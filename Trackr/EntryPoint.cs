@@ -28,6 +28,7 @@ namespace Trackr
 
         private int indx = -1;
         private Panel[] arr;
+        private Button previousPanel;
 
 
         public Stack(int maxSize)
@@ -40,6 +41,10 @@ namespace Trackr
             this.indx++;
             arr[indx] = item;
             item.BringToFront();
+            if (indx > 0) {
+                previousPanel.Show();
+                previousPanel.BringToFront();
+            }
         }
 
         public object Pop()
@@ -47,12 +52,19 @@ namespace Trackr
             Panel toReturn = this.arr[this.indx];
             this.indx--;
             toReturn.SendToBack();
+            if (indx == 0) {
+                previousPanel.Hide();
+            }
             return toReturn;
         }
 
         public object Peek()
         {
             return this.arr[this.indx];
+        }
+
+        public void SetPreviousPanelButton(Button btn) {
+            previousPanel = btn;
         }
      
     }
