@@ -16,8 +16,19 @@ namespace Trackr
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AuthenticationScreen());
+
+            FormController.auth = new AuthenticationScreen();
+            FormController.auth.Show();
+            Application.Run();
         }
+    }
+
+    public static class FormController {
+        /// <summary>
+        /// Static class that keeps references to the open windows. This allows windows to be closed once used to free up memory resources.
+        /// </summary>
+        public static AuthenticationScreen auth;
+        public static StudentMainForm studentMain;
     }
 
     public class Stack
@@ -65,6 +76,7 @@ namespace Trackr
 
         public void SetPreviousPanelButton(Button btn) {
             previousPanel = btn;
+            previousPanel.BringToFront();
         }
      
     }

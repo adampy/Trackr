@@ -58,6 +58,12 @@
     </Compile>
     <Compile Include="AbstractObjects.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="StudentMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentMainForm.Designer.cs">
+      <DependentUpon>StudentMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +79,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StudentMainForm.resx">
+      <DependentUpon>StudentMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
