@@ -29,6 +29,7 @@ namespace Trackr {
             /// HttpStatusNotFound or HttpStatusUnauthorized exceptions may be thrown here.
             /// </summary>
             HttpResponseMessage response = await client.GetAsync(apiRoot + extension);
+            //return response;
             if (response.IsSuccessStatusCode) {
                 return response;
             } else if (response.StatusCode == System.Net.HttpStatusCode.NotFound) {
@@ -45,6 +46,7 @@ namespace Trackr {
             /// </summary>
             var content = new FormUrlEncodedContent(formData);
             HttpResponseMessage response = await client.PostAsync(apiRoot + extension, content);
+            //return response;
             
             if (response.IsSuccessStatusCode) {
                 return response;

@@ -65,7 +65,7 @@ namespace Trackr {
             /// <summary>
             /// Gets all the teachers from the API.
             /// </summary>
-            HttpResponseMessage response = await WebRequestHandler.GET("teacher/");
+            HttpResponseMessage response = await WebRequestHandler.GET("/teacher/");
             Teacher[] teachers = Teacher.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return teachers;
         }
@@ -87,7 +87,11 @@ namespace Trackr {
             }
 
             HttpResponseMessage response = await WebRequestHandler.POST("/teacher/", formData);
-            return Teacher.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
+            if (response.StatusCode == System.Net.HttpStatusCode.Created) {
+                return Teacher.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
+            } else {
+                throw new HttpStatusUnauthorized();
+            }
         }
         async public static Task<bool> IsTeacherUsernameTaken(string username, string adminCode) {
             /// <summary>
@@ -95,12 +99,22 @@ namespace Trackr {
             /// </summary>
 
             Dictionary<string, string> formData = new Dictionary<string, string> {
-                {"admin", adminCode }
+                {"admin", adminCode },
+                {"username", username }
             };
 
-            HttpResponseMessage response = await WebRequestHandler.POST("/teacher/username/" + username, formData);
+            HttpResponseMessage response = await WebRequestHandler.POST("/teacher/username", formData);
+
             dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
             return json.data[0];
+        }
+        #endregion
+
+        #region Tasks
+        async public static Task<TaskObj[]> GetTasks(Student student = null) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/task/");
+            TaskObj[] tasks = TaskObj.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
+            return tasks;
         }
         #endregion
     }

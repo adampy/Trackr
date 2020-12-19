@@ -64,6 +64,9 @@
     <Compile Include="StudentMainForm.Designer.cs">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TaskTaskObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

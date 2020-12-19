@@ -34,6 +34,12 @@ namespace Trackr {
             /// </summary>
             return username;
         }
+        public int GetId() {
+            /// <summary>
+            /// Method used to encapsulate the `id` attribute.
+            /// </summary>
+            return id;
+        }
     }
 
     public class Student : User {
@@ -91,6 +97,60 @@ namespace Trackr {
             /// Constructor for the sub-class, `Teacher`. Inherits from `User`.
             /// </summary>
             this.title = title;
+        }
+    }
+
+    public class TaskObj {
+        private int id;
+        private Student student;
+        private int groupId;
+        private string title;
+        private string description;
+        private int maxScore;
+        private DateTime dateDue;
+        private DateTime dateSet;
+        private bool hasCompleted;
+
+        public TaskObj(int id, int groupId, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
+            this.id = id;
+            this.student = student;
+            this.groupId = groupId;
+            this.title = title;
+            this.description = description;
+            this.maxScore = maxScore;
+            this.dateDue = dateDue;
+            this.dateSet = dateSet;
+            this.hasCompleted = hasCompleted;
+            this.student = student;
+        }
+        public static TaskObj[] CreateFromJsonString(string json, Student student = null) {
+            /// <summary>
+            /// Static method that creates an array of `TaskObj` from an API response
+            /// </summary>
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            TaskObj[] tasks = new TaskObj[jsonObj.data.Count];
+            for (int i = 0; i < jsonObj.data.Count; i++) {
+                dynamic taskObj = jsonObj.data[i];
+                int id = taskObj.id;
+                int groupId = taskObj.group_id;
+                int maxScore = taskObj.max_score;
+                string title = taskObj.title;
+                string description = taskObj.description;
+                DateTime dateDue = taskObj.date_due;
+                DateTime dateSet = taskObj.date_set;
+
+                bool hasCompleted = false;
+                if (taskObj.has_completed != null) {
+                    hasCompleted = taskObj.has_completed;
+                }
+
+                TaskObj task = new TaskObj(id, groupId, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
+                tasks[i] = task;
+            }
+            return tasks;
+        }
+        public string TaskRepresentation() {
+            return (this.id + ":" + this.title + " = " + this.description);
         }
     }
 }

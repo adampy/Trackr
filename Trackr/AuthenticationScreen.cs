@@ -11,17 +11,47 @@ using System.Windows.Forms;
 using System.Net.Http;
 
 namespace Trackr {
+    public enum UserType {
+        Student = 0,
+        Teacher = 1
+    }
+
     public partial class AuthenticationScreen : Form {
 
         Stack panels = new Stack(4); // Make a stack of size 4
 
         public AuthenticationScreen() {
-
             InitializeComponent();
             panels.Push(mainPanel);
             panels.SetPreviousPanelButton(backButton);
             passwordMatchingLabel.Hide();
             usernameAvaliableLabel.Hide();
+            this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
+        }
+        async private Task<bool> isUserValid(UserType user, string username, string password) {
+            /// <summary>
+            /// A method that returns true if the given user is valid for the given `UserType`. This method does not slow down the API because the user data is stored in cache.
+            /// </summary>
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                {"username", username },
+                {"password", password }
+            };
+
+            string urlExtension = "";
+            if (user == UserType.Student) {
+                urlExtension = "/student/auth";
+            } else if (user == UserType.Teacher) {
+                urlExtension = "/teacher/auth";
+            }
+
+            try {
+                HttpResponseMessage response = await WebRequestHandler.POST(urlExtension, formData);
+                return response.IsSuccessStatusCode;
+            } catch (HttpStatusNotFound) {
+                return false;
+            } catch (HttpStatusUnauthorized) {
+                return false;
+            }
         }
         private void flushTextBoxes() {
             ///<summary>
@@ -43,6 +73,34 @@ namespace Trackr {
             //adminCodeTextBox.Text = ""; // TODO: remove this line if not needed?
             usernameAvaliableLabel.Hide();
         }
+        private bool isPasswordValid(string password) {
+            /// <summary>
+            /// Returns `true` if `password` is strong enough (passes the criteria), else returns false.
+            /// Criteria:
+            ///     length of 8 or more
+            ///     1 or more uppercase
+            ///     1 or more lowercase
+            ///     1 or more digits
+            /// </summary>
+            if (password.Length < 8) {
+                return false;
+            }
+
+            bool uppercase = false;
+            bool lowercase = false;
+            bool digit = false;
+            foreach (char letter in password) {
+                int ascii = (int)letter; // Get the ASCII representation of the character
+                if (ascii >= 97 && ascii <= 122) {
+                    lowercase = true;
+                } else if (ascii >= 65 && ascii <= 90) {
+                    uppercase = true;
+                } else if (ascii >= 48 && ascii <= 57) {
+                    digit = true;
+                }
+            }
+            return (uppercase && lowercase && digit);
+        }
         async private void authScreenLoad(object sender, EventArgs e) {
             /// <summary>
             /// Subroutine that sends a simple GET request to the root of the API to ensure it is not sleeping. This route also checks for internet connection on the device.
@@ -58,7 +116,7 @@ namespace Trackr {
                 MessageBox.Show("No internet connection avaliable: please connect to the internet and try again.", "Internet connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-            
+
         }
         private void signInClick(object sender, EventArgs e) {
             /// <summary>
@@ -96,15 +154,11 @@ namespace Trackr {
 
             string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
             APIHandler.SetAuthorizationHeader(credentials);
-            try {
+            if (await isUserValid(UserType.Student, username, password)) {
                 Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
                 FormController.studentMain = new StudentMainForm(student); // Open the new form
-                
-            } catch (HttpStatusUnauthorized) {
+            } else {
                 MessageBox.Show("Your account doesn't exist.");
-            } catch (HttpStatusNotFound) {
-                // This catch runs if the account is valid, but of the wrong type, e.g. student clicked teacher
-                MessageBox.Show("Your account is not a student, please click login as a teacher instead.");
             }
         }
         async private void teacherSignInClick(object sender, EventArgs e) {
@@ -123,13 +177,11 @@ namespace Trackr {
 
             string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
             APIHandler.SetAuthorizationHeader(credentials);
-            try {
+            if (await isUserValid(UserType.Teacher, username, password)){
                 Teacher teacher = await APIHandler.GetTeacher(username: username);
                 MessageBox.Show(teacher.GetUsername() + ":" + teacher.DisplayName());
-            } catch (HttpStatusUnauthorized) {
+            } else {
                 MessageBox.Show("Your account doesn't exist.");
-            } catch (HttpStatusNotFound) {
-                MessageBox.Show("Your account is not a teacher, please click login as a student instead.");
             }
         }
         async private void teacherRegisterButtonCick(object sender, EventArgs e) {
@@ -145,10 +197,10 @@ namespace Trackr {
             string title = titleTextBox.Text;
             string adminCode = adminCodeTextBox.Text;
             string username = usernameRegistrationTextBox.Text;
-            flushTextBoxes();
 
             if (forename == "" || surname == "" || password == "" || confirmedPassword == "" || title == "" || adminCode == "" || adminCode == "") {
                 MessageBox.Show("All values must be entered");
+                return;
             }
 
             if (password != confirmedPassword) {
@@ -156,24 +208,27 @@ namespace Trackr {
                 return;
             }
 
-            // TODO: Make password criteria to check if a password is secure enough
-            try {
-                Teacher teacher = await APIHandler.MakeTeacher(forename, surname, username, password, title, adminCode: adminCode);
-                MessageBox.Show("Success: " + teacher.DisplayName() + " " + teacher.GetUsername());
-            } catch (HttpStatusUnauthorized) {
-                MessageBox.Show("Incorrect admin code entered.");
-            } catch (HttpRequestException exception) {
-                throw exception;
-            }
-        }
-        async private void usernameAvaliableButtonClick(object sender, EventArgs e) {
-            string adminCode = adminCodeTextBox.Text;
-            if (adminCode == "") {
-                MessageBox.Show("Enter the admin code before you can check if a username is avaliable!");
+            if (!isPasswordValid(password)) {
+                MessageBox.Show("The password is not strong enough. It must have:\nlength of 8\n1 or more uppercase letters\n1 or more lowercase letters\n1 or more digits.");
                 return;
             }
 
+            try {
+                Teacher teacher = await APIHandler.MakeTeacher(forename, surname, username, password, title, adminCode: adminCode);
+                MessageBox.Show("Success: " + teacher.DisplayName() + " " + teacher.GetUsername());
+                flushTextBoxes();
+            } catch (HttpStatusUnauthorized) {
+                MessageBox.Show("Incorrect admin code entered.");
+                }
+        }
+        async private void usernameAvaliableButtonClick(object sender, EventArgs e) {
+            string adminCode = adminCodeTextBox.Text;
             string username = usernameRegistrationTextBox.Text;
+            if (adminCode == "" || username == "") {
+                MessageBox.Show("Enter the admin code, and/or a username, before you can check if a username is avaliable!");
+                return;
+            }
+
             try {
                 bool taken = await APIHandler.IsTeacherUsernameTaken(username, adminCode);
                 if (!taken) {
