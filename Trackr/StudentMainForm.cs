@@ -13,7 +13,6 @@ namespace Trackr {
         Student user;
 
         public StudentMainForm(Student user) {
-            FormController.auth.Close();
             Task<TaskObj[]> task = Task.Run<TaskObj[]>(async () => await APIHandler.GetTasks(student: user)); // Running async code from a sync method by using `Task`
             TaskObj[] tasks = task.Result;
 
@@ -25,7 +24,6 @@ namespace Trackr {
             this.user = user;
             this.Text += this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
-            
 
             TaskTabPage uncompleted = new TaskTabPage("Uncompleted tasks", tasks, Color.FromArgb(255, 87, 87));
             tabControl1.TabPages.Add(uncompleted);

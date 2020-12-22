@@ -11,16 +11,16 @@ namespace Trackr {
         TaskObj task;
         Label mainLabel;
         public TaskControl(TaskObj task) : base() {
-            this.AutoSize = true;
             this.task = task;
-        }
 
-        public void ShowLabel() {
+            this.AutoSize = true;
+            this.Height = 50;
+
             mainLabel = new Label();
             mainLabel.Text = task.TaskRepresentation();
             mainLabel.AutoSize = true;
             mainLabel.Font = new Font("Corbel", 15.0f);
-            mainLabel.Location = this.Location;
+            mainLabel.Location = new Point(0, 0);
             this.Controls.Add(mainLabel);
         }
     }
@@ -35,23 +35,14 @@ namespace Trackr {
             this.AutoScroll = true;
             this.panels = new Panel[taskData.Length];
 
-            /*Label label2 = new Label();
-            label2.Location = new Point(0, 0);
-            label2.Font = new Font("Corbel Light", 15.0f, FontStyle.Italic);
-            label2.ForeColor = Color.Black;
-            label2.Text = "";
-            label2.AutoSize = true;
-            this.Controls.Add(label2);*/
-
             int y = 0;
             int x = 0;
-            int dy = 100;
+            int dy = 50;
             foreach (TaskObj i in taskData) {
                 TaskControl taskControl = new TaskControl(i);
                 taskControl.Location = new Point(x, y);
-                y += dy;
+                y += dy; 
                 this.Controls.Add(taskControl);
-                taskControl.ShowLabel();
             }
         }
 

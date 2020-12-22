@@ -115,7 +115,7 @@ namespace Trackr {
             this.id = id;
             this.student = student;
             this.groupId = groupId;
-            this.title = title;
+            this.title = title; // make these public and access them in the TaskControl class
             this.description = description;
             this.maxScore = maxScore;
             this.dateDue = dateDue;

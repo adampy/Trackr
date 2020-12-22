@@ -19,15 +19,20 @@ namespace Trackr {
     public partial class AuthenticationScreen : Form {
 
         Stack panels = new Stack(4); // Make a stack of size 4
-
+        bool closedByProgram = false; // false if not closed by program and true if the program has closed the window
+        
         public AuthenticationScreen() {
             InitializeComponent();
             panels.Push(mainPanel);
             panels.SetPreviousPanelButton(backButton);
             passwordMatchingLabel.Hide();
             usernameAvaliableLabel.Hide();
-            this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
+            this.FormClosed += (obj, args) => { if (!closedByProgram) { Application.Exit(); } }; // Anonymous function that closes the whole application if this form is closed
         }
+        public void SetSoftClose() {
+            this.Close();
+        }
+
         async private Task<bool> isUserValid(UserType user, string username, string password) {
             /// <summary>
             /// A method that returns true if the given user is valid for the given `UserType`. This method does not slow down the API because the user data is stored in cache.
@@ -156,6 +161,8 @@ namespace Trackr {
             APIHandler.SetAuthorizationHeader(credentials);
             if (await isUserValid(UserType.Student, username, password)) {
                 Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
+                closedByProgram = true; // Set boolean to prevent Application.Exit() call
+                this.Close(); // Close current form
                 FormController.studentMain = new StudentMainForm(student); // Open the new form
             } else {
                 MessageBox.Show("Your account doesn't exist.");
