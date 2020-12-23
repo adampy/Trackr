@@ -44,7 +44,7 @@ namespace Trackr {
         #endregion
 
         #region Teachers
-        async public static Task<Teacher> GetTeacher(int id = 0, string username = null) {
+        async public static Task<Teacher> GetTeacher(int id = 0, string username = null, string hateoasLink = null) {
             /// <summary>
             /// Gets all the teachers from the API, either using `id`, `username`. The first element from the query is returned.
             /// </summary>
@@ -53,6 +53,8 @@ namespace Trackr {
                 extension = "/teacher/" + id.ToString();
             } else if (username != null) {
                 extension = "/teacher/" + username + "?username=True";
+            } else if (hateoasLink != null) {
+                extension = hateoasLink + "/";
             } else {
                 return null;
             }
@@ -115,6 +117,14 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.GET("/task/");
             TaskObj[] tasks = TaskObj.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
             return tasks;
+        }
+        #endregion
+
+        #region Groups
+        async public static Task<Group> GetGroup(string hateoasLink) {
+            HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink + "/");
+            Group group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            return group;
         }
         #endregion
     }

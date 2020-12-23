@@ -103,7 +103,7 @@ namespace Trackr {
     public class TaskObj {
         public int id;
         public Student student;
-        public dynamic group; // This field is the group ref object
+        public Group group; // This field is the group ref object
         public string title;
         public string description;
         public int maxScore;
@@ -111,7 +111,7 @@ namespace Trackr {
         public DateTime dateSet;
         public bool hasCompleted;
 
-        public TaskObj(int id, dynamic group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
+        public TaskObj(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
             this.id = id;
             this.student = student;
             this.group = group;
@@ -132,7 +132,8 @@ namespace Trackr {
             for (int i = 0; i < jsonObj.data.Count; i++) {
                 dynamic taskObj = jsonObj.data[i];
                 int id = taskObj.id;
-                dynamic group = taskObj.group; // This field is the group ref object
+                Task<Group> taskProcess = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: taskObj.reference.link));
+                Group group = taskProcess.Result;
                 int maxScore = taskObj.max_score;
                 string title = taskObj.title;
                 string description = taskObj.description;
@@ -152,6 +153,28 @@ namespace Trackr {
     }
 
     public class Group {
+        private int id;
+        private Teacher teacher;
+        private string name;
+        private string subject;
 
+        public Group(int id, Teacher teacher, string name, string subject) {
+            this.id = id;
+            this.teacher = teacher;
+            this.name = name;
+            this.subject = subject;
+        }
+
+        public static Group CreateFromJsonString(string json) {
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            int id = jsonObj.id;
+            string name = jsonObj.name;
+            string subject = jsonObj.subject;
+
+            string hateoasLink = jsonObj.reference.link;
+            Task<Teacher> task = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(hateoasLink: hateoasLink));
+            Teacher teacher = task.Result;
+            return new Group(id, teacher, name, subject);
+        }
     }
 }
