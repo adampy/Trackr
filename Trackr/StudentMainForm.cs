@@ -25,7 +25,7 @@ namespace Trackr {
             this.Text += this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
 
-            TaskTabPage uncompleted = new TaskTabPage("Uncompleted tasks", tasks, Color.FromArgb(255, 87, 87));
+            TaskTabPage uncompleted = new TaskTabPage("Uncompleted tasks", tasks, borderWidth: 3);
             tabControl1.TabPages.Add(uncompleted);
         }
     }

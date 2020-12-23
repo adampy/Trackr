@@ -99,22 +99,22 @@ namespace Trackr {
             this.title = title;
         }
     }
-
+    
     public class TaskObj {
-        private int id;
-        private Student student;
-        private int groupId;
-        private string title;
-        private string description;
-        private int maxScore;
-        private DateTime dateDue;
-        private DateTime dateSet;
-        private bool hasCompleted;
+        public int id;
+        public Student student;
+        public dynamic group; // This field is the group ref object
+        public string title;
+        public string description;
+        public int maxScore;
+        public DateTime dateDue;
+        public DateTime dateSet;
+        public bool hasCompleted;
 
-        public TaskObj(int id, int groupId, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
+        public TaskObj(int id, dynamic group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
             this.id = id;
             this.student = student;
-            this.groupId = groupId;
+            this.group = group;
             this.title = title; // make these public and access them in the TaskControl class
             this.description = description;
             this.maxScore = maxScore;
@@ -132,7 +132,7 @@ namespace Trackr {
             for (int i = 0; i < jsonObj.data.Count; i++) {
                 dynamic taskObj = jsonObj.data[i];
                 int id = taskObj.id;
-                int groupId = taskObj.group_id;
+                dynamic group = taskObj.group; // This field is the group ref object
                 int maxScore = taskObj.max_score;
                 string title = taskObj.title;
                 string description = taskObj.description;
@@ -144,13 +144,14 @@ namespace Trackr {
                     hasCompleted = taskObj.has_completed;
                 }
 
-                TaskObj task = new TaskObj(id, groupId, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
+                TaskObj task = new TaskObj(id, group, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
                 tasks[i] = task;
             }
             return tasks;
         }
-        public string TaskRepresentation() {
-            return (this.id + ":" + this.title + " = " + this.description);
-        }
+    }
+
+    public class Group {
+
     }
 }
