@@ -13,8 +13,8 @@ namespace Trackr {
         Student user;
 
         public StudentMainForm(Student user) {
-            Task<TaskObj[]> task = Task.Run<TaskObj[]>(async () => await APIHandler.GetTasks(student: user)); // Running async code from a sync method by using `Task`
-            TaskObj[] tasks = task.Result;
+            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
+            Homework[] tasks = task.Result;
 
             InitializeComponent();
             this.Show();
@@ -34,11 +34,11 @@ namespace Trackr {
                     completedTasks.Add(tasks[i]);
                 }
             }
-            TaskTabPage uncompleted = new TaskTabPage(tabControl1, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
-            TaskTabPage completed = new TaskTabPage(tabControl1, "Completed tasks", completedTasks, taskBorderWidth: 3);
+            HomeworkTabPage uncompleted = new HomeworkTabPage(tabControl1, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
+            HomeworkTabPage completed = new HomeworkTabPage(tabControl1, "Completed tasks", completedTasks, taskBorderWidth: 3);
             tabControl1.TabPages.Add(uncompleted);
             tabControl1.TabPages.Add(completed);
-            tabControl1.Font = new Font("Corbel", 8.0f);
+            tabControl1.Font = new Font("Corbel", 12.0f);
         }
     }
 }

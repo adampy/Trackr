@@ -100,18 +100,27 @@ namespace Trackr {
         }
     }
     
-    public class TaskObj {
-        public int id;
-        public Student student;
-        public Group group; // This field is the group ref object
-        public string title;
-        public string description;
-        public int maxScore;
-        public DateTime dateDue;
-        public DateTime dateSet;
-        public bool hasCompleted;
+    public interface ITask {
+        public int id { get; set; }
+        public Group group { get; set; } // This field is the group ref object
+        public string title { get; set; }
+        public string description { get; set; }
+        public int maxScore { get; set; }
+        public DateTime dateDue { get; set; }
+        public DateTime dateSet { get; set; }
+    }
 
-        public TaskObj(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
+    public class Homework : ITask {
+        public int id { get; set; }
+        public Group group { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public int maxScore { get; set; }
+        public DateTime dateDue { get; set; }
+        public DateTime dateSet { get; set; }
+        public Student student { get; set; }
+        public bool hasCompleted { get; set; }
+        public Homework(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
             this.id = id;
             this.student = student;
             this.group = group;
@@ -123,34 +132,39 @@ namespace Trackr {
             this.hasCompleted = hasCompleted;
             this.student = student;
         }
-        public static TaskObj[] CreateFromJsonString(string json, Student student = null) {
+        public static Homework[] CreateFromJsonString(string json, Student student) {
             /// <summary>
             /// Static method that creates an array of `TaskObj` from an API response
             /// </summary>
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            TaskObj[] tasks = new TaskObj[jsonObj.data.Count];
+            Homework[] homeworks = new Homework[jsonObj.data.Count];
             for (int i = 0; i < jsonObj.data.Count; i++) {
-                dynamic taskObj = jsonObj.data[i];
-                int id = taskObj.id;
+                dynamic homeworkObj = jsonObj.data[i];
+                int id = homeworkObj.id;
 
-                string temp = taskObj.group.reference.link;
+                string temp = homeworkObj.group.reference.link;
 
                 Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp)).Result;
-                int maxScore = taskObj.max_score;
-                string title = taskObj.title;
-                string description = taskObj.description;
-                DateTime dateDue = taskObj.date_due;
-                DateTime dateSet = taskObj.date_set;
+                int maxScore = homeworkObj.max_score;
+                string title = homeworkObj.title;
+                string description = homeworkObj.description;
+                DateTime dateDue = homeworkObj.date_due;
+                DateTime dateSet = homeworkObj.date_set;
 
                 bool hasCompleted = false;
-                if (taskObj.has_completed != null) {
-                    hasCompleted = taskObj.has_completed;
+                if (homeworkObj.has_completed != null) {
+                    hasCompleted = homeworkObj.has_completed;
                 }
 
-                tasks[i] = new TaskObj(id, group, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
+                homeworks[i] = new Homework(id, group, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
             }
-            return tasks;
+            return homeworks;
         }
+        public void UpdateHomeworkStatus(bool newStatus) {
+            this.hasCompleted = newStatus;
+            APIHandler.UpdateHomeworkStatus(this);
+        }
+
     }
 
     public class Group {

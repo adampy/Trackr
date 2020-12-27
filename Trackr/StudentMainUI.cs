@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace Trackr {
 
-    public class TaskTabPage : TabPage {
+    public class HomeworkTabPage : TabPage {
         public CustomList data;
         private Panel[] panels;
         private TabControl parent;
 
-        public TaskTabPage(TabControl parent, string text, CustomList taskData, int taskBorderWidth) {
+        public HomeworkTabPage(TabControl parent, string text, CustomList taskData, int taskBorderWidth) {
             this.Text = text;
             this.data = taskData;
             this.parent = parent;
@@ -25,9 +25,9 @@ namespace Trackr {
             int x = 0;
 
             for (int i = 0; i < taskData.GetLength(); i++) {
-                TaskObj taskIterable = (TaskObj)taskData.Get(i);
+                Homework taskIterable = (Homework)taskData.Get(i);
                 bool includeBottomBorder = (i != taskData.GetLength() - 1); // Boolean that denotes the last item in the list. When this is True the bottom border is not included in the ListItem.
-                TaskListItem taskListItem = new TaskListItem(parent, taskIterable, 2, true);
+                HomeworkListItem taskListItem = new HomeworkListItem(parent, taskIterable, 2, true);
                 taskListItem.Location = new Point(x, y);
                 y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
                 this.Controls.Add(taskListItem);
@@ -46,9 +46,9 @@ namespace Trackr {
         }
     }
 
-    public class TaskListItem : UserControl {
+    public class HomeworkListItem : UserControl {
         private TabControl tabController;
-        private TaskObj task;
+        private Homework task;
         private LinkLabel titleLabel;
         private Label groupLabel;
         private Label descriptionLabel;
@@ -58,7 +58,7 @@ namespace Trackr {
         private bool bottomBorder;
         private int bottomBorderWidth;
 
-        public TaskListItem(TabControl tabController, TaskObj task, int bottomBorderWidth, bool bottomBorder) : base() {
+        public HomeworkListItem(TabControl tabController, Homework task, int bottomBorderWidth, bool bottomBorder) : base() {
             /// <summary>
             /// Constructor method for TaskListItem.
             /// </summary>
@@ -145,12 +145,14 @@ namespace Trackr {
             tabController.SelectedIndex = tabController.TabPages.Count - 1; // Select the most new tab
         }
         private void OnDoneButtonClick(object sender, EventArgs e) {
-            MessageBox.Show("Hello");
+            bool current = this.task.hasCompleted;
+            this.task.UpdateHomeworkStatus(!current);
+            MessageBox.Show("Updated!");
         }
     }
 
     public class FocussedTaskTab : TabPage {
-        private TaskObj task;
+        private Homework task;
         private Label titleLabel;
         private Label groupLabel;
         private RemoveTabButton removeTab;
@@ -170,7 +172,7 @@ namespace Trackr {
             }
         }
 
-        public FocussedTaskTab(TaskObj task) : base() {
+        public FocussedTaskTab(Homework task) : base() {
             this.task = task;
             this.Text = this.task.title;
             this.BorderStyle = BorderStyle.FixedSingle; // Add border

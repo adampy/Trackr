@@ -113,10 +113,16 @@ namespace Trackr {
         #endregion
 
         #region Tasks
-        async public static Task<TaskObj[]> GetTasks(Student student = null) {
-            HttpResponseMessage response = await WebRequestHandler.GET("/task/");
-            TaskObj[] tasks = TaskObj.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
+        async public static Task<Homework[]> GetHomework(Student student) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
+            Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
             return tasks; // TODO: Add cache to teacher and group get methods
+        }
+        async public static void UpdateHomeworkStatus(Homework homework) {
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                {"completed", homework.hasCompleted.ToString().ToLower() }
+            };
+            HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData);
         }
         #endregion
 
