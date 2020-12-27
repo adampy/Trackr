@@ -38,6 +38,7 @@ namespace Trackr {
             TaskTabPage completed = new TaskTabPage(tabControl1, "Completed tasks", completedTasks, taskBorderWidth: 3);
             tabControl1.TabPages.Add(uncompleted);
             tabControl1.TabPages.Add(completed);
+            tabControl1.Font = new Font("Corbel", 8.0f);
         }
     }
 }
