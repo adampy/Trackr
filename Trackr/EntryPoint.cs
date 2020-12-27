@@ -20,9 +20,10 @@ namespace Trackr
             /*FormController.auth = new AuthenticationScreen();
             FormController.auth.Show();*/
 
-            Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: "/group/4")).Result;
-
             APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
+
+            //Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: "/group/4")).Result;
+
             Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
             FormController.studentMain = new StudentMainForm(student);
             FormController.studentMain.Show();
@@ -37,55 +38,5 @@ namespace Trackr
         /// </summary>
         public static AuthenticationScreen auth;
         public static StudentMainForm studentMain;
-    }
-
-    public class Stack
-    {
-        /// <summary>
-        /// A stack is used to store the previous panels in the back button. This stack is specialised in Panel operations
-        /// </summary>
-
-        private int indx = -1;
-        private Panel[] arr;
-        private Button previousPanel;
-
-
-        public Stack(int maxSize)
-        {
-            this.arr = new Panel[maxSize];
-        }
-
-        public void Push(Panel item)
-        {
-            this.indx++;
-            arr[indx] = item;
-            item.BringToFront();
-            if (indx > 0) {
-                previousPanel.Show();
-                previousPanel.BringToFront();
-            }
-        }
-
-        public object Pop()
-        {
-            Panel toReturn = this.arr[this.indx];
-            this.indx--;
-            toReturn.SendToBack();
-            if (indx == 0) {
-                previousPanel.Hide();
-            }
-            return toReturn;
-        }
-
-        public object Peek()
-        {
-            return this.arr[this.indx];
-        }
-
-        public void SetPreviousPanelButton(Button btn) {
-            previousPanel = btn;
-            previousPanel.BringToFront();
-        }
-     
     }
 }

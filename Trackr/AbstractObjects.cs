@@ -132,8 +132,10 @@ namespace Trackr {
             for (int i = 0; i < jsonObj.data.Count; i++) {
                 dynamic taskObj = jsonObj.data[i];
                 int id = taskObj.id;
-                Task<Group> taskProcess = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: taskObj.reference.link));
-                Group group = taskProcess.Result;
+
+                string temp = taskObj.group.reference.link;
+
+                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp)).Result;
                 int maxScore = taskObj.max_score;
                 string title = taskObj.title;
                 string description = taskObj.description;
@@ -145,8 +147,7 @@ namespace Trackr {
                     hasCompleted = taskObj.has_completed;
                 }
 
-                TaskObj task = new TaskObj(id, group, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
-                tasks[i] = task;
+                tasks[i] = new TaskObj(id, group, title, description, maxScore, dateDue, dateSet, hasCompleted: hasCompleted, student: student);
             }
             return tasks;
         }
@@ -165,16 +166,26 @@ namespace Trackr {
             this.subject = subject;
         }
 
-        public static Group CreateFromJsonString(string json) {
+        public static Group[]CreateFromJsonString(string json) {
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            int id = jsonObj.id;
-            string name = jsonObj.name;
-            string subject = jsonObj.subject;
+            Group[] allGroups = new Group[jsonObj.data.Count]; // The provided JSON may be an array of groups
+            for (int i = 0; i < jsonObj.data.Count; i++) {
+                dynamic groupObj = jsonObj.data[i]; // Get the group
+                int id = groupObj.id;
+                string name = groupObj.name;
+                string subject = groupObj.subject;
 
-            string hateoasLink = jsonObj.reference.link;
-            Task<Teacher> task = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(hateoasLink: hateoasLink));
-            Teacher teacher = task.Result;
-            return new Group(id, teacher, name, subject);
+                string hateoasLink = groupObj.teacher.reference.link;
+                Task<Teacher> task = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(hateoasLink: hateoasLink));
+                Teacher teacher = task.Result;
+
+                allGroups[i] = new Group(id, teacher, name, subject);
+            }
+            return allGroups;
+        }
+
+        public string GetName() {
+            return this.name;
         }
     }
 }

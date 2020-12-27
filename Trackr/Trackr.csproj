@@ -57,6 +57,7 @@
       <DependentUpon>AuthenticationScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="AbstractObjects.cs" />
+    <Compile Include="DataStructures.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="StudentMainForm.cs">
       <SubType>Form</SubType>
@@ -64,8 +65,8 @@
     <Compile Include="StudentMainForm.Designer.cs">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TaskTaskObjects.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="TaskObjUI.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />

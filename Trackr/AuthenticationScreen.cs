@@ -18,7 +18,7 @@ namespace Trackr {
 
     public partial class AuthenticationScreen : Form {
 
-        Stack panels = new Stack(4); // Make a stack of size 4
+        PanelStack panels = new PanelStack(4); // Make a stack of size 4
         bool closedByProgram = false; // false if not closed by program and true if the program has closed the window
         
         public AuthenticationScreen() {
@@ -94,6 +94,7 @@ namespace Trackr {
             bool uppercase = false;
             bool lowercase = false;
             bool digit = false;
+            bool colon = false;
             foreach (char letter in password) {
                 int ascii = (int)letter; // Get the ASCII representation of the character
                 if (ascii >= 97 && ascii <= 122) {
@@ -102,9 +103,11 @@ namespace Trackr {
                     uppercase = true;
                 } else if (ascii >= 48 && ascii <= 57) {
                     digit = true;
+                } else if (ascii == 58) { // Ensure there is no colon present as this will affect the Authorization header formatting (username:password)
+                    colon = true;
                 }
             }
-            return (uppercase && lowercase && digit);
+            return (uppercase && lowercase && digit && !colon);
         }
         async private void authScreenLoad(object sender, EventArgs e) {
             /// <summary>

@@ -54,7 +54,7 @@ namespace Trackr {
             } else if (username != null) {
                 extension = "/teacher/" + username + "?username=True";
             } else if (hateoasLink != null) {
-                extension = hateoasLink + "/";
+                extension = hateoasLink;
             } else {
                 return null;
             }
@@ -116,14 +116,14 @@ namespace Trackr {
         async public static Task<TaskObj[]> GetTasks(Student student = null) {
             HttpResponseMessage response = await WebRequestHandler.GET("/task/");
             TaskObj[] tasks = TaskObj.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
-            return tasks;
+            return tasks; // TODO: Add cache to teacher and group get methods
         }
         #endregion
 
         #region Groups
         async public static Task<Group> GetGroup(string hateoasLink) {
-            HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink + "/");
-            Group group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink);
+            Group group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
             return group;
         }
         #endregion

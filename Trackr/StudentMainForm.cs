@@ -25,8 +25,19 @@ namespace Trackr {
             this.Text += this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
 
-            TaskTabPage uncompleted = new TaskTabPage("Uncompleted tasks", tasks, borderWidth: 3);
+            CustomList uncompletedTasks = new CustomList(tasks.Length);
+            CustomList completedTasks = new CustomList(tasks.Length); // Make two new arrays. Having them the same length as tasks makes this adding and accessing both O(1) in time but O(n) in memory
+            for (int i = 0; i < tasks.Length; i++) {
+                if (tasks[i].hasCompleted == false) {
+                    uncompletedTasks.Add(tasks[i]);
+                } else {
+                    completedTasks.Add(tasks[i]);
+                }
+            }
+            TaskTabPage uncompleted = new TaskTabPage(tabControl1, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
+            TaskTabPage completed = new TaskTabPage(tabControl1, "Completed tasks", completedTasks, taskBorderWidth: 3);
             tabControl1.TabPages.Add(uncompleted);
+            tabControl1.TabPages.Add(completed);
         }
     }
 }
