@@ -56,9 +56,10 @@ namespace Trackr {
         public CustomList data;
         private Panel[] panels;
         private HomeworkTabController parent;
+        private string titleText;
 
         public HomeworkTabPage(HomeworkTabController parent, string text, CustomList taskData, int taskBorderWidth) {
-            this.Text = text;
+            this.titleText = text;
             this.data = taskData;
             this.parent = parent;
             this.AutoScroll = true;
@@ -93,6 +94,8 @@ namespace Trackr {
                 y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
                 this.Controls.Add(taskListItem);
             }
+            this.Text = this.titleText + " (" + this.data.GetLength().ToString() + ")";
+
         }
     }
 
