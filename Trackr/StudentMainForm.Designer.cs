@@ -26,6 +26,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentMainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -50,16 +51,32 @@
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "SAMPLE NAME";
             // 
+            // refreshButton
+            // 
+            this.refreshButton.BackgroundImage = global::Trackr.Properties.Resources.refreshButton;
+            this.refreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.refreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.refreshButton.FlatAppearance.BorderSize = 0;
+            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.refreshButton.Location = new System.Drawing.Point(674, 7);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(60, 60);
+            this.refreshButton.TabIndex = 2;
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.OnRefreshButtonClick);
+            // 
             // StudentMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 429);
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.Name = "StudentMainForm";
             this.Text = "Trackr - ";
             this.ResumeLayout(false);
@@ -71,5 +88,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Button refreshButton;
     }
 }

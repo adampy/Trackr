@@ -11,11 +11,10 @@ using System.Windows.Forms;
 namespace Trackr {
     public partial class StudentMainForm : Form {
         private Student user;
-        private CustomList taskData;
         private HomeworkTabController tabController;
 
         public StudentMainForm(Student user) {
-            InitializeComponent(); // This method also sets up the HomeworkTabController
+            InitializeComponent();
             this.Show();
             this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
 
@@ -34,8 +33,12 @@ namespace Trackr {
             tabController.SelectedIndex = 0;
             tabController.Size = new Size(740, 363);
             this.Controls.Add(tabController);
-            //tabController.Name = "tabController";
-            //tabController.TabIndex = 3;
+        }
+
+        private void OnRefreshButtonClick(object sender, EventArgs e) {
+            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user));
+            Homework[] tasks = task.Result;
+            tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
         }
     }
 }

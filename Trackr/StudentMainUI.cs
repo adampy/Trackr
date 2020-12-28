@@ -14,15 +14,19 @@ namespace Trackr {
         private HomeworkTabPage completed;
         private int previousTabIndex = 0;
         
-        public HomeworkTabController(Homework[] allTasks) : base() {
+        public HomeworkTabController(Homework[] allTasks, int tabIndx = 0) : base() {
             this.allTasks = allTasks;
             this.UpdateTabs();
+            this.SelectedIndex = tabIndx;
             this.Deselecting += this.OnTabMoving;
         }
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
         }
-        public void UpdateTabs(bool disposeCurrentTabs = false) {
+        public void UpdateTabs(bool disposeCurrentTabs = false, Homework[] newTasks = null) {
+            if (newTasks != null) { // If new tasks are given to the tab controller, change the current tasks to those tasks.
+                this.allTasks = newTasks;
+            }
             CustomList uncompletedTasks = new CustomList(allTasks.Length);
             CustomList completedTasks = new CustomList(allTasks.Length); // Make two new arrays. Having them the same length as tasks makes this adding and accessing both O(1) in time but O(n) in memory
             for (int i = 0; i < allTasks.Length; i++) {
@@ -33,13 +37,17 @@ namespace Trackr {
                 }
             }
             if (disposeCurrentTabs) {
-                uncompleted.Dispose();
-                completed.Dispose();
+                // The current tabs are wrong, so provide new data to the current tabs
+                uncompleted.FillTabPage(newTaskData: uncompletedTasks);
+                completed.FillTabPage(newTaskData: completedTasks);
+            } else {
+                // The current tabs do not exist, so create them
+                uncompleted = new HomeworkTabPage(this, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
+                completed = new HomeworkTabPage(this, "Completed tasks", completedTasks, taskBorderWidth: 3);
+                this.TabPages.Add(uncompleted);
+                this.TabPages.Add(completed);
             }
-            uncompleted = new HomeworkTabPage(this, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
-            completed = new HomeworkTabPage(this, "Completed tasks", completedTasks, taskBorderWidth: 3);
-            this.TabPages.Add(uncompleted);
-            this.TabPages.Add(completed);
+            
         }
         private void OnTabMoving(object sender, TabControlCancelEventArgs e) {
             if (e.TabPageIndex >= 0) {
@@ -54,7 +62,7 @@ namespace Trackr {
 
     public class HomeworkTabPage : TabPage {
         public CustomList data;
-        private Panel[] panels;
+        private HomeworkListItem[] listItems;
         private HomeworkTabController parent;
         private string titleText;
 
@@ -79,17 +87,26 @@ namespace Trackr {
             e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, this.Width, this.Height); // Fill background in white
         }
 
-        public void FillTabPage() {
+        public void FillTabPage(CustomList newTaskData = null) {
             /// <summary>
-            /// Method that converts all of the items in `this.data` into the page.
+            /// Method that converts all of the items in `this.data` into the page. If `newTaskData` is provided, then `this.data = newTaskData`.
             /// </summary>
+            if (newTaskData != null) {
+                // New tasks have been provided, dispose of the current list items and replace the current data with the new data provided.
+                this.data = newTaskData;
+                foreach (HomeworkListItem h in this.listItems) {
+                    h.Dispose();
+                }
+            }
 
+            // TODO: Merge sort these in relation to their due date - most recent come first
             int y = 0;
-            this.panels = new Panel[this.data.GetLength()]; // TODO: Change all arrays to CustomList type
+            this.listItems = new HomeworkListItem[this.data.GetLength()]; // TODO: Change all arrays to CustomList type
             for (int i = 0; i < this.data.GetLength(); i++) {
                 Homework taskIterable = (Homework)this.data.Get(i);
                 bool includeBottomBorder = (i != this.data.GetLength() - 1); // Boolean that denotes the last item in the list. When this is True the bottom border is not included in the ListItem.
                 HomeworkListItem taskListItem = new HomeworkListItem(parent, taskIterable, 2, true);
+                this.listItems[i] = taskListItem;
                 taskListItem.Location = new Point(0, y);
                 y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
                 this.Controls.Add(taskListItem);
@@ -107,6 +124,7 @@ namespace Trackr {
         private Label descriptionLabel;
         private Label dateLabel;
         private Label monthLabel;
+        private Label overdueLabel;
         private DoneButtonControl doneButton;
         private bool bottomBorder;
         private int bottomBorderWidth;
@@ -144,10 +162,21 @@ namespace Trackr {
             descriptionLabel = new Label();
             descriptionLabel.AutoSize = true;
             descriptionLabel.Font = new Font("Corbel", 15.0f);
-            descriptionLabel.Location = new Point(300, 20);
-            descriptionLabel.Text = task.description;
+            descriptionLabel.Location = new Point(300, 30);
+            descriptionLabel.Text = HomeworkListItem.ReduceText(task.description, 25);
             descriptionLabel.BackColor = Color.Transparent;
             this.Controls.Add(descriptionLabel);
+
+            if (task.dateDue < DateTime.UtcNow && !task.hasCompleted) {
+                overdueLabel = new Label();
+                overdueLabel.Text = "Overdue!!!";
+                overdueLabel.BackColor = Color.Red;
+                overdueLabel.Font = new Font("Corbel", 15.0f, FontStyle.Bold);
+                overdueLabel.Location = new Point(300, 0);
+                overdueLabel.AutoSize = true;
+                overdueLabel.TextAlign = ContentAlignment.TopCenter;
+                this.Controls.Add(overdueLabel);
+            }
 
             // Date Label
             dateLabel = new Label();
@@ -162,7 +191,7 @@ namespace Trackr {
             monthLabel = new Label();
             monthLabel.AutoSize = true;
             monthLabel.Font = new Font("Corbel", 20.0f);
-            monthLabel.Location = new Point(650, 40);
+            monthLabel.Location = new Point(650, 45);
             monthLabel.Text = task.dateDue.ToString("MMM"); // MMM gets the abbreviated month
             monthLabel.BackColor = Color.Transparent;
             this.Controls.Add(monthLabel);
@@ -201,7 +230,27 @@ namespace Trackr {
             bool current = this.task.hasCompleted;
             this.task.UpdateHomeworkStatus(!current);
             MessageBox.Show("Updated!");
-            tabController.UpdateTabs(disposeCurrentTabs: true);
+            int currentTabIndex = tabController.SelectedIndex;
+            tabController.UpdateTabs(disposeCurrentTabs: true); // The current tabs are incorrect, but the data is the same
+            tabController.SelectedIndex = currentTabIndex; // Ensures the program stays on the same tab
+        }
+        
+        public static string ReduceText(string text, int length, char seperator = ' ') {
+            /// <summary>
+            /// Decreases the length of `text` to lower than or equal to `length` by splitting it at an occurence of a `seperator`, which is " " by default.
+            /// A "..." is appended to the end of the string after this length reduction.
+            /// </summary>
+
+            //string firstSplit = text.Split(seperator)[0];
+            int sepIndx = -1;
+            for (int i = text.Length - 1; i >= 0; i--) {
+                // Traverse through the string backwards to find the last occuring `seperator`
+                if (text[i] == seperator && i <= length) { // -3 for the ... at the end
+                    sepIndx = i;
+                    break;
+                }
+            }
+            return text.Substring(0, sepIndx + 1) + "...";
         }
     }
 
@@ -292,14 +341,10 @@ namespace Trackr {
             lbl.Text = labelText;
             this.Controls.Add(lbl);
 
+            this.isChecked = startingState; // This sets the colour of the Button - colour change is performed inside of this.OnPaint
             btn = new Button();
             btn.AutoSize = true;
             btn.Location = new Point(0, 0);
-            if (startingState) {
-                btn.BackColor = Color.Green;
-            } else {
-                btn.BackColor = Color.Red;
-            }
             btn.Click += (obj, e) => OnButtonClick(obj, e);
             btn.TabStop = false;
             btn.FlatStyle = FlatStyle.Flat;
