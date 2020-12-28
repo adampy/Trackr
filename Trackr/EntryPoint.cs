@@ -21,9 +21,6 @@ namespace Trackr
             FormController.auth.Show();*/
 
             APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
-
-            //Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: "/group/4")).Result;
-
             Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
             FormController.studentMain = new StudentMainForm(student);
             FormController.studentMain.Show();

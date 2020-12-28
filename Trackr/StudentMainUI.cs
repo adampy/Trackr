@@ -8,30 +8,63 @@ using System.Windows.Forms;
 
 namespace Trackr {
 
+    public class HomeworkTabController : TabControl {
+        private Homework[] allTasks;
+        private HomeworkTabPage uncompleted;
+        private HomeworkTabPage completed;
+        private int previousTabIndex = 0;
+        
+        public HomeworkTabController(Homework[] allTasks) : base() {
+            this.allTasks = allTasks;
+            this.UpdateTabs();
+            this.Deselecting += this.OnTabMoving;
+        }
+        protected override void OnPaint(PaintEventArgs e) {
+            base.OnPaint(e);
+        }
+        public void UpdateTabs(bool disposeCurrentTabs = false) {
+            CustomList uncompletedTasks = new CustomList(allTasks.Length);
+            CustomList completedTasks = new CustomList(allTasks.Length); // Make two new arrays. Having them the same length as tasks makes this adding and accessing both O(1) in time but O(n) in memory
+            for (int i = 0; i < allTasks.Length; i++) {
+                if (allTasks[i].hasCompleted == false) {
+                    uncompletedTasks.Add(allTasks[i]);
+                } else {
+                    completedTasks.Add(allTasks[i]);
+                }
+            }
+            if (disposeCurrentTabs) {
+                uncompleted.Dispose();
+                completed.Dispose();
+            }
+            uncompleted = new HomeworkTabPage(this, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
+            completed = new HomeworkTabPage(this, "Completed tasks", completedTasks, taskBorderWidth: 3);
+            this.TabPages.Add(uncompleted);
+            this.TabPages.Add(completed);
+        }
+        private void OnTabMoving(object sender, TabControlCancelEventArgs e) {
+            if (e.TabPageIndex >= 0) {
+                this.previousTabIndex = e.TabPageIndex;
+            }
+        }
+
+        public void ChangeToPreviousTab() {
+            this.SelectedIndex = this.previousTabIndex;
+        }
+    }
+
     public class HomeworkTabPage : TabPage {
         public CustomList data;
         private Panel[] panels;
-        private TabControl parent;
+        private HomeworkTabController parent;
 
-        public HomeworkTabPage(TabControl parent, string text, CustomList taskData, int taskBorderWidth) {
+        public HomeworkTabPage(HomeworkTabController parent, string text, CustomList taskData, int taskBorderWidth) {
             this.Text = text;
             this.data = taskData;
             this.parent = parent;
             this.AutoScroll = true;
-            this.panels = new Panel[data.GetLength()]; // TODO: Change all arrays to CustomList type
             this.BorderStyle = BorderStyle.FixedSingle;
 
-            int y = 0;
-            int x = 0;
-
-            for (int i = 0; i < taskData.GetLength(); i++) {
-                Homework taskIterable = (Homework)taskData.Get(i);
-                bool includeBottomBorder = (i != taskData.GetLength() - 1); // Boolean that denotes the last item in the list. When this is True the bottom border is not included in the ListItem.
-                HomeworkListItem taskListItem = new HomeworkListItem(parent, taskIterable, 2, true);
-                taskListItem.Location = new Point(x, y);
-                y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
-                this.Controls.Add(taskListItem);
-            }
+            FillTabPage();
 
             //https://stackoverflow.com/questions/5489273/how-do-i-disable-the-horizontal-scrollbar-in-a-panel
             this.AutoScroll = false;
@@ -44,10 +77,27 @@ namespace Trackr {
         protected override void OnPaint(PaintEventArgs e) {
             e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, this.Width, this.Height); // Fill background in white
         }
+
+        public void FillTabPage() {
+            /// <summary>
+            /// Method that converts all of the items in `this.data` into the page.
+            /// </summary>
+
+            int y = 0;
+            this.panels = new Panel[this.data.GetLength()]; // TODO: Change all arrays to CustomList type
+            for (int i = 0; i < this.data.GetLength(); i++) {
+                Homework taskIterable = (Homework)this.data.Get(i);
+                bool includeBottomBorder = (i != this.data.GetLength() - 1); // Boolean that denotes the last item in the list. When this is True the bottom border is not included in the ListItem.
+                HomeworkListItem taskListItem = new HomeworkListItem(parent, taskIterable, 2, true);
+                taskListItem.Location = new Point(0, y);
+                y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
+                this.Controls.Add(taskListItem);
+            }
+        }
     }
 
     public class HomeworkListItem : UserControl {
-        private TabControl tabController;
+        private HomeworkTabController tabController;
         private Homework task;
         private LinkLabel titleLabel;
         private Label groupLabel;
@@ -58,7 +108,7 @@ namespace Trackr {
         private bool bottomBorder;
         private int bottomBorderWidth;
 
-        public HomeworkListItem(TabControl tabController, Homework task, int bottomBorderWidth, bool bottomBorder) : base() {
+        public HomeworkListItem(HomeworkTabController tabController, Homework task, int bottomBorderWidth, bool bottomBorder) : base() {
             /// <summary>
             /// Constructor method for TaskListItem.
             /// </summary>
@@ -119,7 +169,7 @@ namespace Trackr {
             doneButton.AutoSize = true;
             doneButton.Location = new Point(550, 20);
             doneButton.BackColor = Color.Transparent;
-            doneButton.AddButtonClickAction(OnDoneButtonClick);
+            doneButton.AddButtonClickAction(this.OnDoneButtonClick);
             this.Controls.Add(doneButton);
 
             this.Height = monthLabel.Location.Y + monthLabel.Height + 3; //Height is changed relative to the lowest component to prevent UserControl taking up more space than necessary
@@ -141,13 +191,14 @@ namespace Trackr {
             /// <summary>
             /// Method that executes when the title label (blue link label) is clicked.
             /// </summary>
-            tabController.TabPages.Add(new FocussedTaskTab(task));
+            tabController.TabPages.Add(new FocussedTaskTab(task, tabController));
             tabController.SelectedIndex = tabController.TabPages.Count - 1; // Select the most new tab
         }
         private void OnDoneButtonClick(object sender, EventArgs e) {
             bool current = this.task.hasCompleted;
             this.task.UpdateHomeworkStatus(!current);
             MessageBox.Show("Updated!");
+            tabController.UpdateTabs(disposeCurrentTabs: true);
         }
     }
 
@@ -156,29 +207,42 @@ namespace Trackr {
         private Label titleLabel;
         private Label groupLabel;
         private RemoveTabButton removeTab;
+        private HomeworkTabController tabController;
 
         private class RemoveTabButton : Button {
             /// <summary>
             /// Private class, wrapped inside `FocussedTaskTab` which removes the FocussedTaskTab.
             /// </summary>
-            public RemoveTabButton() : base(){
+            
+            private HomeworkTabController tabController;
+            private FocussedTaskTab parentTab;
+            public RemoveTabButton(FocussedTaskTab parentTab, HomeworkTabController tabController) : base(){
                 this.Text = "back";
                 this.BackColor = Color.White;
                 this.AutoSize = true;
+                this.tabController = tabController;
+                this.parentTab = parentTab;
             }
 
             protected override void OnPaint(PaintEventArgs pevent) {
                 base.OnPaint(pevent);
             }
+
+            protected override void OnClick(EventArgs e) {
+                base.OnClick(e);
+                tabController.TabPages.Remove(parentTab);
+                tabController.ChangeToPreviousTab();
+            }
         }
 
-        public FocussedTaskTab(Homework task) : base() {
+        public FocussedTaskTab(Homework task, HomeworkTabController tabController) : base() {
+            this.tabController = tabController;
             this.task = task;
             this.Text = this.task.title;
             this.BorderStyle = BorderStyle.FixedSingle; // Add border
 
             // Remove tab button
-            removeTab = new RemoveTabButton();
+            removeTab = new RemoveTabButton(this, tabController);
             removeTab.AutoSize = true;
             removeTab.Location = new Point(this.Width - 50, 20);
             this.Controls.Add(removeTab);

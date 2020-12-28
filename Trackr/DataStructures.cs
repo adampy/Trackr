@@ -26,6 +26,8 @@ namespace Trackr {
             if (indx > 0) {
                 previousPanel.Show();
                 previousPanel.BringToFront();
+            } else {
+                previousPanel.Hide();
             }
         }
         public object Pop() {

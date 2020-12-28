@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace Trackr {
     public partial class StudentMainForm : Form {
-        Student user;
+        private Student user;
+        private CustomList taskData;
+        private HomeworkTabController tabController;
 
         public StudentMainForm(Student user) {
-            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
-            Homework[] tasks = task.Result;
-
-            InitializeComponent();
+            InitializeComponent(); // This method also sets up the HomeworkTabController
             this.Show();
             this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
 
@@ -25,20 +24,18 @@ namespace Trackr {
             this.Text += this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
 
-            CustomList uncompletedTasks = new CustomList(tasks.Length);
-            CustomList completedTasks = new CustomList(tasks.Length); // Make two new arrays. Having them the same length as tasks makes this adding and accessing both O(1) in time but O(n) in memory
-            for (int i = 0; i < tasks.Length; i++) {
-                if (tasks[i].hasCompleted == false) {
-                    uncompletedTasks.Add(tasks[i]);
-                } else {
-                    completedTasks.Add(tasks[i]);
-                }
-            }
-            HomeworkTabPage uncompleted = new HomeworkTabPage(tabControl1, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
-            HomeworkTabPage completed = new HomeworkTabPage(tabControl1, "Completed tasks", completedTasks, taskBorderWidth: 3);
-            tabControl1.TabPages.Add(uncompleted);
-            tabControl1.TabPages.Add(completed);
-            tabControl1.Font = new Font("Corbel", 12.0f);
+            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
+            Homework[] tasks = task.Result;
+
+            // HomeworkTabController
+            tabController = new HomeworkTabController(tasks);
+            tabController.Location = new Point(10, 56);
+            tabController.Font = new Font("Corbel", 12.0f);
+            tabController.SelectedIndex = 0;
+            tabController.Size = new Size(740, 363);
+            this.Controls.Add(tabController);
+            //tabController.Name = "tabController";
+            //tabController.TabIndex = 3;
         }
     }
 }

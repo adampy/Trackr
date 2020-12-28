@@ -23,8 +23,8 @@ namespace Trackr {
         
         public AuthenticationScreen() {
             InitializeComponent();
-            panels.Push(mainPanel);
             panels.SetPreviousPanelButton(backButton);
+            panels.Push(mainPanel);
             passwordMatchingLabel.Hide();
             usernameAvaliableLabel.Hide();
             this.FormClosed += (obj, args) => { if (!closedByProgram) { Application.Exit(); } }; // Anonymous function that closes the whole application if this form is closed
