@@ -18,7 +18,7 @@ namespace Trackr {
             this.allTasks = allTasks;
             this.UpdateTabs();
             this.SelectedIndex = tabIndx;
-            this.Deselecting += this.OnTabMoving;
+            this.Deselecting += this.BeforeNewTabSelected;
         }
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
@@ -49,7 +49,10 @@ namespace Trackr {
             }
             
         }
-        private void OnTabMoving(object sender, TabControlCancelEventArgs e) {
+        private void BeforeNewTabSelected(object sender, TabControlCancelEventArgs e) {
+            /// <summary>
+            /// Method that changes the previous tab index.
+            /// </summary>
             if (e.TabPageIndex >= 0) {
                 this.previousTabIndex = e.TabPageIndex;
             }
@@ -142,7 +145,7 @@ namespace Trackr {
             // Title Label
             titleLabel = new LinkLabel();
             titleLabel.AutoSize = true;
-            titleLabel.Font = new Font("Corbel", 20.0f, FontStyle.Bold);
+            titleLabel.Font = new Font("Calibri", 20.0f, FontStyle.Bold);
             titleLabel.Location = new Point(5, 0);
             titleLabel.Text = task.title;
             titleLabel.BackColor = Color.Transparent;
@@ -152,7 +155,7 @@ namespace Trackr {
             // Group Label
             groupLabel = new Label();
             groupLabel.AutoSize = true;
-            groupLabel.Font = new Font("Corbel", 15.0f);
+            groupLabel.Font = new Font("Calibri", 15.0f);
             groupLabel.Location = new Point(5, 35);
             groupLabel.Text = task.group.GetName();
             groupLabel.BackColor = Color.Transparent;
@@ -161,7 +164,7 @@ namespace Trackr {
             // Description Label
             descriptionLabel = new Label();
             descriptionLabel.AutoSize = true;
-            descriptionLabel.Font = new Font("Corbel", 15.0f);
+            descriptionLabel.Font = new Font("Calibri", 15.0f);
             descriptionLabel.Location = new Point(300, 30);
             descriptionLabel.Text = HomeworkListItem.ReduceText(task.description, 25);
             descriptionLabel.BackColor = Color.Transparent;
@@ -171,7 +174,7 @@ namespace Trackr {
                 overdueLabel = new Label();
                 overdueLabel.Text = "Overdue!!!";
                 overdueLabel.BackColor = Color.Red;
-                overdueLabel.Font = new Font("Corbel", 15.0f, FontStyle.Bold);
+                overdueLabel.Font = new Font("Calibri", 15.0f, FontStyle.Bold);
                 overdueLabel.Location = new Point(300, 0);
                 overdueLabel.AutoSize = true;
                 overdueLabel.TextAlign = ContentAlignment.TopCenter;
@@ -181,7 +184,7 @@ namespace Trackr {
             // Date Label
             dateLabel = new Label();
             dateLabel.AutoSize = true;
-            dateLabel.Font = new Font("Corbel", 30.0f);
+            dateLabel.Font = new Font("Calibri", 30.0f);
             dateLabel.Location = new Point(650, 0);
             dateLabel.Text = task.dateDue.ToString("dd"); // dd gets the day as a 2 digit number
             dateLabel.BackColor = Color.Transparent;
@@ -190,7 +193,7 @@ namespace Trackr {
             // Month Label
             monthLabel = new Label();
             monthLabel.AutoSize = true;
-            monthLabel.Font = new Font("Corbel", 20.0f);
+            monthLabel.Font = new Font("Calibri", 20.0f);
             monthLabel.Location = new Point(650, 45);
             monthLabel.Text = task.dateDue.ToString("MMM"); // MMM gets the abbreviated month
             monthLabel.BackColor = Color.Transparent;
@@ -302,7 +305,7 @@ namespace Trackr {
             // Title label
             titleLabel = new Label();
             titleLabel.AutoSize = true;
-            titleLabel.Font = new Font("Corbel", 24.0f, FontStyle.Bold);
+            titleLabel.Font = new Font("Calibri", 24.0f, FontStyle.Bold);
             titleLabel.Location = new Point(10, 20);
             titleLabel.Text = task.title;
             titleLabel.BackColor = Color.Transparent;
@@ -311,7 +314,7 @@ namespace Trackr {
             // Group label
             groupLabel = new Label();
             groupLabel.AutoSize = true;
-            groupLabel.Font = new Font("Corbel", 15.0f);
+            groupLabel.Font = new Font("Calibri", 15.0f);
             groupLabel.Location = new Point(10, 50);
             groupLabel.Text = task.group.GetName();
             groupLabel.BackColor = Color.Transparent;
@@ -336,7 +339,7 @@ namespace Trackr {
             /// </summary>
             lbl = new Label();
             lbl.Location = new Point(13, 23);
-            lbl.Font = new Font("Corbel", 12.0f);
+            lbl.Font = new Font("Calibri", 12.0f);
             lbl.AutoSize = true;
             lbl.Text = labelText;
             this.Controls.Add(lbl);
@@ -371,7 +374,7 @@ namespace Trackr {
             if (isChecked) {
                 btn.BackColor = Color.Green;
             } else {
-                btn.BackColor = Color.Red;
+                btn.BackColor = Color.Red; // TODO: Change this from a colored block to a tick
             }
         }
     }

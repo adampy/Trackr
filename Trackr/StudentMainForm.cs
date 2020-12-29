@@ -29,7 +29,7 @@ namespace Trackr {
             // HomeworkTabController
             tabController = new HomeworkTabController(tasks);
             tabController.Location = new Point(10, 56);
-            tabController.Font = new Font("Corbel", 12.0f);
+            tabController.Font = new Font("Calibri", 12.0f);
             tabController.SelectedIndex = 0;
             tabController.Size = new Size(740, 363);
             this.Controls.Add(tabController);
