@@ -36,7 +36,7 @@ namespace Trackr {
         }
 
         private void OnRefreshButtonClick(object sender, EventArgs e) {
-            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user));
+            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user, groupHardRefresh: true));
             Homework[] tasks = task.Result;
             tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
         }

@@ -140,7 +140,7 @@ namespace Trackr {
             this.hasCompleted = hasCompleted;
             this.student = student;
         }
-        public static Homework[] CreateFromJsonString(string json, Student student) {
+        public static Homework[] CreateFromJsonString(string json, Student student, bool groupHardRefresh = false) {
             /// <summary>
             /// Static method that creates an array of `TaskObj` from an API response
             /// </summary>
@@ -152,7 +152,7 @@ namespace Trackr {
 
                 string temp = homeworkObj.group.reference.link;
 
-                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp)).Result;
+                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh)).Result;
                 int maxScore = homeworkObj.max_score;
                 string title = homeworkObj.title;
                 string description = homeworkObj.description;

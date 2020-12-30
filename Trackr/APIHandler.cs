@@ -7,7 +7,9 @@ using System.Net.Http;
 using Newtonsoft.Json;
 
 namespace Trackr {
+
     public static class APIHandler {
+        private static Dictionary<int, Group> groupCache = new Dictionary<int, Group>();
         public static void SetAuthorizationHeader(string credentials) {
             /// <summary>
             /// Subroutine that sets the Authorization header of the WebRequestHandler.
@@ -113,10 +115,10 @@ namespace Trackr {
         #endregion
 
         #region Tasks
-        async public static Task<Homework[]> GetHomework(Student student) {
+        async public static Task<Homework[]> GetHomework(Student student, bool groupHardRefresh = false) {
             HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
-            Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student);
-            return tasks; // TODO: Add cache to teacher and group get methods
+            Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh);
+            return tasks;
         }
         async public static void UpdateHomeworkStatus(Homework homework) {
             Dictionary<string, string> formData = new Dictionary<string, string> {
@@ -127,9 +129,25 @@ namespace Trackr {
         #endregion
 
         #region Groups
-        async public static Task<Group> GetGroup(string hateoasLink) {
+        async public static Task<Group> GetGroup(string hateoasLink, bool hardRefresh = false) {
+            Group group;
+            int id = hateoasLink[hateoasLink.Length - 1];
+            bool exists = groupCache.TryGetValue(id, out group);
+
+            // Search cache first
+            if (exists) {
+                if (!hardRefresh) {
+                    return group;
+                } else {
+                    groupCache.Remove(id);
+                }
+            }
+
+            // Otherwise, or if no cache wanted, send request
             HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink);
-            Group group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
+            group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
+            // Add to cache
+            groupCache.Add(id, group);
             return group;
         }
         #endregion
