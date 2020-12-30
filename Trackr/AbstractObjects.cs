@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 namespace Trackr {
 
     public class User {
-        private int id;
-        private string forename;
-        private string surname;
-        private string username;
+        protected int id;
+        protected string forename;
+        protected string surname; // Protected attributes such that User's children can access them - Student and Teacher
+        protected string username;
 
         public User(int id, string forename, string surname, string username) {
             /// <summary>
@@ -22,7 +22,7 @@ namespace Trackr {
             this.surname = surname;
             this.username = username;
         }
-        public string DisplayName() {
+        public virtual string DisplayName() { // Virtual means this method can be overriden 
             /// <summary>
             /// Returns the display name, which consists of the forename plus the first letter of the surname.
             /// </summary>
@@ -63,7 +63,7 @@ namespace Trackr {
             }
             return students;
         }
-        public Student(int id, string forename, string surname, string username, int alps) : base(id, forename, surname, username){
+        public Student(int id, string forename, string surname, string username, int alps) : base(id, forename, surname, username) {
             /// <summary>
             /// Constructor for the sub-class, `Student`. Inherits from `User`.
             /// </summary>
@@ -98,8 +98,15 @@ namespace Trackr {
             /// </summary>
             this.title = title;
         }
+
+        public override string DisplayName() {
+            /// <summary>
+            /// Returns Title + Surname
+            /// </summary>
+            return this.title + " " + this.surname;
+        }
     }
-    
+
     public interface ITask {
         public int id { get; set; }
         public Group group { get; set; } // This field is the group ref object
@@ -120,6 +127,7 @@ namespace Trackr {
         public DateTime dateSet { get; set; }
         public Student student { get; set; }
         public bool hasCompleted { get; set; }
+        public Feedback feedback { get; set; }
         public Homework(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet, bool hasCompleted = false, Student student = null) {
             this.id = id;
             this.student = student;
@@ -180,7 +188,11 @@ namespace Trackr {
             this.subject = subject;
         }
 
-        public static Group[]CreateFromJsonString(string json) {
+        public Teacher GetTeacher() {
+            return this.teacher; // TODO: Make all private attributes accessible by funcitons (encapsulation)
+        }
+
+        public static Group[] CreateFromJsonString(string json) {
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             Group[] allGroups = new Group[jsonObj.data.Count]; // The provided JSON may be an array of groups
             for (int i = 0; i < jsonObj.data.Count; i++) {
@@ -200,6 +212,30 @@ namespace Trackr {
 
         public string GetName() {
             return this.name;
+        }
+
+        public string GetSubject() {
+            return this.subject;
+        }
+    }
+
+    public class Feedback {
+        private string feedback { get; set; }
+        private int score { get; set; }
+        public Homework task { get; set; }
+        public Feedback(Homework task, string feedback = null, int score = 0) {
+            this.feedback = feedback;
+            this.score = score;
+            this.task = task;
+        }
+        public bool Exists() {
+            return (this.feedback != null);
+        }
+        public string GetFeedback() {
+            return this.feedback;
+        }
+        public int GetScore() {
+            return this.score;
         }
     }
 }

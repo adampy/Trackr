@@ -12,9 +12,11 @@ namespace Trackr {
         private Homework[] allTasks;
         private HomeworkTabPage uncompleted;
         private HomeworkTabPage completed;
+        private Dictionary<int, FocussedTaskTab> focussedTasks; // Links the task id to the focussed task tab
         private int previousTabIndex = 0;
         
         public HomeworkTabController(Homework[] allTasks, int tabIndx = 0) : base() {
+            this.focussedTasks = new Dictionary<int, FocussedTaskTab>();
             this.allTasks = allTasks;
             this.UpdateTabs();
             this.SelectedIndex = tabIndx;
@@ -53,13 +55,32 @@ namespace Trackr {
             /// <summary>
             /// Method that changes the previous tab index.
             /// </summary>
-            if (e.TabPageIndex >= 0) {
-                this.previousTabIndex = e.TabPageIndex;
+            if (this.SelectedIndex >= 0) {
+                this.previousTabIndex = this.SelectedIndex; // TODO: Fix this for occurences where the tab goes back
             }
         }
 
         public void ChangeToPreviousTab() {
             this.SelectedIndex = this.previousTabIndex;
+        }
+
+        public void GoToFocussedTab(Homework task, Feedback feedback) {
+            FocussedTaskTab tab;
+            bool exists = this.focussedTasks.TryGetValue(task.id, out tab);
+            if (exists) {
+                this.SelectTab(tab);
+            } else {
+                tab = new FocussedTaskTab(task, this, feedback: feedback);
+                this.focussedTasks.Add(task.id, tab);
+                this.TabPages.Add(tab);
+                this.SelectTab(tab);
+            }
+        }
+        public void RemoveFocussedTab(Homework task) {
+            FocussedTaskTab tab;
+            bool exists = this.focussedTasks.TryGetValue(task.id, out tab); // Getting the existing tab
+            this.TabPages.Remove(tab);
+            this.focussedTasks.Remove(task.id); // Remove from dicts
         }
     }
 
@@ -222,12 +243,12 @@ namespace Trackr {
             }
 
         }
-        private void OnTitleLabelClick(object sender, EventArgs e) {
+        async private void OnTitleLabelClick(object sender, EventArgs e) { // Make this method async as it will get the marks from the API
             /// <summary>
             /// Method that executes when the title label (blue link label) is clicked.
             /// </summary>
-            tabController.TabPages.Add(new FocussedTaskTab(task, tabController));
-            tabController.SelectedIndex = tabController.TabPages.Count - 1; // Select the most new tab
+            Feedback potentialFeedback = await APIHandler.GetFeedback(this.task);
+            tabController.GoToFocussedTab(task, potentialFeedback);
         }
         private void OnDoneButtonClick(object sender, EventArgs e) {
             bool current = this.task.hasCompleted;
@@ -244,7 +265,6 @@ namespace Trackr {
             /// A "..." is appended to the end of the string after this length reduction.
             /// </summary>
 
-            //string firstSplit = text.Split(seperator)[0];
             int sepIndx = -1;
             for (int i = text.Length - 1; i >= 0; i--) {
                 // Traverse through the string backwards to find the last occuring `seperator`
@@ -261,6 +281,12 @@ namespace Trackr {
         private Homework task;
         private Label titleLabel;
         private Label groupLabel;
+        private Label groupSubjectLabel;
+        private Label taskDescriptionLabel;
+        private Label dueInLabel;
+        private Label removeTabLabel;
+        private Feedback feedback;
+        private FeedbackPanel feedbackPanel;
         private RemoveTabButton removeTab;
         private HomeworkTabController tabController;
 
@@ -272,11 +298,17 @@ namespace Trackr {
             private HomeworkTabController tabController;
             private FocussedTaskTab parentTab;
             public RemoveTabButton(FocussedTaskTab parentTab, HomeworkTabController tabController) : base(){
-                this.Text = "back";
                 this.BackColor = Color.White;
                 this.AutoSize = true;
                 this.tabController = tabController;
                 this.parentTab = parentTab;
+
+                this.FlatStyle = FlatStyle.Flat;
+                this.FlatAppearance.BorderSize = 0;
+                this.Cursor = Cursors.Hand;
+                this.BackgroundImage = global::Trackr.Properties.Resources.blackCross;
+                this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                this.Size = new Size(60, 60);
             }
 
             protected override void OnPaint(PaintEventArgs pevent) {
@@ -285,28 +317,64 @@ namespace Trackr {
 
             protected override void OnClick(EventArgs e) {
                 base.OnClick(e);
-                tabController.TabPages.Remove(parentTab);
+                tabController.RemoveFocussedTab(parentTab.task);
                 tabController.ChangeToPreviousTab();
             }
         }
 
-        public FocussedTaskTab(Homework task, HomeworkTabController tabController) : base() {
+        private class FeedbackPanel : Panel {
+            /// <summary>
+            /// Private class wrapped inside of FocussedTaskTab which contains all of the feedback items. Mostly for code maintainability.
+            /// </summary>
+            private Feedback feedback;
+            private Label mainLabel;
+            private Label feedbackLabel;
+            private Label scoreLabel;
+            public FeedbackPanel(Feedback feedback) : base() {
+                this.feedback = feedback;
+                this.AutoSize = true;
+                this.BackColor = Color.Transparent;
+
+                // Main label
+                mainLabel = new Label();
+                mainLabel.AutoSize = true;
+                mainLabel.Text = "Feedback from " + feedback.task.group.GetTeacher().DisplayName();
+                mainLabel.Font = new Font("Calibri", 18.0f, FontStyle.Bold);
+                this.Controls.Add(mainLabel);
+
+                // Feedback label
+                feedbackLabel = new Label();
+                feedbackLabel.AutoSize = true;
+                feedbackLabel.Text = "Feedback from " + feedback.GetFeedback();
+                feedbackLabel.Font = new Font("Calibri", 14.0f);
+                feedbackLabel.Location = new Point(0, 25);
+                this.Controls.Add(feedbackLabel);
+
+                // Score label
+                scoreLabel = new Label();
+                scoreLabel.AutoSize = true;
+                scoreLabel.Text = "Marks: " + feedback.GetScore().ToString() + "/" + feedback.task.maxScore.ToString();
+                scoreLabel.Font = new Font("Calibri", 14.0f, FontStyle.Bold);
+                scoreLabel.Location = new Point(500, 0);
+                this.Controls.Add(scoreLabel);
+            }
+            protected override void OnPaint(PaintEventArgs e) {
+                base.OnPaint(e);
+            }
+        }
+
+        public FocussedTaskTab(Homework task, HomeworkTabController tabController, Feedback feedback = null) : base() {
             this.tabController = tabController;
             this.task = task;
+            this.feedback = feedback;
             this.Text = this.task.title;
             this.BorderStyle = BorderStyle.FixedSingle; // Add border
-
-            // Remove tab button
-            removeTab = new RemoveTabButton(this, tabController);
-            removeTab.AutoSize = true;
-            removeTab.Location = new Point(this.Width - 50, 20);
-            this.Controls.Add(removeTab);
 
             // Title label
             titleLabel = new Label();
             titleLabel.AutoSize = true;
-            titleLabel.Font = new Font("Calibri", 24.0f, FontStyle.Bold);
-            titleLabel.Location = new Point(10, 20);
+            titleLabel.Font = new Font("Calibri", 18.0f, FontStyle.Bold);
+            titleLabel.Location = new Point(10, 0);
             titleLabel.Text = task.title;
             titleLabel.BackColor = Color.Transparent;
             this.Controls.Add(titleLabel);
@@ -314,18 +382,70 @@ namespace Trackr {
             // Group label
             groupLabel = new Label();
             groupLabel.AutoSize = true;
-            groupLabel.Font = new Font("Calibri", 15.0f);
-            groupLabel.Location = new Point(10, 50);
-            groupLabel.Text = task.group.GetName();
+            groupLabel.Font = new Font("Calibri", 14.0f);
+            groupLabel.Location = new Point(10, 30);
+            groupLabel.Text = "• Class: " + task.group.GetName();
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
 
-            // Done button
-            // TODO: Finish this tab
+            // Group subject label
+            groupSubjectLabel = new Label();
+            groupSubjectLabel.AutoSize = true;
+            groupSubjectLabel.Font = new Font("Calibri", 14.0f, FontStyle.Italic);
+            groupSubjectLabel.Location = new Point(10, 55);
+            groupSubjectLabel.Text = "• Subject: " + task.group.GetSubject();
+            groupSubjectLabel.BackColor = Color.Transparent;
+            this.Controls.Add(groupSubjectLabel);
+
+            // Due-in label
+            dueInLabel = new Label();
+            dueInLabel.AutoSize = true;
+            dueInLabel.Font = new Font("Calibri", 18.0f, FontStyle.Underline);
+            dueInLabel.Location = new Point(300, 0);
+            dueInLabel.Text = "Due in: " + task.dateDue.ToString("d MMMM yyyy");
+            dueInLabel.BackColor = Color.Transparent;
+            this.Controls.Add(dueInLabel);
+
+            // Task description label
+            taskDescriptionLabel = new Label();
+            taskDescriptionLabel.AutoSize = true;
+            taskDescriptionLabel.Font = new Font("Calibri", 14.0f);
+            taskDescriptionLabel.Location = new Point(10, 90);
+            taskDescriptionLabel.Text = "This is a fake description of a task so that I can understand where I need to start the line wrapping. This is a fake description of a task so that I can understand where I need to start the line wrapping. This is a fake description of a task so that I can understand where I need to start the line wrapping.";//task.description;
+            taskDescriptionLabel.BackColor = Color.Transparent;
+            taskDescriptionLabel.MaximumSize = new Size(650, 200);
+            this.Controls.Add(taskDescriptionLabel);
+
+            // Remove tab button
+            removeTab = new RemoveTabButton(this, tabController);
+            removeTab.AutoSize = true;
+            removeTab.Location = new Point(650, 5);
+            this.Controls.Add(removeTab);
+
+            // Remove tab label
+            removeTabLabel = new Label();
+            removeTabLabel.Text = "Remove tab";
+            removeTabLabel.AutoSize = true;
+            removeTabLabel.Location = new Point(638, 69);
+            removeTabLabel.BackColor = Color.Transparent;
+            this.Controls.Add(this.removeTabLabel);
+
+            if (this.feedback.Exists()) {
+                feedbackPanel = new FeedbackPanel(this.feedback);
+                
+                feedbackPanel.Location = new Point(10, 215);
+                feedbackPanel.Width = tabController.Size.Width;
+                this.Controls.Add(feedbackPanel);
+            }
+
         }
 
         protected override void OnPaint(PaintEventArgs e) {
             e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, this.Width, this.Height);
+
+            if (this.feedback.Exists()) {
+                e.Graphics.DrawLine(Pens.Black, 0, 210, tabController.Size.Width, 210);
+            }
         }
     }
 

@@ -133,5 +133,26 @@ namespace Trackr {
             return group;
         }
         #endregion
+
+        #region Feedback
+        async public static Task<Feedback> GetFeedback(Homework task) {
+            /// <summary>
+            /// Static method that gets feedback for the given `task` and the student stored in the Authorization header.
+            /// As `Feedback` is a struct, there is no static constructor like there is with other objects, therefore JSON needs to be processed here.
+            /// This may return an empty feedback structure (feedback = "None", score = "None") if feedback is not avaliable.
+            /// </summary>
+            HttpResponseMessage response = await WebRequestHandler.GET("/task/" + task.id.ToString() + "/status");
+            string responseContent = await response.Content.ReadAsStringAsync();
+            dynamic json = JsonConvert.DeserializeObject(responseContent);
+
+            string feedbackString = json.data[0].feedback;
+            int score = 0;
+            if (json.data[0].score != null) {
+                score = json.data[0].score;
+            }
+            Feedback feedback = new Feedback(task, feedbackString, score);
+            return feedback;
+        }
+        #endregion
     }
 }
