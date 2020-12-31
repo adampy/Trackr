@@ -106,6 +106,29 @@ namespace Trackr {
             /// </summary>
             this.alps = alps;
         }
+        public string GetAlpsString() {
+            /// <summary>
+            /// Returns an ALPs string for the students ALPs grade
+            /// </summary>
+            if (this.alps <= 47) {
+                return "D";
+            } else if (this.alps <= 52) {
+                return "C/D";
+            } else if (this.alps <= 58) {
+                return "C";
+            } else if (this.alps <= 64) {
+                return "B/C";
+            } else if (this.alps <= 70) {
+                return "B";
+            } else if (this.alps <= 75) {
+                return "A";
+            } else {
+                return "A*/A";
+            }
+        }
+        public int GetAlps() {
+            return this.alps;
+        }
     }
 
     public class Teacher : User {

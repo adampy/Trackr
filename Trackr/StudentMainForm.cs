@@ -22,6 +22,7 @@ namespace Trackr {
             this.user = user;
             this.Text += this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
+            this.alpsLabel.Text = user.GetAlpsString();
 
             Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
             Homework[] tasks = task.Result;

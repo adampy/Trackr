@@ -29,6 +29,8 @@
             this.refreshButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
+            this.alpsLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,11 +94,37 @@
             this.editAccountToolStripMenuItem.Text = "Edit account";
             this.editAccountToolStripMenuItem.Click += new System.EventHandler(this.editAccountClick);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Corbel Light", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(11, 24);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 23);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "ALPS grade:";
+            // 
+            // alpsLabel
+            // 
+            this.alpsLabel.AutoSize = true;
+            this.alpsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.alpsLabel.Font = new System.Drawing.Font("Corbel", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.alpsLabel.Location = new System.Drawing.Point(103, 24);
+            this.alpsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.alpsLabel.Name = "alpsLabel";
+            this.alpsLabel.Size = new System.Drawing.Size(126, 23);
+            this.alpsLabel.TabIndex = 5;
+            this.alpsLabel.Text = "SAMPLE ALPS";
+            // 
             // StudentMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 429);
+            this.Controls.Add(this.alpsLabel);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.label1);
@@ -122,5 +150,7 @@
         private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editAccountToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label alpsLabel;
     }
 }
