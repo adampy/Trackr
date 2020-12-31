@@ -61,6 +61,12 @@
     <Compile Include="AbstractObjects.cs" />
     <Compile Include="DataStructures.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="StudentEditAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentEditAccount.Designer.cs">
+      <DependentUpon>StudentEditAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="StudentMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="StudentEditAccount.resx">
+      <DependentUpon>StudentEditAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StudentMainForm.resx">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </EmbeddedResource>

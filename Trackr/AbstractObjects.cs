@@ -28,17 +28,54 @@ namespace Trackr {
             /// </summary>
             return (forename + " " + surname[0]);
         }
+        public int GetId() {
+            /// <summary>
+            /// Method used to encapsulate the `id` attribute.
+            /// </summary>
+            return id;
+        }
         public string GetUsername() {
             /// <summary>
             /// Method used to encapsulate the private `username` attribute.
             /// </summary>
             return username;
         }
-        public int GetId() {
+        public void SetUsername(string username) {
             /// <summary>
-            /// Method used to encapsulate the `id` attribute.
+            /// Encapsulation method that ONLY sets the username of this user object, NO API CALLS HAPPEN IN THIS METHOD.
             /// </summary>
-            return id;
+            this.username = username;
+        }
+        public static bool IsPasswordValid(string password) {
+            /// <summary>
+            /// Returns `true` if `password` is strong enough (passes the criteria), else returns false.
+            /// Criteria:
+            ///     length of 8 or more
+            ///     1 or more uppercase
+            ///     1 or more lowercase
+            ///     1 or more digits
+            /// </summary>
+            if (password.Length < 8) {
+                return false;
+            }
+
+            bool uppercase = false;
+            bool lowercase = false;
+            bool digit = false;
+            bool colon = false;
+            foreach (char letter in password) {
+                int ascii = (int)letter; // Get the ASCII representation of the character
+                if (ascii >= 97 && ascii <= 122) {
+                    lowercase = true;
+                } else if (ascii >= 65 && ascii <= 90) {
+                    uppercase = true;
+                } else if (ascii >= 48 && ascii <= 57) {
+                    digit = true;
+                } else if (ascii == 58) { // Ensure there is no colon present as this will affect the Authorization header formatting (username:password)
+                    colon = true;
+                }
+            }
+            return (uppercase && lowercase && digit && !colon);
         }
     }
 

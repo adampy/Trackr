@@ -78,37 +78,7 @@ namespace Trackr {
             //adminCodeTextBox.Text = ""; // TODO: remove this line if not needed?
             usernameAvaliableLabel.Hide();
         }
-        private bool isPasswordValid(string password) {
-            /// <summary>
-            /// Returns `true` if `password` is strong enough (passes the criteria), else returns false.
-            /// Criteria:
-            ///     length of 8 or more
-            ///     1 or more uppercase
-            ///     1 or more lowercase
-            ///     1 or more digits
-            /// </summary>
-            if (password.Length < 8) {
-                return false;
-            }
-
-            bool uppercase = false;
-            bool lowercase = false;
-            bool digit = false;
-            bool colon = false;
-            foreach (char letter in password) {
-                int ascii = (int)letter; // Get the ASCII representation of the character
-                if (ascii >= 97 && ascii <= 122) {
-                    lowercase = true;
-                } else if (ascii >= 65 && ascii <= 90) {
-                    uppercase = true;
-                } else if (ascii >= 48 && ascii <= 57) {
-                    digit = true;
-                } else if (ascii == 58) { // Ensure there is no colon present as this will affect the Authorization header formatting (username:password)
-                    colon = true;
-                }
-            }
-            return (uppercase && lowercase && digit && !colon);
-        }
+        
         async private void authScreenLoad(object sender, EventArgs e) {
             /// <summary>
             /// Subroutine that sends a simple GET request to the root of the API to ensure it is not sleeping. This route also checks for internet connection on the device.
@@ -218,7 +188,7 @@ namespace Trackr {
                 return;
             }
 
-            if (!isPasswordValid(password)) {
+            if (!User.IsPasswordValid(password)) {
                 MessageBox.Show("The password is not strong enough. It must have:\nlength of 8\n1 or more uppercase letters\n1 or more lowercase letters\n1 or more digits.");
                 return;
             }
@@ -240,7 +210,7 @@ namespace Trackr {
             }
 
             try {
-                bool taken = await APIHandler.IsTeacherUsernameTaken(username, adminCode);
+                bool taken = await APIHandler.IsUsernameTaken(UserType.Teacher, username, adminCode: adminCode);
                 if (!taken) {
                     usernameAvaliableLabel.Text = "Username avaliable!";
                     usernameAvaliableLabel.ForeColor = Color.Green;

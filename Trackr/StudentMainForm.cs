@@ -40,5 +40,27 @@ namespace Trackr {
             Homework[] tasks = task.Result;
             tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
         }
+
+        async private void editAccountClick(object sender, EventArgs e) {
+            StudentEditAccount edit = new StudentEditAccount(existingUsername: user.GetUsername());
+            var dialog = edit.ShowDialog(); // Block any events occurring on the main form
+            if (dialog == DialogResult.OK) {
+                // Validation passed -> edit account
+                
+                this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
+                this.Text = "Trackr - " + edit.newUsername;
+
+                bool done;
+                if (edit.newPassword != null) {
+                    done = await APIHandler.EditStudent(newUsername: edit.newUsername, newPassword: edit.newPassword);
+                } else {
+                    done = await APIHandler.EditStudent(newUsername: edit.newUsername);
+                }
+
+                MessageBox.Show("Updated!");
+            } else {
+                MessageBox.Show("Failed!");
+            }
+        }
     }
 }

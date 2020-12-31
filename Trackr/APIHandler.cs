@@ -16,6 +16,31 @@ namespace Trackr {
             /// </summary>
             WebRequestHandler.SetAuthorizationHeader(credentials);
         }
+        async public static Task<bool> IsUsernameTaken(UserType user, string username, string adminCode = null) {
+            /// <summary>
+            /// Returns true if the username is taken, else returns false.
+            /// </summary>
+
+            if (user == UserType.Teacher && adminCode != null) {
+                Dictionary<string, string> formData = new Dictionary<string, string> {
+                    {"admin", adminCode },
+                    {"username", username }
+                };
+
+                HttpResponseMessage response = await WebRequestHandler.POST("/teacher/username", formData);
+                dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                return json.data[0];
+            } else if (user == UserType.Student) {
+                Dictionary<string, string> formData = new Dictionary<string, string> {
+                    { "username", username }
+                };
+                HttpResponseMessage response = await WebRequestHandler.POST("/student/username", formData);
+                dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                return json.data[0];
+            } else {
+                return false; // If incorrect params entered
+            }
+        }
 
         #region Students
         async public static Task<Student> GetStudent(int id = 0, string username = null) {
@@ -42,6 +67,34 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.GET("/student/");
             Student[] students = Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return students;
+        }
+        async public static Task<bool> EditStudent(string newUsername = null, string newPassword = null) {
+            /// <summary>
+            /// Update the student which is from the Authorization header.
+            /// </summary>
+            Dictionary<string, string> formData = new Dictionary<string, string>();
+            if (newUsername != null) {
+                formData.Add("username", newUsername);
+            }
+            if (newPassword != null) {
+                formData.Add("password", newPassword);
+            }
+
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/", formData);
+            
+            //Now change the Authorization header
+            string header = WebRequestHandler.ConvertFromBase64(WebRequestHandler.GetAuthorizationHeader());
+            string[] parts = header.Split(':');
+            if (newUsername != null) {
+                parts[0] = newUsername;
+            }
+            if (newPassword != null) {
+                parts[1] = newPassword;
+            }
+            string newHeader = parts[0] + ':' + parts[1];
+            WebRequestHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64(newHeader));
+
+            return response.IsSuccessStatusCode;
         }
         #endregion
 
@@ -96,21 +149,6 @@ namespace Trackr {
             } else {
                 throw new HttpStatusUnauthorized();
             }
-        }
-        async public static Task<bool> IsTeacherUsernameTaken(string username, string adminCode) {
-            /// <summary>
-            /// Returns true if the username is taken, else returns false.
-            /// </summary>
-
-            Dictionary<string, string> formData = new Dictionary<string, string> {
-                {"admin", adminCode },
-                {"username", username }
-            };
-
-            HttpResponseMessage response = await WebRequestHandler.POST("/teacher/username", formData);
-
-            dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-            return json.data[0];
         }
         #endregion
 
