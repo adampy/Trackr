@@ -46,20 +46,15 @@ namespace Trackr {
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
             if (dialog == DialogResult.OK) {
                 // Validation passed -> edit account
-                
-                this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
-                this.Text = "Trackr - " + edit.newUsername;
 
-                bool done;
-                if (edit.newPassword != null) {
-                    done = await APIHandler.EditStudent(newUsername: edit.newUsername, newPassword: edit.newPassword);
-                } else {
-                    done = await APIHandler.EditStudent(newUsername: edit.newUsername);
+                if (edit.newUsername != null || edit.newPassword != null) { // Then a request is necessary
+                    if (edit.newUsername != null) { // Then change the username
+                        this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
+                        this.Text = "Trackr - " + edit.newUsername;
+                    }
+                    bool done = await APIHandler.EditStudent(newUsername: edit.newUsername, newPassword: edit.newPassword); // edit.newPassword and edit.newUsername may be null
+                    MessageBox.Show("Your edits have saved!");
                 }
-
-                MessageBox.Show("Updated!");
-            } else {
-                MessageBox.Show("Failed!");
             }
         }
     }

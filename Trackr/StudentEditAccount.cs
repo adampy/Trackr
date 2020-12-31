@@ -15,19 +15,25 @@ namespace Trackr {
         public StudentEditAccount(string existingUsername) {
             InitializeComponent();
             usernameTextbox.Text = existingUsername;
-            passwordTextbox1.Enabled = checkBox1.Checked;
-            passwordTextbox2.Enabled = checkBox1.Checked;
+            passwordTextbox1.Enabled = passwordCheckBox.Checked;
+            passwordTextbox2.Enabled = passwordCheckBox.Checked;
+            usernameTextbox.Enabled = usernameCheckBox.Checked;
         }
 
         private void StudentEditAccount_Paint(object sender, PaintEventArgs e) {
-            int y = checkBox1.Location.Y + 10;
-            e.Graphics.DrawLine(Pens.Gray, 0, y, checkBox1.Location.X - 5, y);
-            e.Graphics.DrawLine(Pens.Gray, checkBox1.Location.X + checkBox1.Size.Width, y, this.Width, y);
+            int y = passwordCheckBox.Location.Y + 10;
+            e.Graphics.DrawLine(Pens.Gray, 0, y, passwordCheckBox.Location.X - 5, y);
+            e.Graphics.DrawLine(Pens.Gray, passwordCheckBox.Location.X + passwordCheckBox.Size.Width, y, this.Width, y);
+
+            y = usernameCheckBox.Location.Y + 10;
+            e.Graphics.DrawLine(Pens.Gray, 0, y, usernameCheckBox.Location.X - 5, y);
+            e.Graphics.DrawLine(Pens.Gray, usernameCheckBox.Location.X + usernameCheckBox.Size.Width, y, this.Width, y);
         }
 
         private void stateChanged(object sender, EventArgs e) {
-            passwordTextbox1.Enabled = checkBox1.Checked;
-            passwordTextbox2.Enabled = checkBox1.Checked;
+            passwordTextbox1.Enabled = passwordCheckBox.Checked;
+            passwordTextbox2.Enabled = passwordCheckBox.Checked;
+            usernameTextbox.Enabled = usernameCheckBox.Checked;
         }
 
         async private void submitChangedClick(object sender, EventArgs e) { 
@@ -37,12 +43,24 @@ namespace Trackr {
             //passwordTextbox1.Text = "";
             //passwordTextbox2.Text = "";
 
-            if (username == "") {
-                MessageBox.Show("Username field needs filling!");
-                return;
+            // Username checks
+            if (usernameCheckBox.Checked) {
+                if (username == "") {
+                    MessageBox.Show("Username field needs filling!");
+                    return;
+                } else {
+                    bool usernameTaken = await APIHandler.IsUsernameTaken(UserType.Student, username);
+                    if (usernameTaken) {
+                        MessageBox.Show("Username has already been taken, please try another!");
+                        return;
+                    } else {
+                        this.newUsername = username;
+                    }
+                }
             }
 
-            if (checkBox1.Checked) {
+            // Password checks
+            if (passwordCheckBox.Checked) {
                 // Passwords need to be included
                 if (password == "" || confirmedPassword == "") {
                     MessageBox.Show("Password fields need filling!");
@@ -56,19 +74,13 @@ namespace Trackr {
                     MessageBox.Show("Password is not of sufficient complexity!");
                     return;
                 }
+                // Password is valid at this point
+                this.newPassword = password;
             }
+            
 
-            // Check the username has not been taken
-            if (!await APIHandler.IsUsernameTaken(UserType.Student, username)) {
-                this.newUsername = username;
-                if (password != "") { 
-                    this.newPassword = password; // TODO: Test updating password works
-                }
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            } else {
-                MessageBox.Show("Username has already been taken, please try another!");
-            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
