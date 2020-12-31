@@ -64,6 +64,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.mainPanel.SuspendLayout();
             this.signInPanel.SuspendLayout();
             this.registrationPanel.SuspendLayout();
@@ -99,7 +101,7 @@
             this.signInButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.signInButton.Font = new System.Drawing.Font("Corbel Light", 28.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.signInButton.Location = new System.Drawing.Point(154, 120);
-            this.signInButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.signInButton.Margin = new System.Windows.Forms.Padding(2);
             this.signInButton.Name = "signInButton";
             this.signInButton.Size = new System.Drawing.Size(263, 93);
             this.signInButton.TabIndex = 2;
@@ -113,7 +115,7 @@
             this.registerButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.registerButton.Font = new System.Drawing.Font("Corbel Light", 28.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.registerButton.Location = new System.Drawing.Point(154, 219);
-            this.registerButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.registerButton.Margin = new System.Windows.Forms.Padding(2);
             this.registerButton.Name = "registerButton";
             this.registerButton.Size = new System.Drawing.Size(263, 93);
             this.registerButton.TabIndex = 3;
@@ -129,7 +131,7 @@
             this.mainPanel.Controls.Add(this.registerButton);
             this.mainPanel.Controls.Add(this.label1);
             this.mainPanel.Location = new System.Drawing.Point(8, 8);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(2);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(568, 358);
             this.mainPanel.TabIndex = 4;
@@ -148,6 +150,8 @@
             // 
             // signInPanel
             // 
+            this.signInPanel.Controls.Add(this.checkBox1);
+            this.signInPanel.Controls.Add(this.label14);
             this.signInPanel.Controls.Add(this.linkLabel1);
             this.signInPanel.Controls.Add(this.studentSignInLinkLabel);
             this.signInPanel.Controls.Add(this.passwordTextBox);
@@ -157,7 +161,7 @@
             this.signInPanel.Controls.Add(this.signInMainLabel);
             this.signInPanel.Controls.Add(this.label3);
             this.signInPanel.Location = new System.Drawing.Point(7, 6);
-            this.signInPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.signInPanel.Margin = new System.Windows.Forms.Padding(2);
             this.signInPanel.Name = "signInPanel";
             this.signInPanel.Size = new System.Drawing.Size(569, 360);
             this.signInPanel.TabIndex = 4;
@@ -191,8 +195,8 @@
             // passwordTextBox
             // 
             this.passwordTextBox.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordTextBox.Location = new System.Drawing.Point(30, 181);
-            this.passwordTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.passwordTextBox.Location = new System.Drawing.Point(30, 158);
+            this.passwordTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '•';
             this.passwordTextBox.Size = new System.Drawing.Size(503, 30);
@@ -202,7 +206,7 @@
             // 
             this.usernameTextBox.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameTextBox.Location = new System.Drawing.Point(30, 84);
-            this.usernameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.usernameTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(503, 30);
             this.usernameTextBox.TabIndex = 7;
@@ -211,7 +215,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(26, 155);
+            this.label5.Location = new System.Drawing.Point(26, 133);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 23);
@@ -276,7 +280,7 @@
             this.registrationPanel.Controls.Add(this.label7);
             this.registrationPanel.Controls.Add(this.label8);
             this.registrationPanel.Location = new System.Drawing.Point(9, 9);
-            this.registrationPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.registrationPanel.Margin = new System.Windows.Forms.Padding(2);
             this.registrationPanel.Name = "registrationPanel";
             this.registrationPanel.Size = new System.Drawing.Size(569, 352);
             this.registrationPanel.TabIndex = 9;
@@ -285,7 +289,7 @@
             // 
             this.usernameAvaliableButton.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameAvaliableButton.Location = new System.Drawing.Point(420, 155);
-            this.usernameAvaliableButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.usernameAvaliableButton.Margin = new System.Windows.Forms.Padding(2);
             this.usernameAvaliableButton.Name = "usernameAvaliableButton";
             this.usernameAvaliableButton.Size = new System.Drawing.Size(113, 25);
             this.usernameAvaliableButton.TabIndex = 22;
@@ -320,7 +324,7 @@
             // 
             this.adminCodeTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.adminCodeTextBox.Location = new System.Drawing.Point(448, 27);
-            this.adminCodeTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.adminCodeTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.adminCodeTextBox.Name = "adminCodeTextBox";
             this.adminCodeTextBox.Size = new System.Drawing.Size(83, 25);
             this.adminCodeTextBox.TabIndex = 13;
@@ -329,7 +333,7 @@
             // 
             this.titleTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleTextBox.Location = new System.Drawing.Point(28, 199);
-            this.titleTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.titleTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(503, 25);
             this.titleTextBox.TabIndex = 10;
@@ -349,7 +353,7 @@
             // 
             this.usernameRegistrationTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernameRegistrationTextBox.Location = new System.Drawing.Point(28, 155);
-            this.usernameRegistrationTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.usernameRegistrationTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.usernameRegistrationTextBox.Name = "usernameRegistrationTextBox";
             this.usernameRegistrationTextBox.Size = new System.Drawing.Size(388, 25);
             this.usernameRegistrationTextBox.TabIndex = 9;
@@ -380,7 +384,7 @@
             // 
             this.teacherRegisterButton.Font = new System.Drawing.Font("Corbel Light", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.teacherRegisterButton.Location = new System.Drawing.Point(28, 315);
-            this.teacherRegisterButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.teacherRegisterButton.Margin = new System.Windows.Forms.Padding(2);
             this.teacherRegisterButton.Name = "teacherRegisterButton";
             this.teacherRegisterButton.Size = new System.Drawing.Size(502, 37);
             this.teacherRegisterButton.TabIndex = 13;
@@ -392,7 +396,7 @@
             // 
             this.confirmPasswordRegistrationTextbox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.confirmPasswordRegistrationTextbox.Location = new System.Drawing.Point(28, 285);
-            this.confirmPasswordRegistrationTextbox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.confirmPasswordRegistrationTextbox.Margin = new System.Windows.Forms.Padding(2);
             this.confirmPasswordRegistrationTextbox.Name = "confirmPasswordRegistrationTextbox";
             this.confirmPasswordRegistrationTextbox.PasswordChar = '•';
             this.confirmPasswordRegistrationTextbox.Size = new System.Drawing.Size(503, 25);
@@ -414,7 +418,7 @@
             // 
             this.passwordRegistrationTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordRegistrationTextBox.Location = new System.Drawing.Point(28, 242);
-            this.passwordRegistrationTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.passwordRegistrationTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.passwordRegistrationTextBox.Name = "passwordRegistrationTextBox";
             this.passwordRegistrationTextBox.PasswordChar = '•';
             this.passwordRegistrationTextBox.Size = new System.Drawing.Size(503, 25);
@@ -436,7 +440,7 @@
             // 
             this.surnameTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.surnameTextBox.Location = new System.Drawing.Point(28, 113);
-            this.surnameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.surnameTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.surnameTextBox.Name = "surnameTextBox";
             this.surnameTextBox.Size = new System.Drawing.Size(503, 25);
             this.surnameTextBox.TabIndex = 8;
@@ -445,7 +449,7 @@
             // 
             this.forenameTextBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.forenameTextBox.Location = new System.Drawing.Point(28, 72);
-            this.forenameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.forenameTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.forenameTextBox.Name = "forenameTextBox";
             this.forenameTextBox.Size = new System.Drawing.Size(503, 25);
             this.forenameTextBox.TabIndex = 7;
@@ -483,18 +487,42 @@
             this.label8.TabIndex = 4;
             this.label8.Text = "Teacher registration form";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Corbel Light", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(26, 194);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(496, 92);
+            this.label14.TabIndex = 11;
+            this.label14.Text = "•Note: please select \"First-Time Sign-in\" if you are a student and are:\r\n        " +
+    "•signing in for the first time\r\n        •signing in after having your password r" +
+    "eset\r\n\r\n";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Bold);
+            this.checkBox1.Location = new System.Drawing.Point(195, 267);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(176, 27);
+            this.checkBox1.TabIndex = 12;
+            this.checkBox1.Text = "First-Time Sign-in";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // AuthenticationScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(589, 374);
             this.Controls.Add(this.backButton);
-            this.Controls.Add(this.registrationPanel);
             this.Controls.Add(this.signInPanel);
             this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.registrationPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximumSize = new System.Drawing.Size(605, 413);
             this.MinimumSize = new System.Drawing.Size(605, 413);
             this.Name = "AuthenticationScreen";
@@ -547,6 +575,8 @@
         private System.Windows.Forms.TextBox adminCodeTextBox;
         private System.Windows.Forms.Button usernameAvaliableButton;
         private System.Windows.Forms.Label usernameAvaliableLabel;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label14;
     }
 }
 

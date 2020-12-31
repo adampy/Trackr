@@ -96,6 +96,22 @@ namespace Trackr {
 
             return response.IsSuccessStatusCode;
         }
+        async public static Task<bool> ResetPassword(string username, string password) {
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                {"username", username },
+                {"password", password }
+            };
+
+            try {
+                HttpResponseMessage response = await WebRequestHandler.POST("/student/password_reset", formData);
+                return response.IsSuccessStatusCode;
+            } catch (HttpStatusNotFound) {
+                return false;
+            } catch (HttpStatusUnauthorized) {
+                return false;
+            }
+
+        }
         #endregion
 
         #region Teachers
@@ -154,9 +170,13 @@ namespace Trackr {
 
         #region Tasks
         async public static Task<Homework[]> GetHomework(Student student, bool groupHardRefresh = false) {
-            HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
-            Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh);
-            return tasks;
+            try {
+                HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
+                Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh);
+                return tasks;
+            } catch (HttpStatusNotFound) {
+                return new Homework[0];
+            }
         }
         async public static void UpdateHomeworkStatus(Homework homework) {
             Dictionary<string, string> formData = new Dictionary<string, string> {

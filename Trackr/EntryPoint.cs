@@ -17,13 +17,13 @@ namespace Trackr
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            /*FormController.auth = new AuthenticationScreen();
-            FormController.auth.Show();*/
+            FormController.auth = new AuthenticationScreen();
+            FormController.auth.Show();
 
-            APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
+            /*APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
             Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
             FormController.studentMain = new StudentMainForm(student);
-            FormController.studentMain.Show();
+            FormController.studentMain.Show();*/
 
             Application.Run();
         }

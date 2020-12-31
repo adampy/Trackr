@@ -125,20 +125,46 @@ namespace Trackr {
             string password = passwordTextBox.Text;
             flushTextBoxes();
 
-            if (username == "" || password == "") {
-                MessageBox.Show("Username or password cannot be left blank!"); //TODO: Does this need a messagebox? Nicer way of showing error?
-                return; // Do not execute more of the subroutine
-            }
+            if (checkBox1.Checked) {
+                if (username == "") {
+                    MessageBox.Show("Username cannot be left blank!");
+                    return;
+                }
+                StudentGetPassword passwordForm = new StudentGetPassword();
+                var dialog = passwordForm.ShowDialog();
+                if (dialog == DialogResult.OK) {
+                    password = passwordForm.passwordResult;
+                } else {
+                    MessageBox.Show("An error has occurred, please try again.");
+                    return;
+                }
 
-            string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
-            APIHandler.SetAuthorizationHeader(credentials);
-            if (await isUserValid(UserType.Student, username, password)) {
+                // Send request to API to change password of `username` to `password`
+                await APIHandler.ResetPassword(username, password);
+                string newCredentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
+                WebRequestHandler.SetAuthorizationHeader(newCredentials);
+                
                 Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
                 closedByProgram = true; // Set boolean to prevent Application.Exit() call
                 this.Close(); // Close current form
                 FormController.studentMain = new StudentMainForm(student); // Open the new form
+
             } else {
-                MessageBox.Show("Your account doesn't exist.");
+                if (username == "" || password == "") {
+                    MessageBox.Show("Username or password cannot be left blank!"); //TODO: Does this need a messagebox? Nicer way of showing error?
+                    return; // Do not execute more of the subroutine
+                }
+
+                string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
+                APIHandler.SetAuthorizationHeader(credentials);
+                if (await isUserValid(UserType.Student, username, password)) {
+                    Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
+                    closedByProgram = true; // Set boolean to prevent Application.Exit() call
+                    this.Close(); // Close current form
+                    FormController.studentMain = new StudentMainForm(student); // Open the new form
+                } else {
+                    MessageBox.Show("Your account doesn't exist.");
+                }
             }
         }
         async private void teacherSignInClick(object sender, EventArgs e) {
@@ -239,6 +265,11 @@ namespace Trackr {
                 }
                 passwordMatchingLabel.Show();
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            passwordTextBox.Enabled = !checkBox1.Checked;
+            passwordTextBox.Text = "";
         }
     }
 }
