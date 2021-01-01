@@ -185,7 +185,9 @@ namespace Trackr {
             APIHandler.SetAuthorizationHeader(credentials);
             if (await isUserValid(UserType.Teacher, username, password)){
                 Teacher teacher = await APIHandler.GetTeacher(username: username);
-                MessageBox.Show(teacher.GetUsername() + ":" + teacher.DisplayName());
+                closedByProgram = true; // Set boolean to prevent Application.Exit() call
+                this.Close(); // Close current form
+                FormController.teacherMain = new TeacherMainForm(teacher); // Open the new form
             } else {
                 MessageBox.Show("Your account doesn't exist.");
             }

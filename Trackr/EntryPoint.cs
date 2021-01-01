@@ -17,13 +17,18 @@ namespace Trackr
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            FormController.auth = new AuthenticationScreen();
-            FormController.auth.Show();
+            /*FormController.auth = new AuthenticationScreen();
+            FormController.auth.Show();*/
 
             /*APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
             Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
             FormController.studentMain = new StudentMainForm(student);
             FormController.studentMain.Show();*/
+
+            APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("stood:beeryboater"));
+            Teacher teacher = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(username: "stood")).Result;
+            FormController.teacherMain = new TeacherMainForm(teacher);
+            FormController.teacherMain.Show();
 
             Application.Run();
         }
@@ -35,5 +40,6 @@ namespace Trackr
         /// </summary>
         public static AuthenticationScreen auth;
         public static StudentMainForm studentMain;
+        public static TeacherMainForm teacherMain;
     }
 }
