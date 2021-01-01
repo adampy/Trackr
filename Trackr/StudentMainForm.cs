@@ -43,7 +43,7 @@ namespace Trackr {
         }
 
         async private void editAccountClick(object sender, EventArgs e) {
-            StudentEditAccount edit = new StudentEditAccount(existingUsername: user.GetUsername());
+            EditAccount edit = new EditAccount(UserType.Student, existingUsername: user.GetUsername());
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
             if (dialog == DialogResult.OK) {
                 // Validation passed -> edit account

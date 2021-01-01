@@ -1,5 +1,5 @@
 ﻿namespace Trackr {
-    partial class StudentEditAccount {
+    partial class EditAccount {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentEditAccount));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditAccount));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.usernameTextbox = new System.Windows.Forms.TextBox();
@@ -166,7 +166,7 @@
             this.MaximizeBox = false;
             this.Name = "StudentEditAccount";
             this.Text = "Trackr - Edit account";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.StudentEditAccount_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EditAccount_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
 

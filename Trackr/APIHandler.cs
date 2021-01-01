@@ -17,7 +17,7 @@ namespace Trackr {
             WebRequestHandler.SetAuthorizationHeader(credentials);
         }
 
-        #region Generic User
+        #region Abstract User
         async public static Task<bool> IsUsernameTaken(UserType user, string username, string adminCode = null) {
             /// <summary>
             /// Returns true if the username is taken, else returns false.

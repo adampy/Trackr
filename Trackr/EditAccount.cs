@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
-    public partial class StudentEditAccount : Form {
+    public partial class EditAccount : Form {
         public string newUsername;
         public string newPassword;
-        public StudentEditAccount(string existingUsername) {
+        private UserType userType;
+        public EditAccount(UserType userType, string existingUsername) {
+            this.userType = userType;
             InitializeComponent();
             usernameTextbox.Text = existingUsername;
             passwordTextbox1.Enabled = passwordCheckBox.Checked;
@@ -20,7 +22,7 @@ namespace Trackr {
             usernameTextbox.Enabled = usernameCheckBox.Checked;
         }
 
-        private void StudentEditAccount_Paint(object sender, PaintEventArgs e) {
+        private void EditAccount_Paint(object sender, PaintEventArgs e) {
             int y = passwordCheckBox.Location.Y + 10;
             e.Graphics.DrawLine(Pens.Gray, 0, y, passwordCheckBox.Location.X - 5, y);
             e.Graphics.DrawLine(Pens.Gray, passwordCheckBox.Location.X + passwordCheckBox.Size.Width, y, this.Width, y);
@@ -48,8 +50,10 @@ namespace Trackr {
                 if (username == "") {
                     MessageBox.Show("Username field needs filling!");
                     return;
+                } else if (username.Contains(":")) {
+                    MessageBox.Show("Username cannot contain a colon. Please remove it.");
                 } else {
-                    bool usernameTaken = await APIHandler.IsUsernameTaken(UserType.Student, username);
+                    bool usernameTaken = await APIHandler.IsUsernameTaken(this.userType, username);
                     if (usernameTaken) {
                         MessageBox.Show("Username has already been taken, please try another!");
                         return;
@@ -77,7 +81,6 @@ namespace Trackr {
                 // Password is valid at this point
                 this.newPassword = password;
             }
-            
 
             this.DialogResult = DialogResult.OK;
             this.Close();
