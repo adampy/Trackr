@@ -134,7 +134,6 @@
             this.teachersLinkLabel.TabStop = true;
             this.teachersLinkLabel.Text = "Teachers";
             this.teachersLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.teacherLinkLabelClick);
-
             // 
             // studentLinkLabel
             // 
@@ -207,6 +206,7 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "TeacherMainForm";
             this.Text = "TeacherMainForm";
             this.menuStrip1.ResumeLayout(false);

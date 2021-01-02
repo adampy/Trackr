@@ -43,6 +43,12 @@ namespace Trackr {
         public string GetFullName() {
             return this.forename + " " + this.surname;
         }
+        public string GetForename() {
+            return this.forename;
+        }
+        public string GetSurname() {
+            return this.surname;
+        }
         public void SetUsername(string username) {
             /// <summary>
             /// Encapsulation method that ONLY sets the username of this user object, NO API CALLS HAPPEN IN THIS METHOD.

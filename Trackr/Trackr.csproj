@@ -109,6 +109,12 @@
     <Compile Include="TeacherUI\GroupPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TeacherUI\ManageStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\ManageStudent.Designer.cs">
+      <DependentUpon>ManageStudent.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeacherUI\StudentListItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\GroupListItem.resx">
       <DependentUpon>GroupListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\ManageStudent.resx">
+      <DependentUpon>ManageStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\StudentListItem.resx">
       <DependentUpon>StudentListItem.cs</DependentUpon>

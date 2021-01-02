@@ -7,8 +7,6 @@ namespace Trackr {
     class StudentPanel : Panel {
         private Panel parent;
         private Label allStudentsLabel;
-        private TextBox studentSearchBox;
-        private Label studentSearchLabel;
         private ListPanel list;
         private SearchBox searchBox;
         public StudentPanel(Panel parentPanel) : base() {

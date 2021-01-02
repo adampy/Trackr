@@ -175,6 +175,9 @@ namespace Trackr {
                 throw new HttpStatusUnauthorized();
             }
         }
+        async public static void TeacherEditStudent(Student student, Dictionary<string, string> formData) {
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+        }
         #endregion
 
         #region Tasks
@@ -191,7 +194,7 @@ namespace Trackr {
             Dictionary<string, string> formData = new Dictionary<string, string> {
                 {"completed", homework.hasCompleted.ToString().ToLower() }
             };
-            HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData);
+            HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData); // TODO: Do I need to account for errors here?
         }
         #endregion
 

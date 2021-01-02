@@ -36,6 +36,8 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.signInPanel = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.studentSignInLinkLabel = new System.Windows.Forms.LinkLabel();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
@@ -64,8 +66,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.mainPanel.SuspendLayout();
             this.signInPanel.SuspendLayout();
             this.registrationPanel.SuspendLayout();
@@ -165,6 +165,30 @@
             this.signInPanel.Name = "signInPanel";
             this.signInPanel.Size = new System.Drawing.Size(569, 360);
             this.signInPanel.TabIndex = 4;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Bold);
+            this.checkBox1.Location = new System.Drawing.Point(195, 267);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(176, 27);
+            this.checkBox1.TabIndex = 12;
+            this.checkBox1.Text = "First-Time Sign-in";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Corbel Light", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(26, 194);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(496, 92);
+            this.label14.TabIndex = 11;
+            this.label14.Text = "•Note: please select \"First-Time Sign-in\" if you are a student and are:\r\n        " +
+    "•signing in for the first time\r\n        •signing in after having your password r" +
+    "eset\r\n\r\n";
             // 
             // linkLabel1
             // 
@@ -487,30 +511,6 @@
             this.label8.TabIndex = 4;
             this.label8.Text = "Teacher registration form";
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Corbel Light", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(26, 194);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(496, 92);
-            this.label14.TabIndex = 11;
-            this.label14.Text = "•Note: please select \"First-Time Sign-in\" if you are a student and are:\r\n        " +
-    "•signing in for the first time\r\n        •signing in after having your password r" +
-    "eset\r\n\r\n";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Corbel", 13.8F, System.Drawing.FontStyle.Bold);
-            this.checkBox1.Location = new System.Drawing.Point(195, 267);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(176, 27);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "First-Time Sign-in";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // AuthenticationScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -523,6 +523,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(605, 413);
             this.MinimumSize = new System.Drawing.Size(605, 413);
             this.Name = "AuthenticationScreen";

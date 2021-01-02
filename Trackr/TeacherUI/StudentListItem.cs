@@ -17,7 +17,8 @@ namespace Trackr {
             this.studentNameLabel.Text = student.GetFullName();
         }
         private void manageStudentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-
+            ManageStudent manage = new ManageStudent(this.student);
+            manage.ShowDialog();
         }
     }
 }
