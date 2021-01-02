@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.contentsPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.selectionPanel.SuspendLayout();
             this.contentsPanel.SuspendLayout();
@@ -102,12 +103,13 @@
             // 
             this.groupsLinkLabel.AutoSize = true;
             this.groupsLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupsLinkLabel.Location = new System.Drawing.Point(11, 270);
+            this.groupsLinkLabel.Location = new System.Drawing.Point(11, 130);
             this.groupsLinkLabel.Name = "groupsLinkLabel";
             this.groupsLinkLabel.Size = new System.Drawing.Size(96, 33);
             this.groupsLinkLabel.TabIndex = 4;
             this.groupsLinkLabel.TabStop = true;
             this.groupsLinkLabel.Text = "Classes";
+            this.groupsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.groupsLinkLabelClick);
             // 
             // tasksLinkLabel
             // 
@@ -119,17 +121,20 @@
             this.tasksLinkLabel.TabIndex = 3;
             this.tasksLinkLabel.TabStop = true;
             this.tasksLinkLabel.Text = "Assignments";
+            this.tasksLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.taskLinkLabelClick);
             // 
             // teachersLinkLabel
             // 
             this.teachersLinkLabel.AutoSize = true;
             this.teachersLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teachersLinkLabel.Location = new System.Drawing.Point(11, 130);
+            this.teachersLinkLabel.Location = new System.Drawing.Point(11, 270);
             this.teachersLinkLabel.Name = "teachersLinkLabel";
             this.teachersLinkLabel.Size = new System.Drawing.Size(113, 33);
             this.teachersLinkLabel.TabIndex = 2;
             this.teachersLinkLabel.TabStop = true;
             this.teachersLinkLabel.Text = "Teachers";
+            this.teachersLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.teacherLinkLabelClick);
+
             // 
             // studentLinkLabel
             // 
@@ -141,7 +146,7 @@
             this.studentLinkLabel.TabIndex = 1;
             this.studentLinkLabel.TabStop = true;
             this.studentLinkLabel.Text = "Students";
-            this.studentLinkLabel.Click += new System.EventHandler(this.studentLabelClick);
+            this.studentLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.studentLinkLabelClick);
             // 
             // label2
             // 
@@ -155,12 +160,12 @@
             // 
             // contentsPanel
             // 
+            this.contentsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.contentsPanel.Controls.Add(this.label3);
             this.contentsPanel.Location = new System.Drawing.Point(193, 62);
             this.contentsPanel.Name = "contentsPanel";
             this.contentsPanel.Size = new System.Drawing.Size(595, 376);
             this.contentsPanel.TabIndex = 6;
-            this.contentsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.onContentsPanelPaint);
             // 
             // label3
             // 
@@ -174,11 +179,27 @@
             this.label3.Text = "Choose a tab on the left-hand side and the contents of that\r\ntab will move into t" +
     "his area.";
             // 
+            // refreshButton
+            // 
+            this.refreshButton.BackColor = System.Drawing.Color.Transparent;
+            this.refreshButton.BackgroundImage = global::Trackr.Properties.Resources.refreshButton;
+            this.refreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.refreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.refreshButton.FlatAppearance.BorderSize = 0;
+            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.refreshButton.Location = new System.Drawing.Point(717, 0);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(60, 60);
+            this.refreshButton.TabIndex = 7;
+            this.refreshButton.UseVisualStyleBackColor = false;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButtonClick);
+            // 
             // TeacherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.contentsPanel);
             this.Controls.Add(this.selectionPanel);
             this.Controls.Add(this.nameLabel);
@@ -213,5 +234,6 @@
         private System.Windows.Forms.LinkLabel tasksLinkLabel;
         private System.Windows.Forms.LinkLabel teachersLinkLabel;
         private System.Windows.Forms.LinkLabel studentLinkLabel;
+        private System.Windows.Forms.Button refreshButton;
     }
 }

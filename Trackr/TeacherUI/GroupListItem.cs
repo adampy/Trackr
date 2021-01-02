@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
-    public partial class TeacherMainUI : UserControl {
-        public TeacherMainUI() {
+    public partial class GroupListItem : ListItem {
+        private Group group;
+        public GroupListItem(Group group) {
             InitializeComponent();
+            this.group = group;
+            this.groupNameLabel.Text = group.GetName();
         }
     }
 }

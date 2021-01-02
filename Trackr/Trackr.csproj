@@ -100,11 +100,35 @@
     <Compile Include="TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeacherUI\TeacherMainUI.cs">
+    <Compile Include="TeacherUI\GroupListItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TeacherUI\TeacherMainUI.Designer.cs">
-      <DependentUpon>TeacherMainUI.cs</DependentUpon>
+    <Compile Include="TeacherUI\GroupListItem.Designer.cs">
+      <DependentUpon>GroupListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\StudentListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\StudentListItem.Designer.cs">
+      <DependentUpon>StudentListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\StudentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TeacherPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TaskPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ListPanel.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />
@@ -134,8 +158,11 @@
     <EmbeddedResource Include="TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeacherUI\TeacherMainUI.resx">
-      <DependentUpon>TeacherMainUI.cs</DependentUpon>
+    <EmbeddedResource Include="TeacherUI\GroupListItem.resx">
+      <DependentUpon>GroupListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\StudentListItem.resx">
+      <DependentUpon>StudentListItem.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

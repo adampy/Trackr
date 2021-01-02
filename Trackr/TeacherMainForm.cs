@@ -11,6 +11,12 @@ using System.Windows.Forms;
 namespace Trackr {
     public partial class TeacherMainForm : Form {
         private Teacher user;
+        private Panel currentPanel;
+        private StudentPanel studentPanel;
+        private GroupPanel groupPanel;
+        private TaskPanel taskPanel;
+        private TeacherPanel teacherPanel;
+
         public TeacherMainForm(Teacher user) {
             InitializeComponent();
             this.Show();
@@ -18,10 +24,9 @@ namespace Trackr {
             this.user = user;
             this.Text = "Trackr - " + user.GetUsername();
             this.nameLabel.Text = user.DisplayName();
-            
+
             this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
         }
-
         async private void editAccountMenuItemClick(object sender, EventArgs e) {
             EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.GetUsername());
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
@@ -38,16 +43,72 @@ namespace Trackr {
                 }
             }
         }
+        private void AddPanel(Panel panel) {
+            /// <summary>
+            /// Uses polymorphism to add a new panel.
+            /// </summary>
+            if (this.currentPanel != null) {
+                if (this.currentPanel == panel) {
+                    return;
+                }
+                this.currentPanel.Hide();
+            }
 
-        private void onContentsPanelPaint(object sender, PaintEventArgs e) {
-            e.Graphics.DrawRectangle(Pens.Black, 0, 0, contentsPanel.Width - 1, contentsPanel.Height - 1); // -1 because of the border
+            panel.Location = new Point(1, 1);
+            panel.Dock = DockStyle.Fill;
+
+            if (this.contentsPanel.Controls.Contains(label3)) {
+                this.contentsPanel.Controls.Remove(label3); // Remove help label
+            }
+            this.contentsPanel.Controls.Add(panel);
+            this.currentPanel = panel;
+            this.currentPanel.Show();
+            this.currentPanel.BringToFront();
         }
 
-        private void studentLabelClick(object sender, EventArgs e) {
-            this.contentsPanel.Controls.Remove(label3);
-            TeacherMainUI allStudents = new TeacherMainUI();
-            allStudents.Location = new Point(1, 1);
-            this.contentsPanel.Controls.Add(allStudents);
+        private void studentLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
+            if (this.studentPanel == null) {
+                this.studentPanel = new StudentPanel(contentsPanel);
+            }
+            AddPanel(this.studentPanel);
+        }
+        private void groupsLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
+            if (this.groupPanel == null) {
+                this.groupPanel = new GroupPanel(contentsPanel, this.user);
+            }
+            AddPanel(this.groupPanel);
+        }
+        private void taskLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
+            if (this.taskPanel == null) {
+                this.taskPanel = new TaskPanel(contentsPanel);
+            }
+            AddPanel(this.taskPanel);
+        }
+        private void teacherLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
+            if (this.teacherPanel == null) {
+                this.teacherPanel = new TeacherPanel(contentsPanel);
+            }
+            AddPanel(this.teacherPanel);
+        }
+
+        private void refreshButtonClick(object sender, EventArgs e) {
+            if (this.studentPanel != null)
+                this.studentPanel.Hide();
+            if (this.groupPanel != null)
+                this.groupPanel.Hide();
+            if (this.taskPanel != null)
+                this.taskPanel.Hide();
+            if (this.teacherPanel != null)
+                this.teacherPanel.Hide();
+
+            this.studentPanel = null;
+            this.groupPanel = null;
+            this.taskPanel = null;
+            this.teacherPanel = null;
+
+            if (!this.contentsPanel.Controls.Contains(label3)) {
+                this.contentsPanel.Controls.Add(label3); // Remove help label
+            }
         }
     }
 }

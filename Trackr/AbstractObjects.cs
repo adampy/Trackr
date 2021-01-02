@@ -40,6 +40,9 @@ namespace Trackr {
             /// </summary>
             return username;
         }
+        public string GetFullName() {
+            return this.forename + " " + this.surname;
+        }
         public void SetUsername(string username) {
             /// <summary>
             /// Encapsulation method that ONLY sets the username of this user object, NO API CALLS HAPPEN IN THIS METHOD.
@@ -129,6 +132,7 @@ namespace Trackr {
         public int GetAlps() {
             return this.alps;
         }
+        
     }
 
     public class Teacher : User {

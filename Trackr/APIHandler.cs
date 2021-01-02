@@ -217,6 +217,11 @@ namespace Trackr {
             groupCache.Add(id, group);
             return group;
         }
+        async public static Task<Group[]> TeacherGetGroups(Teacher teacher) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/group/?mine=True");
+            Group[] groups = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            return groups;
+        }
         #endregion
 
         #region Feedback
