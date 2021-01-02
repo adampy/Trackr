@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
+using System;
 
 namespace Trackr {
     class StudentPanel : Panel {
@@ -9,6 +10,7 @@ namespace Trackr {
         private TextBox studentSearchBox;
         private Label studentSearchLabel;
         private ListPanel list;
+        private SearchBox searchBox;
         public StudentPanel(Panel parentPanel) : base() {
             this.parent = parentPanel;
             this.Width = parent.Width;
@@ -21,22 +23,12 @@ namespace Trackr {
             allStudentsLabel.BackColor = Color.Transparent;
             this.Controls.Add(allStudentsLabel);
 
-            // studentSearchLabel
-            studentSearchLabel = new Label();
-            studentSearchLabel.AutoSize = true;
-            studentSearchLabel.Font = new Font("Calibri", 10.0f);
-            studentSearchLabel.Location = new Point(this.Width - 150, 0);
-            studentSearchLabel.Text = "Search";
-            studentSearchLabel.BackColor = Color.Transparent;
-            this.Controls.Add(studentSearchLabel);
-
-            // studentSearchBox
-            studentSearchBox = new TextBox();
-            studentSearchBox.Font = new Font("Calibri", 10.0f);
-            studentSearchBox.Location = new Point(this.Width - 100, 0);
-            studentSearchBox.Width = 100;
-            studentSearchBox.TextChanged += (obj, e) => { list.MakePanels(studentSearchBox.Text); }; // Anonymous function that runs when the search box is changed
-            this.Controls.Add(studentSearchBox);
+            // searchBox
+            searchBox = new SearchBox();
+            searchBox.BackColor = Color.Transparent;
+            searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
+            searchBox.AddTextBoxChangedAction(SearchBoxChanged);
+            this.Controls.Add(searchBox);
 
             // list
             Task<Student[]> task = Task.Run<Student[]>(async () => await APIHandler.GetAllStudents()); // Running async code from a sync method by using `Task`
@@ -48,6 +40,9 @@ namespace Trackr {
             list.Width = this.parent.Width;
             list.Height = this.parent.Height - 35;
             this.Controls.Add(list);
+        }
+        private void SearchBoxChanged(object sender, EventArgs e) {
+            list.MakePanels(searchBox.GetText());
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
+using System;
 
 namespace Trackr {
     class GroupPanel : Panel {
         private Panel parent;
         private Label groupLabel;
-        private Label groupSearchLabel;
-        private TextBox groupSearchBox;
+        private SearchBox searchBox;
         private ListPanel list;
         public GroupPanel(Panel parentPanel) : base() {
             this.parent = parentPanel;
@@ -21,22 +21,12 @@ namespace Trackr {
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
 
-            // groupSearchLabel
-            groupSearchLabel = new Label();
-            groupSearchLabel.AutoSize = true;
-            groupSearchLabel.Font = new Font("Calibri", 10.0f);
-            groupSearchLabel.Location = new Point(this.Width - 150, 0);
-            groupSearchLabel.Text = "Search";
-            groupSearchLabel.BackColor = Color.Transparent;
-            this.Controls.Add(groupSearchLabel);
-
-            // groupSearchBox
-            groupSearchBox = new TextBox();
-            groupSearchBox.Font = new Font("Calibri", 10.0f);
-            groupSearchBox.Location = new Point(this.Width - 100, 0);
-            groupSearchBox.Width = 100;
-            groupSearchBox.TextChanged += (obj, e) => { list.MakePanels(groupSearchBox.Text); }; // Anonymous function that runs when the search box is changed
-            this.Controls.Add(groupSearchBox);
+            // searchBox
+            searchBox = new SearchBox();
+            searchBox.BackColor = Color.Transparent;
+            searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
+            searchBox.AddTextBoxChangedAction(SearchBoxChanged);
+            this.Controls.Add(searchBox);
 
             // list
             Task<Group[]> task = Task.Run<Group[]>(async () => await APIHandler.TeacherGetGroups()); // Running async code from a sync method by using `Task`
@@ -49,5 +39,9 @@ namespace Trackr {
             list.Height = this.parent.Height - 35;
             this.Controls.Add(list);
         }
+        private void SearchBoxChanged(object sender, EventArgs e) {
+            list.MakePanels(searchBox.GetText());
+        }
+
     }
 }
