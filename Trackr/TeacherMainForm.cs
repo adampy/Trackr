@@ -38,5 +38,16 @@ namespace Trackr {
                 }
             }
         }
+
+        private void onContentsPanelPaint(object sender, PaintEventArgs e) {
+            e.Graphics.DrawRectangle(Pens.Black, 0, 0, contentsPanel.Width - 1, contentsPanel.Height - 1); // -1 because of the border
+        }
+
+        private void studentLabelClick(object sender, EventArgs e) {
+            this.contentsPanel.Controls.Remove(label3);
+            TeacherMainUI allStudents = new TeacherMainUI();
+            allStudents.Location = new Point(1, 1);
+            this.contentsPanel.Controls.Add(allStudents);
+        }
     }
 }

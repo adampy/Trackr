@@ -79,7 +79,19 @@
     <Compile Include="StudentMainForm.Designer.cs">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentMainUI.cs">
+    <Compile Include="StudentUI\DoneButtonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentUI\FocussedTaskTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StudentUI\HomeworkListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentUI\HomeworkTabController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StudentUI\HomeworkTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TeacherMainForm.cs">
@@ -87,6 +99,12 @@
     </Compile>
     <Compile Include="TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\TeacherMainUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TeacherMainUI.Designer.cs">
+      <DependentUpon>TeacherMainUI.cs</DependentUpon>
     </Compile>
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />
@@ -115,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\TeacherMainUI.resx">
+      <DependentUpon>TeacherMainUI.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

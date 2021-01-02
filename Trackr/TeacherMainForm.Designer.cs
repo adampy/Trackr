@@ -28,7 +28,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectionPanel = new System.Windows.Forms.Panel();
+            this.groupsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.tasksLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.teachersLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.studentLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.contentsPanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            this.selectionPanel.SuspendLayout();
+            this.contentsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -76,11 +86,101 @@
             this.editAccountToolStripMenuItem.Text = "Edit account";
             this.editAccountToolStripMenuItem.Click += new System.EventHandler(this.editAccountMenuItemClick);
             // 
+            // selectionPanel
+            // 
+            this.selectionPanel.Controls.Add(this.groupsLinkLabel);
+            this.selectionPanel.Controls.Add(this.tasksLinkLabel);
+            this.selectionPanel.Controls.Add(this.teachersLinkLabel);
+            this.selectionPanel.Controls.Add(this.studentLinkLabel);
+            this.selectionPanel.Controls.Add(this.label2);
+            this.selectionPanel.Location = new System.Drawing.Point(13, 62);
+            this.selectionPanel.Name = "selectionPanel";
+            this.selectionPanel.Size = new System.Drawing.Size(174, 376);
+            this.selectionPanel.TabIndex = 5;
+            // 
+            // groupsLinkLabel
+            // 
+            this.groupsLinkLabel.AutoSize = true;
+            this.groupsLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupsLinkLabel.Location = new System.Drawing.Point(11, 270);
+            this.groupsLinkLabel.Name = "groupsLinkLabel";
+            this.groupsLinkLabel.Size = new System.Drawing.Size(96, 33);
+            this.groupsLinkLabel.TabIndex = 4;
+            this.groupsLinkLabel.TabStop = true;
+            this.groupsLinkLabel.Text = "Classes";
+            // 
+            // tasksLinkLabel
+            // 
+            this.tasksLinkLabel.AutoSize = true;
+            this.tasksLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tasksLinkLabel.Location = new System.Drawing.Point(11, 200);
+            this.tasksLinkLabel.Name = "tasksLinkLabel";
+            this.tasksLinkLabel.Size = new System.Drawing.Size(157, 33);
+            this.tasksLinkLabel.TabIndex = 3;
+            this.tasksLinkLabel.TabStop = true;
+            this.tasksLinkLabel.Text = "Assignments";
+            // 
+            // teachersLinkLabel
+            // 
+            this.teachersLinkLabel.AutoSize = true;
+            this.teachersLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teachersLinkLabel.Location = new System.Drawing.Point(11, 130);
+            this.teachersLinkLabel.Name = "teachersLinkLabel";
+            this.teachersLinkLabel.Size = new System.Drawing.Size(113, 33);
+            this.teachersLinkLabel.TabIndex = 2;
+            this.teachersLinkLabel.TabStop = true;
+            this.teachersLinkLabel.Text = "Teachers";
+            // 
+            // studentLinkLabel
+            // 
+            this.studentLinkLabel.AutoSize = true;
+            this.studentLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.studentLinkLabel.Location = new System.Drawing.Point(11, 60);
+            this.studentLinkLabel.Name = "studentLinkLabel";
+            this.studentLinkLabel.Size = new System.Drawing.Size(114, 33);
+            this.studentLinkLabel.TabIndex = 1;
+            this.studentLinkLabel.TabStop = true;
+            this.studentLinkLabel.Text = "Students";
+            this.studentLinkLabel.Click += new System.EventHandler(this.studentLabelClick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Corbel", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(154, 39);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Manage...";
+            // 
+            // contentsPanel
+            // 
+            this.contentsPanel.Controls.Add(this.label3);
+            this.contentsPanel.Location = new System.Drawing.Point(193, 62);
+            this.contentsPanel.Name = "contentsPanel";
+            this.contentsPanel.Size = new System.Drawing.Size(595, 376);
+            this.contentsPanel.TabIndex = 6;
+            this.contentsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.onContentsPanelPaint);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Corbel", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 10);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(580, 58);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Choose a tab on the left-hand side and the contents of that\r\ntab will move into t" +
+    "his area.";
+            // 
             // TeacherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.contentsPanel);
+            this.Controls.Add(this.selectionPanel);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -90,6 +190,10 @@
             this.Text = "TeacherMainForm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.selectionPanel.ResumeLayout(false);
+            this.selectionPanel.PerformLayout();
+            this.contentsPanel.ResumeLayout(false);
+            this.contentsPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,5 +205,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editAccountToolStripMenuItem;
+        private System.Windows.Forms.Panel selectionPanel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel contentsPanel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel groupsLinkLabel;
+        private System.Windows.Forms.LinkLabel tasksLinkLabel;
+        private System.Windows.Forms.LinkLabel teachersLinkLabel;
+        private System.Windows.Forms.LinkLabel studentLinkLabel;
     }
 }

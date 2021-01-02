@@ -18,7 +18,7 @@ namespace Trackr
             Application.SetCompatibleTextRenderingDefault(false);
 
             /*FormController.auth = new AuthenticationScreen();
-            FormController.auth.Show();*/
+            FormController.auth.Show();
 
             /*APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
             Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
