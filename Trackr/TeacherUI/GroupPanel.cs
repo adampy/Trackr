@@ -9,8 +9,7 @@ namespace Trackr {
         private Label groupSearchLabel;
         private TextBox groupSearchBox;
         private ListPanel list;
-        private Teacher user;
-        public GroupPanel(Panel parentPanel, Teacher user) : base() {
+        public GroupPanel(Panel parentPanel) : base() {
             this.parent = parentPanel;
             this.Width = parent.Width;
             // groupLabel
@@ -40,7 +39,7 @@ namespace Trackr {
             this.Controls.Add(groupSearchBox);
 
             // list
-            Task<Group[]> task = Task.Run<Group[]>(async () => await APIHandler.TeacherGetGroups(teacher: this.user)); // Running async code from a sync method by using `Task`
+            Task<Group[]> task = Task.Run<Group[]>(async () => await APIHandler.TeacherGetGroups()); // Running async code from a sync method by using `Task`
             Group[] groups = task.Result;
 
             //list = new StudentListPanel(students);

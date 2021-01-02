@@ -140,14 +140,19 @@ namespace Trackr {
                 }
 
                 // Send request to API to change password of `username` to `password`
-                await APIHandler.ResetPassword(username, password);
-                string newCredentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
-                WebRequestHandler.SetAuthorizationHeader(newCredentials);
-                
-                Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
-                closedByProgram = true; // Set boolean to prevent Application.Exit() call
-                this.Close(); // Close current form
-                FormController.studentMain = new StudentMainForm(student); // Open the new form
+                try {
+                    await APIHandler.ResetPassword(username, password);
+                    string newCredentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
+                    WebRequestHandler.SetAuthorizationHeader(newCredentials);
+
+                    Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
+                    closedByProgram = true; // Set boolean to prevent Application.Exit() call
+                    this.Close(); // Close current form
+                    FormController.studentMain = new StudentMainForm(student); // Open the new form
+                } catch (HttpStatusUnauthorized) {
+                    MessageBox.Show("Your account already has a password - please ask a teacher to reset your password.");
+                    return;
+                }
 
             } else {
                 if (username == "" || password == "") {
@@ -175,6 +180,11 @@ namespace Trackr {
             string username = usernameTextBox.Text;
             string password = passwordTextBox.Text;
             flushTextBoxes();
+
+            if (checkBox1.Checked == true) {
+                MessageBox.Show("Teachers cannot use the first time sign-in feature, and should enter their password.");
+                return;
+            }
 
             if (username == "" || password == "") {
                 MessageBox.Show("Username or password cannot be left blank!");

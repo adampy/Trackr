@@ -34,6 +34,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.submitChangedButton = new System.Windows.Forms.Button();
             this.passwordCheckBox = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -146,11 +147,22 @@
             this.passwordCheckBox.UseVisualStyleBackColor = true;
             this.passwordCheckBox.CheckedChanged += new System.EventHandler(this.stateChanged);
             // 
-            // StudentEditAccount
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(370, 14);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "If you wish to change your name, please do so in the \"manage teacher\" section";
+            // 
+            // EditAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 323);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.submitChangedButton);
             this.Controls.Add(this.passwordTextbox2);
             this.Controls.Add(this.label4);
@@ -164,7 +176,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "StudentEditAccount";
+            this.Name = "EditAccount";
             this.Text = "Trackr - Edit account";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.EditAccount_Paint);
             this.ResumeLayout(false);
@@ -184,5 +196,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button submitChangedButton;
         private System.Windows.Forms.CheckBox passwordCheckBox;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -20,6 +20,9 @@ namespace Trackr {
             passwordTextbox1.Enabled = passwordCheckBox.Checked;
             passwordTextbox2.Enabled = passwordCheckBox.Checked;
             usernameTextbox.Enabled = usernameCheckBox.Checked;
+            if (userType == UserType.Student) {
+                label5.Dispose();
+            }
         }
 
         private void EditAccount_Paint(object sender, PaintEventArgs e) {

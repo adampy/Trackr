@@ -74,7 +74,7 @@ namespace Trackr {
         }
         private void groupsLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
             if (this.groupPanel == null) {
-                this.groupPanel = new GroupPanel(contentsPanel, this.user);
+                this.groupPanel = new GroupPanel(contentsPanel);
             }
             AddPanel(this.groupPanel);
         }
