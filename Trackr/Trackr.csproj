@@ -100,6 +100,18 @@
     <Compile Include="MainForms\TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TeacherUI\GroupPanel\EditGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel\EditGroup.Designer.cs">
+      <DependentUpon>EditGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel\ViewGroupStudents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel\ViewGroupStudents.Designer.cs">
+      <DependentUpon>ViewGroupStudents.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeacherUI\StudentPanel\EditStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,8 +188,14 @@
     <EmbeddedResource Include="MainForms\TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\GroupPanel\EditGroup.resx">
+      <DependentUpon>EditGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\GroupPanel\GroupListItem.resx">
       <DependentUpon>GroupListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\GroupPanel\ViewGroupStudents.resx">
+      <DependentUpon>ViewGroupStudents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\StudentPanel\EditStudent.resx">
       <DependentUpon>EditStudent.cs</DependentUpon>

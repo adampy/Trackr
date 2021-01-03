@@ -287,6 +287,10 @@ namespace Trackr {
         public string GetSubject() {
             return this.subject;
         }
+        
+        public int GetId() {
+            return this.id;
+        }
     }
 
     public class Feedback {

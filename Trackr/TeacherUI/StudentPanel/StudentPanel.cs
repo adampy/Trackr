@@ -59,14 +59,13 @@ namespace Trackr {
         private void SearchBoxChanged(object sender, EventArgs e) {
             list.MakePanels(searchBox.GetText());
         }
-        public void RefreshList() {
+        async public void RefreshList() {
             /// <summary>
             /// Executed after opening the manage student tab.
             /// </summary>
             
             // Data
-            Task<Student[]> task = Task.Run<Student[]>(async () => await APIHandler.GetAllStudents()); // Running async code from a sync method by using `Task`
-            Student[] students = task.Result;
+            Student[] students = await APIHandler.GetAllStudents();
 
             // List
             if (list != null) {

@@ -243,6 +243,19 @@ namespace Trackr {
             Group[] groups = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return groups;
         }
+        async public static void UpdateGroup(Group group, Dictionary<string, string> formData) {
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/group/" + group.GetId().ToString(), formData);
+        }
+        async public static void CreateGroup(Dictionary<string, string> formData) {
+            await WebRequestHandler.POST("/group/", formData);
+        }
+        async public static void DeleteGroup(Group group) {
+            await WebRequestHandler.DELETE("/group/" + group.GetId().ToString());
+        }
+        async public static Task<Student[]> GetGroupStudents(Group group) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/students"); // TODO: Handle 404 NOT FOUND
+            return Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+        }
         #endregion
 
         #region Feedback

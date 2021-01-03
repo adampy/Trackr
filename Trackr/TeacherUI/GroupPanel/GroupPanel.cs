@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace Trackr {
     public class GroupPanel : Panel {
@@ -9,6 +10,7 @@ namespace Trackr {
         private Label groupLabel;
         private SearchBox searchBox;
         private ListPanel list;
+        private Button newGroupButton;
         public GroupPanel(Panel parentPanel) : base() {
             this.parent = parentPanel;
             this.Width = parent.Width;
@@ -20,6 +22,16 @@ namespace Trackr {
             groupLabel.Text = "Manage groups";
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
+            
+            
+            // newStudentButton
+            newGroupButton = new Button();
+            newGroupButton.Text = "New class";
+            newGroupButton.Font = new Font("Calibri", 12.0f);
+            newGroupButton.Location = new Point(5, 3);
+            newGroupButton.AutoSize = true;
+            newGroupButton.Click += NewGroupButton_Click;
+            this.Controls.Add(newGroupButton);
 
             // searchBox
             searchBox = new SearchBox();
@@ -28,24 +40,40 @@ namespace Trackr {
             searchBox.AddTextBoxChangedAction(SearchBoxChanged);
             this.Controls.Add(searchBox);
             RefreshList();
-
         }
         private void SearchBoxChanged(object sender, EventArgs e) {
             list.MakePanels(searchBox.GetText());
         }
 
-        private void RefreshList() {
-            // list
-            Task<Group[]> task = Task.Run<Group[]>(async () => await APIHandler.TeacherGetGroups()); // Running async code from a sync method by using `Task`
-            Group[] groups = task.Result;
+        private void NewGroupButton_Click(object sender, EventArgs e) {
+            EditGroup newG = new EditGroup(); // Create a new student
+            DialogResult dialog = newG.ShowDialog(this);
+            if (dialog != DialogResult.OK) {
+                return;
+            }
 
-            //list = new StudentListPanel(students);
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                {"name", newG.newName },
+                {"subject", newG.newSubject }
+            };
+            APIHandler.CreateGroup(formData);
+            RefreshList();
+        }
+
+        async public void RefreshList() {
+            // Groups
+            Group[] groups = await APIHandler.TeacherGetGroups();
+
+            // List
+            if (list != null) {
+                list.Dispose();
+            }
+
             list = new ListPanel(this.parent.Width, groups, typeof(GroupListItem));
             list.Location = new Point(0, 35);
             list.Width = this.parent.Width;
             list.Height = this.parent.Height - 35;
             this.Controls.Add(list);
         }
-
     }
 }
