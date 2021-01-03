@@ -12,6 +12,7 @@ namespace Trackr {
         protected string forename;
         protected string surname; // Protected attributes such that User's children can access them - Student and Teacher
         protected string username;
+        public string fullName { get; set; }
 
         public User(int id, string forename, string surname, string username) {
             /// <summary>
@@ -21,6 +22,7 @@ namespace Trackr {
             this.forename = forename;
             this.surname = surname;
             this.username = username;
+            this.fullName = forename + " " + surname;
         }
         public virtual string DisplayName() { // Virtual means this method can be overriden 
             /// <summary>
@@ -41,7 +43,7 @@ namespace Trackr {
             return username;
         }
         public string GetFullName() {
-            return this.forename + " " + this.surname;
+            return this.fullName;
         }
         public string GetForename() {
             return this.forename;
@@ -138,7 +140,6 @@ namespace Trackr {
         public int GetAlps() {
             return this.alps;
         }
-        
     }
 
     public class Teacher : User {

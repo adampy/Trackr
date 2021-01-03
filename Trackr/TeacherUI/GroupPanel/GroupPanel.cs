@@ -18,8 +18,8 @@ namespace Trackr {
             groupLabel = new Label();
             groupLabel.AutoSize = true;
             groupLabel.Font = new Font("Calibri", 20.0f);
-            groupLabel.Location = new Point(180, 0);
-            groupLabel.Text = "Manage groups";
+            groupLabel.Location = new Point(150, 0);
+            groupLabel.Text = "Manage your groups";
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
             

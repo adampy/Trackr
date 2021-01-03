@@ -256,6 +256,18 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/students"); // TODO: Handle 404 NOT FOUND
             return Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
         }
+        async public static void RemoveStudentFromGroup(Student student, Group group) {
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                { "students", student.GetId().ToString() }
+            };
+            await WebRequestHandler.POST("/group/" + group.GetId().ToString() + "/leave", formData);
+        }
+        async public static void AddStudentToGroup(Student student, Group group) {
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                { "students", student.GetId().ToString() }
+            };
+            await WebRequestHandler.POST("/group/" + group.GetId().ToString() + "/join", formData);
+        }
         #endregion
 
         #region Feedback
