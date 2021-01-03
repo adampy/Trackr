@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System;
 
 namespace Trackr {
-    class GroupPanel : Panel {
+    public class GroupPanel : Panel {
         private Panel parent;
         private Label groupLabel;
         private SearchBox searchBox;
@@ -27,7 +27,14 @@ namespace Trackr {
             searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
             searchBox.AddTextBoxChangedAction(SearchBoxChanged);
             this.Controls.Add(searchBox);
+            RefreshList();
 
+        }
+        private void SearchBoxChanged(object sender, EventArgs e) {
+            list.MakePanels(searchBox.GetText());
+        }
+
+        private void RefreshList() {
             // list
             Task<Group[]> task = Task.Run<Group[]>(async () => await APIHandler.TeacherGetGroups()); // Running async code from a sync method by using `Task`
             Group[] groups = task.Result;
@@ -38,9 +45,6 @@ namespace Trackr {
             list.Width = this.parent.Width;
             list.Height = this.parent.Height - 35;
             this.Controls.Add(list);
-        }
-        private void SearchBoxChanged(object sender, EventArgs e) {
-            list.MakePanels(searchBox.GetText());
         }
 
     }

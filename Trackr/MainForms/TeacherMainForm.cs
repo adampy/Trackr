@@ -38,8 +38,8 @@ namespace Trackr {
                         this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
                         this.Text = "Trackr - " + edit.newUsername;
                     }
-                    bool done = await APIHandler.EditAccount(UserType.Teacher, newUsername: edit.newUsername, newPassword: edit.newPassword); // edit.newPassword and edit.newUsername may be null
-                    MessageBox.Show("Your edits have saved!");
+                    bool done = await APIHandler.EditAccountCredentials(UserType.Teacher, newUsername: edit.newUsername, newPassword: edit.newPassword); // edit.newPassword and edit.newUsername may be null
+                    MessageBox.Show("Your edits have been saved!");
                 }
             }
         }

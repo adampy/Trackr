@@ -36,8 +36,8 @@
             this.usernameLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.resetPasswordButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.editStudentButton = new System.Windows.Forms.Button();
+            this.deleteStudentButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -172,33 +172,35 @@
             this.resetPasswordButton.UseVisualStyleBackColor = true;
             this.resetPasswordButton.Click += new System.EventHandler(this.resetPasswordButton_Click);
             // 
-            // button1
+            // editStudentButton
             // 
-            this.button1.Font = new System.Drawing.Font("Corbel", 11.25F);
-            this.button1.Location = new System.Drawing.Point(15, 264);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(210, 38);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Edit student";
-            this.button1.UseVisualStyleBackColor = true;
+            this.editStudentButton.Font = new System.Drawing.Font("Corbel", 11.25F);
+            this.editStudentButton.Location = new System.Drawing.Point(15, 264);
+            this.editStudentButton.Name = "editStudentButton";
+            this.editStudentButton.Size = new System.Drawing.Size(210, 38);
+            this.editStudentButton.TabIndex = 13;
+            this.editStudentButton.Text = "Edit student";
+            this.editStudentButton.UseVisualStyleBackColor = true;
+            this.editStudentButton.Click += new System.EventHandler(this.editStudentButton_Click);
             // 
-            // button2
+            // deleteStudentButton
             // 
-            this.button2.Font = new System.Drawing.Font("Corbel", 11.25F);
-            this.button2.Location = new System.Drawing.Point(231, 264);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(214, 38);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Delete student";
-            this.button2.UseVisualStyleBackColor = true;
+            this.deleteStudentButton.Font = new System.Drawing.Font("Corbel", 11.25F);
+            this.deleteStudentButton.Location = new System.Drawing.Point(231, 264);
+            this.deleteStudentButton.Name = "deleteStudentButton";
+            this.deleteStudentButton.Size = new System.Drawing.Size(214, 38);
+            this.deleteStudentButton.TabIndex = 14;
+            this.deleteStudentButton.Text = "Delete student";
+            this.deleteStudentButton.UseVisualStyleBackColor = true;
+            this.deleteStudentButton.Click += new System.EventHandler(this.deleteStudentButton_Click);
             // 
             // ManageStudent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(457, 309);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.deleteStudentButton);
+            this.Controls.Add(this.editStudentButton);
             this.Controls.Add(this.resetPasswordButton);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.usernameLabel);
@@ -235,7 +237,7 @@
         private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button resetPasswordButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button editStudentButton;
+        private System.Windows.Forms.Button deleteStudentButton;
     }
 }

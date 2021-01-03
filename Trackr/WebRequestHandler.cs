@@ -85,5 +85,10 @@ namespace Trackr {
             response = await client.SendAsync(request); // TODO: try catch for patch requests
             return response;
         }
+
+        async public static Task<HttpResponseMessage> DELETE(string extension) {
+            HttpResponseMessage response = await client.DeleteAsync(apiRoot + extension);
+            return response;
+        }
     }
 }

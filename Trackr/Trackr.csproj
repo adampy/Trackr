@@ -52,31 +52,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIHandler.cs" />
-    <Compile Include="AuthenticationScreen.cs">
+    <Compile Include="MainForms\AuthenticationScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthenticationScreen.Designer.cs">
+    <Compile Include="MainForms\AuthenticationScreen.Designer.cs">
       <DependentUpon>AuthenticationScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="AbstractObjects.cs" />
     <Compile Include="DataStructures.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="EditAccount.cs">
+    <Compile Include="MiscForms\EditAccount.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditAccount.Designer.cs">
+    <Compile Include="MiscForms\EditAccount.Designer.cs">
       <DependentUpon>EditAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentGetPassword.cs">
+    <Compile Include="MiscForms\StudentGetPassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StudentGetPassword.Designer.cs">
+    <Compile Include="MiscForms\StudentGetPassword.Designer.cs">
       <DependentUpon>StudentGetPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentMainForm.cs">
+    <Compile Include="MainForms\StudentMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StudentMainForm.Designer.cs">
+    <Compile Include="MainForms\StudentMainForm.Designer.cs">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StudentUI\DoneButtonControl.cs">
@@ -94,40 +94,46 @@
     <Compile Include="StudentUI\HomeworkTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TeacherMainForm.cs">
+    <Compile Include="MainForms\TeacherMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TeacherMainForm.Designer.cs">
+    <Compile Include="MainForms\TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeacherUI\GroupListItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TeacherUI\GroupListItem.Designer.cs">
-      <DependentUpon>GroupListItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TeacherUI\GroupPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TeacherUI\ManageStudent.cs">
+    <Compile Include="TeacherUI\StudentPanel\EditStudent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TeacherUI\ManageStudent.Designer.cs">
-      <DependentUpon>ManageStudent.cs</DependentUpon>
+    <Compile Include="TeacherUI\StudentPanel\EditStudent.Designer.cs">
+      <DependentUpon>EditStudent.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeacherUI\StudentListItem.cs">
+    <Compile Include="TeacherUI\GroupPanel\GroupListItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TeacherUI\StudentListItem.Designer.cs">
+    <Compile Include="TeacherUI\GroupPanel\GroupListItem.Designer.cs">
+      <DependentUpon>GroupListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel\GroupPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\StudentPanel\ManageStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\StudentPanel\ManageStudent.Designer.cs">
+      <DependentUpon>ManageStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\StudentPanel\StudentListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\StudentPanel\StudentListItem.Designer.cs">
       <DependentUpon>StudentListItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeacherUI\StudentPanel.cs">
+    <Compile Include="TeacherUI\StudentPanel\StudentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TeacherUI\TeacherPanel.cs">
+    <Compile Include="TeacherUI\TeacherPanel\TeacherPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TeacherUI\TaskPanel.cs">
+    <Compile Include="TeacherUI\TaskPanel\TaskPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ListItem.cs">
@@ -145,7 +151,7 @@
     <Compile Include="WebRequestHandler.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AuthenticationScreen.resx">
+    <EmbeddedResource Include="MainForms\AuthenticationScreen.resx">
       <DependentUpon>AuthenticationScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -158,25 +164,28 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="EditAccount.resx">
+    <EmbeddedResource Include="MiscForms\EditAccount.resx">
       <DependentUpon>EditAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentGetPassword.resx">
+    <EmbeddedResource Include="MiscForms\StudentGetPassword.resx">
       <DependentUpon>StudentGetPassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentMainForm.resx">
+    <EmbeddedResource Include="MainForms\StudentMainForm.resx">
       <DependentUpon>StudentMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeacherMainForm.resx">
+    <EmbeddedResource Include="MainForms\TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeacherUI\GroupListItem.resx">
+    <EmbeddedResource Include="TeacherUI\GroupPanel\GroupListItem.resx">
       <DependentUpon>GroupListItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeacherUI\ManageStudent.resx">
+    <EmbeddedResource Include="TeacherUI\StudentPanel\EditStudent.resx">
+      <DependentUpon>EditStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\StudentPanel\ManageStudent.resx">
       <DependentUpon>ManageStudent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeacherUI\StudentListItem.resx">
+    <EmbeddedResource Include="TeacherUI\StudentPanel\StudentListItem.resx">
       <DependentUpon>StudentListItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SearchBox.resx">

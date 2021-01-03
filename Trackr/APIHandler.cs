@@ -43,7 +43,7 @@ namespace Trackr {
                 return false; // If incorrect params entered
             }
         }
-        async public static Task<bool> EditAccount(UserType user, string newUsername = null, string newPassword = null) {
+        async public static Task<bool> EditAccountCredentials(UserType user, string newUsername = null, string newPassword = null) {
             /// <summary>
             /// Update the student which is from the Authorization header.
             /// </summary>
@@ -121,6 +121,9 @@ namespace Trackr {
             }
 
         }
+        async public static void UpdateStudent(Student student, Dictionary<string, string> formData) {
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+        }
         #endregion
 
         #region Teachers
@@ -176,7 +179,10 @@ namespace Trackr {
             }
         }
         async public static void TeacherEditStudent(Student student, Dictionary<string, string> formData) {
-            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+            await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+        }
+        async public static void TeacherDeleteStudentAccount(Student student) {
+            await WebRequestHandler.DELETE("/student/" + student.GetId().ToString());
         }
         #endregion
 

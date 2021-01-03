@@ -19,6 +19,9 @@ namespace Trackr {
         private void manageStudentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             ManageStudent manage = new ManageStudent(this.student);
             manage.ShowDialog();
+            if (manage.studentPanelNeedsRefresh) {
+                ((StudentPanel)((ListPanel)this.Parent).Parent).RefreshList(); // TODO: Remove all parent and this.parent references and change to something like this
+            }
         }
     }
 }
