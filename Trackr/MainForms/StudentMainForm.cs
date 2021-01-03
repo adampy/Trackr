@@ -20,9 +20,7 @@ namespace Trackr {
 
             // Aesthetics
             this.user = user;
-            this.Text += this.user.GetUsername();
-            this.nameLabel.Text = this.user.DisplayName() + "!";
-            this.alpsLabel.Text = user.GetAlpsString();
+            DecorateForm();
 
             Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
             Homework[] tasks = task.Result;
@@ -36,10 +34,19 @@ namespace Trackr {
             this.Controls.Add(tabController);
         }
 
-        private void OnRefreshButtonClick(object sender, EventArgs e) {
-            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user, groupHardRefresh: true));
-            Homework[] tasks = task.Result;
+        private void DecorateForm() {
+            this.Text += this.user.GetUsername();
+            this.nameLabel.Text = this.user.DisplayName() + "!";
+            this.alpsLabel.Text = user.GetAlpsString();
+        }
+
+        async private void OnRefreshButtonClick(object sender, EventArgs e) {
+            Homework[] tasks = await APIHandler.GetHomework(student: user, groupHardRefresh: true);
             tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
+
+            this.user = await APIHandler.GetStudent(id: this.user.GetId()); // Update student
+            DecorateForm(); // Update the form accordingly (e.g. new ALPs grade, username)
+            // TODO: Show error to re-sign-in if a teacher changes username whilst student using the program
         }
 
         async private void editAccountClick(object sender, EventArgs e) {

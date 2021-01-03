@@ -25,8 +25,22 @@ namespace Trackr {
         public string newSurname;
         public int newAlps;
         public bool isNewUsername;
+        public EditStudent() {
+            /// <summary>
+            /// This constructor is used when creating a new student.
+            /// </summary>
+            InitializeComponent();
+            alpsComboBox.Items.AddRange(alpsConverter.Keys.ToArray());
+            isNewUsername = true;
+            label1.Text = "Create new student";
+            editStudentButton.Text = "Save student";
+            this.Text = "Create student";
+        }
 
         public EditStudent(Student student) {
+            /// <summary>
+            /// This constructor is used when editing a student.
+            /// </summary>
             InitializeComponent();
             this.student = student;
             alpsComboBox.Items.AddRange(alpsConverter.Keys.ToArray());
@@ -43,7 +57,7 @@ namespace Trackr {
 
         async private void editStudentButton_Click(object sender, EventArgs e) {
             newUsername = usernameTextBox.Text;
-            newForename = forenameTextBox.Text; // TODO: Validation - length checking (or just have a max length on the text boxes)
+            newForename = forenameTextBox.Text;
             newSurname = surnameTextBox.Text;
             if (alpsComboBox.SelectedIndex == -1 || newUsername == "" || newForename == "" || newSurname == "") {
                 MessageBox.Show("All fields must be entered, including the ALPs grade combobox.");
@@ -51,7 +65,10 @@ namespace Trackr {
             }
 
             newAlps = alpsConverter[alpsComboBox.SelectedItem.ToString()];
-            isNewUsername = newUsername != student.GetUsername(); // If the username has changed
+            
+            if (student != null) {
+                isNewUsername = newUsername != student.GetUsername(); // If the username has changed
+            }
 
             if ((isNewUsername && !await APIHandler.IsUsernameTaken(UserType.Student, newUsername)) || !isNewUsername) {
                 this.DialogResult = DialogResult.OK;

@@ -124,6 +124,18 @@ namespace Trackr {
         async public static void UpdateStudent(Student student, Dictionary<string, string> formData) {
             HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
         }
+        async public static void CreateStudent(string forename, string surname, string username, int alps) {
+            /// <summary>
+            /// APIHandler method that creates a student. This method assumes that the alps is in the correct range and username has not already been taken.
+            /// </summary>
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                { "forename", forename },
+                { "surname", surname },
+                { "username", username },
+                { "alps", alps.ToString() }
+            };
+            HttpResponseMessage response = await WebRequestHandler.POST("/student/", formData);
+        }
         #endregion
 
         #region Teachers

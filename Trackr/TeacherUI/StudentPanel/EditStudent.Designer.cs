@@ -91,25 +91,28 @@
             // 
             this.forenameTextBox.Font = new System.Drawing.Font("Corbel", 11.25F);
             this.forenameTextBox.Location = new System.Drawing.Point(98, 49);
+            this.forenameTextBox.MaxLength = 35;
             this.forenameTextBox.Name = "forenameTextBox";
             this.forenameTextBox.Size = new System.Drawing.Size(276, 26);
-            this.forenameTextBox.TabIndex = 18;
+            this.forenameTextBox.TabIndex = 1;
             // 
             // surnameTextBox
             // 
             this.surnameTextBox.Font = new System.Drawing.Font("Corbel", 11.25F);
             this.surnameTextBox.Location = new System.Drawing.Point(98, 89);
+            this.surnameTextBox.MaxLength = 35;
             this.surnameTextBox.Name = "surnameTextBox";
             this.surnameTextBox.Size = new System.Drawing.Size(276, 26);
-            this.surnameTextBox.TabIndex = 19;
+            this.surnameTextBox.TabIndex = 2;
             // 
             // usernameTextBox
             // 
             this.usernameTextBox.Font = new System.Drawing.Font("Corbel", 11.25F);
             this.usernameTextBox.Location = new System.Drawing.Point(98, 169);
+            this.usernameTextBox.MaxLength = 64;
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(277, 26);
-            this.usernameTextBox.TabIndex = 20;
+            this.usernameTextBox.TabIndex = 4;
             // 
             // editStudentButton
             // 
@@ -117,7 +120,7 @@
             this.editStudentButton.Location = new System.Drawing.Point(15, 211);
             this.editStudentButton.Name = "editStudentButton";
             this.editStudentButton.Size = new System.Drawing.Size(360, 38);
-            this.editStudentButton.TabIndex = 21;
+            this.editStudentButton.TabIndex = 5;
             this.editStudentButton.Text = "Save changes";
             this.editStudentButton.UseVisualStyleBackColor = true;
             this.editStudentButton.Click += new System.EventHandler(this.editStudentButton_Click);
@@ -129,7 +132,7 @@
             this.alpsComboBox.Location = new System.Drawing.Point(98, 129);
             this.alpsComboBox.Name = "alpsComboBox";
             this.alpsComboBox.Size = new System.Drawing.Size(276, 26);
-            this.alpsComboBox.TabIndex = 22;
+            this.alpsComboBox.TabIndex = 3;
             // 
             // EditStudent
             // 
