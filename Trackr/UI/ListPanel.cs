@@ -75,7 +75,7 @@ namespace Trackr {
                 }
             }
 
-            if (y == 0) { // nO ITEMS ADDED
+            if (y == 0) { // No items added
                 noItemsLabel.Show();
                 noItemsLabel.BringToFront();
             } else {
