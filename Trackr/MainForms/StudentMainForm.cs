@@ -23,7 +23,7 @@ namespace Trackr {
             DecorateForm();
 
             Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
-            Homework[] tasks = task.Result;
+            Homework[] tasks = task.Result; // TODO: Change this to async void method (remove task.Result)
 
             // HomeworkTabController
             tabController = new HomeworkTabController(tasks);
@@ -35,7 +35,7 @@ namespace Trackr {
         }
 
         private void DecorateForm() {
-            this.Text += this.user.GetUsername();
+            this.Text  = "Trackr - " +  this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
             this.alpsLabel.Text = user.GetAlpsString();
         }

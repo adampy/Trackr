@@ -277,16 +277,24 @@ namespace Trackr {
             /// As `Feedback` is a struct, there is no static constructor like there is with other objects, therefore JSON needs to be processed here.
             /// This may return an empty feedback structure (feedback = "None", score = "None") if feedback is not avaliable.
             /// </summary>
-            HttpResponseMessage response = await WebRequestHandler.GET("/task/" + task.id.ToString() + "/status");
-            string responseContent = await response.Content.ReadAsStringAsync();
-            dynamic json = JsonConvert.DeserializeObject(responseContent);
 
-            string feedbackString = json.data[0].feedback;
+            string feedbackString = null;
             int score = 0;
-            if (json.data[0].score != null) {
-                score = json.data[0].score;
+            Feedback feedback;
+            try {
+                HttpResponseMessage response = await WebRequestHandler.GET("/task/" + task.id.ToString() + "/status");
+                string responseContent = await response.Content.ReadAsStringAsync();
+                dynamic json = JsonConvert.DeserializeObject(responseContent);
+
+                feedbackString = json.data[0].feedback;
+                if (json.data[0].score != null) {
+                    score = json.data[0].score;
+                }
             }
-            Feedback feedback = new Feedback(task, feedbackString, score);
+            catch (HttpStatusNotFound) {} // Then no feedback avaliable, jump the the finally clause
+            finally {
+                feedback = new Feedback(task, feedbackString, score);
+            }
             return feedback;
         }
         #endregion
