@@ -50,6 +50,8 @@ namespace Trackr {
                 listItems = new StudentListItem[this.data.Length];
             } else if (this.typeOfListItem == typeof(GroupListItem)) {
                 listItems = new GroupListItem[this.data.Length];
+            } else if (this.typeOfListItem == typeof(AssignmentListItem)) {
+                listItems = new AssignmentListItem[this.data.Length];
             }
 
             int y = 0;
@@ -63,6 +65,9 @@ namespace Trackr {
                     success = true;
                 } else if (this.typeOfListItem == typeof(GroupListItem) && ((Group)obj).GetName().ToLower().Contains(mustContain.ToLower())) {
                     listItem = new GroupListItem(obj);
+                    success = true;
+                } else if (this.typeOfListItem == typeof(AssignmentListItem) && ((Assignment)obj).title.ToLower().Contains(mustContain.ToLower())) {
+                    listItem = new AssignmentListItem(obj);
                     success = true;
                 }
 

@@ -214,6 +214,21 @@ namespace Trackr {
             };
             HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData); // TODO: Do I need to account for errors here?
         }
+        async public static Task<Assignment[]> TeacherGetAssignments() {
+            try {
+                HttpResponseMessage response = await WebRequestHandler.GET("/task/?mine=True");
+                Assignment[] assignments = Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+                return assignments;
+            } catch (HttpStatusNotFound) {
+                return null;
+            }
+        }
+        async public static void EditAssignment(Assignment assignment, Dictionary<string, string> formData) {
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData); // TODO: Do I need to account for errors here?
+        }
+        async public static void CreateAssignment(Group group, Dictionary<string, string> formData) {
+            
+        }
         #endregion
 
         #region Groups

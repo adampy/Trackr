@@ -189,6 +189,9 @@ namespace Trackr {
     }
 
     public class Homework : ITask {
+        /// <summary>
+        ///  Implements ITask, this is the student version of a Task object.
+        /// </summary>
         public int id { get; set; }
         public Group group { get; set; }
         public string title { get; set; }
@@ -243,13 +246,54 @@ namespace Trackr {
             this.hasCompleted = newStatus;
             APIHandler.UpdateHomeworkStatus(this);
         }
+    }
 
+    public class Assignment : ITask {
+        public int id { get; set; }
+        public Group group { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public int maxScore { get; set; }
+        public DateTime dateDue { get; set; }
+        public DateTime dateSet { get; set; }
+        public Assignment(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet) {
+            this.id = id;
+            this.group = group;
+            this.title = title; // TODO: make these public and access them in the TaskControl class
+            this.description = description;
+            this.maxScore = maxScore;
+            this.dateDue = dateDue;
+            this.dateSet = dateSet;
+        }
+        public static Assignment[] CreateFromJsonString(string json) {
+            /// <summary>
+            /// Static method that creates an array of `TaskObj` from an API response
+            /// </summary>
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            Assignment[] assignments = new Assignment[jsonObj.data.Count];
+            for (int i = 0; i < jsonObj.data.Count; i++) {
+                dynamic homeworkObj = jsonObj.data[i];
+                int id = homeworkObj.id;
+
+                string temp = homeworkObj.group.reference.link;
+
+                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp)).Result;
+                int maxScore = homeworkObj.max_score;
+                string title = homeworkObj.title;
+                string description = homeworkObj.description;
+                DateTime dateDue = homeworkObj.date_due;
+                DateTime dateSet = homeworkObj.date_set;
+
+                assignments[i] = new Assignment(id, group, title, description, maxScore, dateDue, dateSet);
+            }
+            return assignments;
+        }
     }
 
     public class Group {
         private int id;
         private Teacher teacher;
-        private string name;
+        private string name { get; set; } // This needs a getter and setter because of the teacher/create task/assigned to combobox
         private string subject;
 
         public Group(int id, Teacher teacher, string name, string subject) {

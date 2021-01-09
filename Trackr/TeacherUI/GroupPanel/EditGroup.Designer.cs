@@ -67,9 +67,9 @@
             this.label3.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(12, 103);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 18);
+            this.label3.Size = new System.Drawing.Size(58, 18);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Subject: ";
+            this.label3.Text = "Subject";
             // 
             // label1
             // 
@@ -77,9 +77,9 @@
             this.label1.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 63);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 18);
+            this.label1.Size = new System.Drawing.Size(48, 18);
             this.label1.TabIndex = 17;
-            this.label1.Text = "Name:";
+            this.label1.Text = "Name";
             // 
             // editGroupButton
             // 

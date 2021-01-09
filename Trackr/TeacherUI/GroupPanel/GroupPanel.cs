@@ -23,8 +23,7 @@ namespace Trackr {
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
             
-            
-            // newStudentButton
+            // newGroupButton
             newGroupButton = new Button();
             newGroupButton.Text = "New class";
             newGroupButton.Font = new Font("Calibri", 12.0f);

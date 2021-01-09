@@ -142,11 +142,29 @@
     <Compile Include="TeacherUI\StudentPanel\StudentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TeacherUI\TaskPanel\AssignmentListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TaskPanel\AssignmentListItem.Designer.cs">
+      <DependentUpon>AssignmentListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherUI\TaskPanel\EditTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TaskPanel\EditTask.Designer.cs">
+      <DependentUpon>EditTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeacherUI\TeacherPanel\TeacherPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TeacherUI\TaskPanel\TaskPanel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\DateRepresentationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\DateRepresentationPanel.Designer.cs">
+      <DependentUpon>DateRepresentationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ListItem.cs">
       <SubType>UserControl</SubType>
@@ -205,6 +223,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\StudentPanel\StudentListItem.resx">
       <DependentUpon>StudentListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\TaskPanel\AssignmentListItem.resx">
+      <DependentUpon>AssignmentListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\TaskPanel\EditTask.resx">
+      <DependentUpon>EditTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DateRepresentationPanel.resx">
+      <DependentUpon>DateRepresentationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SearchBox.resx">
       <DependentUpon>SearchBox.cs</DependentUpon>

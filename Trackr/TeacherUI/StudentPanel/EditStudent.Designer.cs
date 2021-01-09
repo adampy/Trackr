@@ -42,9 +42,9 @@
             this.label5.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(11, 172);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(82, 18);
+            this.label5.Size = new System.Drawing.Size(75, 18);
             this.label5.TabIndex = 16;
-            this.label5.Text = "Username: ";
+            this.label5.Text = "Username";
             // 
             // label4
             // 
@@ -52,9 +52,9 @@
             this.label4.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(11, 132);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 18);
+            this.label4.Size = new System.Drawing.Size(82, 18);
             this.label4.TabIndex = 15;
-            this.label4.Text = "ALPs Grade: ";
+            this.label4.Text = "ALPs Grade";
             // 
             // label3
             // 
@@ -62,9 +62,9 @@
             this.label3.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(11, 92);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 18);
+            this.label3.Size = new System.Drawing.Size(67, 18);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Surname: ";
+            this.label3.Text = "Surname";
             // 
             // label2
             // 
@@ -72,9 +72,9 @@
             this.label2.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(11, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 18);
+            this.label2.Size = new System.Drawing.Size(74, 18);
             this.label2.TabIndex = 13;
-            this.label2.Text = "Forename: ";
+            this.label2.Text = "Forename";
             // 
             // label1
             // 
