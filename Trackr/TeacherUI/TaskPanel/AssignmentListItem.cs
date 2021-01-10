@@ -30,16 +30,33 @@ namespace Trackr {
             if (dialog != DialogResult.OK) {
                 return;
             }
-            MessageBox.Show("Edit task success!");
-            
+            // Make these local vars to prevent  "marshal-by-reference" classes - https://stackoverflow.com/questions/4178576/accessing-a-member-on-form-may-cause-a-runtime-exception-because-it-is-a-field-o
+            int newScore = edit.newScore;
+            DateTime newDueDate = edit.newDueDate;
+
             Dictionary<string, string> formData = new Dictionary<string, string> {
                 {"title", edit.newTitle },
                 {"description", edit.newDescription },
-                {"max_score", edit.newScore.ToString()},
-                {"date_due", edit.newDueDate.ToString("dd/MM/yyyy|HH:mm") }
+                {"max_score", newScore.ToString()},
+                {"date_due", newDueDate.ToString("dd/MM/yyyy|HH:mm") }
             };
             APIHandler.EditAssignment(assignment, formData);
             ((TaskPanel)((ListPanel)this.Parent).Parent).RefreshList(); //TODO: Make all panels (TaskPanel,StudentPanel,GroupPanel,TeacherPanel) have abstract methods of refreshlist
+            MessageBox.Show("Edited task successfully!");
+        }
+
+        private void deleteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            DialogResult confirm = MessageBox.Show("Are you sure you want to delete '" + assignment.title + "'?", "Confirm deletion", MessageBoxButtons.YesNo);
+            if (confirm != DialogResult.Yes) {
+                return;
+            }
+            APIHandler.DeleteAssignment(assignment);
+            ((TaskPanel)((ListPanel)this.Parent).Parent).RefreshList();
+        }
+
+        private void provideFeedbackLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            ProvideFeedback provFbk = new ProvideFeedback(assignment);
+            provFbk.ShowDialog();
         }
     }
 }

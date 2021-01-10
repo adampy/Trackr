@@ -23,6 +23,7 @@ namespace Trackr {
             /// This constructor is used when creating an assignment.
             /// </summary>
             InitializeComponent();
+            this.groups = groups;
             this.Text = "Create task";
             label2.Text = "Create new task";
             editTaskButton.Text = "Save new task";
@@ -32,6 +33,7 @@ namespace Trackr {
             dueDatePicker.Value = defaultTime;
             assignedcomboBox1.DataSource = this.groups;
             assignedcomboBox1.DisplayMember = "name";
+            assignedcomboBox1.ValueMember = "name";
         }
         public EditTask(Assignment assignment) {
             /// <summary>
@@ -65,7 +67,7 @@ namespace Trackr {
                 return;
             }
 
-            if (assignedcomboBox1.Enabled && assignedcomboBox1.SelectedIndex == -1) { //TODO:TEST THIS HERE MAK SURE IT WORKS
+            if (assignedcomboBox1.Enabled && assignedcomboBox1.SelectedIndex == -1) {
                 MessageBox.Show("You must assign the task to a group.");
                 return;
             } else {

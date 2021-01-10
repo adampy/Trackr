@@ -64,9 +64,12 @@
             // 
             // studentComboBox
             // 
+            this.studentComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.studentComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.studentComboBox.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.studentComboBox.FormattingEnabled = true;
             this.studentComboBox.Location = new System.Drawing.Point(122, 381);
+            this.studentComboBox.MaxDropDownItems = 64;
             this.studentComboBox.Name = "studentComboBox";
             this.studentComboBox.Size = new System.Drawing.Size(420, 34);
             this.studentComboBox.TabIndex = 3;
@@ -75,7 +78,7 @@
             // 
             this.addStudentButton.Font = new System.Drawing.Font("Corbel", 15.75F);
             this.addStudentButton.Location = new System.Drawing.Point(546, 381);
-            this.addStudentButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.addStudentButton.Margin = new System.Windows.Forms.Padding(2);
             this.addStudentButton.Name = "addStudentButton";
             this.addStudentButton.Size = new System.Drawing.Size(87, 33);
             this.addStudentButton.TabIndex = 4;

@@ -293,7 +293,7 @@ namespace Trackr {
     public class Group {
         private int id;
         private Teacher teacher;
-        private string name { get; set; } // This needs a getter and setter because of the teacher/create task/assigned to combobox
+        public string name { get; set; } // This needs a getter and setter because of the teacher/create task/assigned to combobox
         private string subject;
 
         public Group(int id, Teacher teacher, string name, string subject) {
@@ -341,8 +341,8 @@ namespace Trackr {
     public class Feedback {
         private string feedback { get; set; }
         private int score { get; set; }
-        public Homework task { get; set; }
-        public Feedback(Homework task, string feedback = null, int score = 0) {
+        public ITask task { get; set; }
+        public Feedback(ITask task, string feedback = null, int score = 0) {
             this.feedback = feedback;
             this.score = score;
             this.task = task;

@@ -65,6 +65,7 @@
             this.provideFeedbackLinkLabel.TabIndex = 7;
             this.provideFeedbackLinkLabel.TabStop = true;
             this.provideFeedbackLinkLabel.Text = "Provide feedback";
+            this.provideFeedbackLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.provideFeedbackLinkLabel_LinkClicked);
             // 
             // deleteLinkLabel
             // 
@@ -79,6 +80,7 @@
             this.deleteLinkLabel.TabIndex = 6;
             this.deleteLinkLabel.TabStop = true;
             this.deleteLinkLabel.Text = "Delete";
+            this.deleteLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.deleteLinkLabel_LinkClicked);
             // 
             // editLinkLabel
             // 

@@ -154,6 +154,12 @@
     <Compile Include="TeacherUI\TaskPanel\EditTask.Designer.cs">
       <DependentUpon>EditTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="TeacherUI\TaskPanel\ProvideFeedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\TaskPanel\ProvideFeedback.Designer.cs">
+      <DependentUpon>ProvideFeedback.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeacherUI\TeacherPanel\TeacherPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -229,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\TaskPanel\EditTask.resx">
       <DependentUpon>EditTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\TaskPanel\ProvideFeedback.resx">
+      <DependentUpon>ProvideFeedback.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DateRepresentationPanel.resx">
       <DependentUpon>DateRepresentationPanel.cs</DependentUpon>

@@ -114,9 +114,11 @@ namespace Trackr {
             try {
                 HttpResponseMessage response = await WebRequestHandler.POST("/student/password_reset", formData);
                 return response.IsSuccessStatusCode;
-            } catch (HttpStatusNotFound) {
+            }
+            catch (HttpStatusNotFound) {
                 return false;
-            } catch (HttpStatusUnauthorized) {
+            }
+            catch (HttpStatusUnauthorized) {
                 return false;
             }
 
@@ -204,7 +206,8 @@ namespace Trackr {
                 HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
                 Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh);
                 return tasks;
-            } catch (HttpStatusNotFound) {
+            }
+            catch (HttpStatusNotFound) {
                 return new Homework[0];
             }
         }
@@ -219,7 +222,8 @@ namespace Trackr {
                 HttpResponseMessage response = await WebRequestHandler.GET("/task/?mine=True");
                 Assignment[] assignments = Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
                 return assignments;
-            } catch (HttpStatusNotFound) {
+            }
+            catch (HttpStatusNotFound) {
                 return null;
             }
         }
@@ -227,7 +231,10 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData); // TODO: Do I need to account for errors here?
         }
         async public static void CreateAssignment(Group group, Dictionary<string, string> formData) {
-            
+            HttpResponseMessage response = await WebRequestHandler.POST("/group/" + group.GetId() + "/task", formData); // TODO: Remove response var here
+        }
+        async public static void DeleteAssignment(Assignment assignment) {
+            await WebRequestHandler.DELETE("/task/" + assignment.id.ToString());
         }
         #endregion
 
@@ -306,12 +313,41 @@ namespace Trackr {
                     score = json.data[0].score;
                 }
             }
-            catch (HttpStatusNotFound) {} // Then no feedback avaliable, jump the the finally clause
+            catch (HttpStatusNotFound) { } // Then no feedback avaliable, jump the the finally clause
             finally {
                 feedback = new Feedback(task, feedbackString, score);
             }
             return feedback;
         }
-        #endregion
+        async public static Task<Feedback> TeacherGetFeedback(Student student, Assignment assignment) {
+            string feedbackString = null;
+            int score = 0;
+            Feedback feedback;
+            try {
+                HttpResponseMessage response = await WebRequestHandler.GET("/task/" + assignment.id.ToString() + "/current_feedback?student=" + student.GetId().ToString());
+                string responseContent = await response.Content.ReadAsStringAsync();
+                dynamic json = JsonConvert.DeserializeObject(responseContent);
+
+                feedbackString = json.data[0].feedback;
+                if (json.data[0].score != null) {
+                    score = json.data[0].score;
+                }
+            }
+            catch (HttpStatusNotFound) { } // Then no feedback avaliable, jump the the finally clause
+            finally {
+                feedback = new Feedback(assignment, feedbackString, score);
+            }
+            return feedback;
+        }
+        async public static void GiveFeedback(Student student, Assignment assignment, int score, string feedback) {
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                { "student", student.GetId().ToString() },
+                { "score", score.ToString() },
+                { "feedback", feedback }
+            };
+
+            await WebRequestHandler.POST("/task/" + assignment.id.ToString() + "/provide_feedback", formData);
+            #endregion
+        }
     }
 }

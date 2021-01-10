@@ -137,7 +137,7 @@ namespace Trackr {
             taskDescriptionLabel.AutoSize = true;
             taskDescriptionLabel.Font = new Font("Calibri", 14.0f);
             taskDescriptionLabel.Location = new Point(10, 90);
-            taskDescriptionLabel.Text = "This is a fake description of a task so that I can understand where I need to start the line wrapping. This is a fake description of a task so that I can understand where I need to start the line wrapping. This is a fake description of a task so that I can understand where I need to start the line wrapping.";//task.description;
+            taskDescriptionLabel.Text = task.description;
             taskDescriptionLabel.BackColor = Color.Transparent;
             taskDescriptionLabel.MaximumSize = new Size(650, 200);
             this.Controls.Add(taskDescriptionLabel);

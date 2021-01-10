@@ -52,8 +52,19 @@ namespace Trackr {
             if (dialog != DialogResult.OK) {
                 return;
             }
+            // Make these local vars to prevent  "marshal-by-reference" classes - https://stackoverflow.com/questions/4178576/accessing-a-member-on-form-may-cause-a-runtime-exception-because-it-is-a-field-o
+            int newScore = newTask.newScore;
+            DateTime newDueDate = newTask.newDueDate;
 
-            // TODO: CREATE TASK METHODS
+            Dictionary<string, string> formData = new Dictionary<string, string> {
+                {"title", newTask.newTitle },
+                {"description", newTask.newDescription },
+                {"max_score", newScore.ToString()},
+                {"date_due", newDueDate.ToString("dd/MM/yyyy|HH:mm") }
+            };
+            APIHandler.CreateAssignment(newTask.newGroup, formData);
+            RefreshList(); //TODO: Make all panels (TaskPanel,StudentPanel,GroupPanel,TeacherPanel) have abstract methods of refreshlist
+            MessageBox.Show("Created task successfully!");
         }
 
         async public void RefreshList() {

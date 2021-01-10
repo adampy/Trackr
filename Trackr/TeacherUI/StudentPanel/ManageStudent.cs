@@ -52,10 +52,12 @@ namespace Trackr {
             if (dialog != DialogResult.OK) {
                 return;
             } else {
+                // Make this local var to prevent "marshal-by-reference" classes - https://stackoverflow.com/questions/4178576/accessing-a-member-on-form-may-cause-a-runtime-exception-because-it-is-a-field-o
+                int newAlps = edit.newAlps;
                 Dictionary<string, string> formData = new Dictionary<string, string> {
                     { "forename", edit.newForename },
                     { "surname", edit.newSurname },
-                    { "alps", edit.newAlps.ToString() },
+                    { "alps", newAlps.ToString() },
                 };
 
                 if (edit.isNewUsername) {
