@@ -27,6 +27,7 @@
             this.editLinkLabel = new System.Windows.Forms.LinkLabel();
             this.deleteLinkLabel = new System.Windows.Forms.LinkLabel();
             this.viewStudentsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.viewMarksLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // groupNameLabel
@@ -44,12 +45,12 @@
             // 
             this.editLinkLabel.ActiveLinkColor = System.Drawing.Color.Red;
             this.editLinkLabel.AutoSize = true;
-            this.editLinkLabel.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editLinkLabel.Font = new System.Drawing.Font("Corbel", 12F);
             this.editLinkLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.editLinkLabel.LinkColor = System.Drawing.Color.Green;
-            this.editLinkLabel.Location = new System.Drawing.Point(434, 18);
+            this.editLinkLabel.Location = new System.Drawing.Point(502, 18);
             this.editLinkLabel.Name = "editLinkLabel";
-            this.editLinkLabel.Size = new System.Drawing.Size(47, 26);
+            this.editLinkLabel.Size = new System.Drawing.Size(37, 19);
             this.editLinkLabel.TabIndex = 2;
             this.editLinkLabel.TabStop = true;
             this.editLinkLabel.Text = "Edit";
@@ -59,12 +60,12 @@
             // 
             this.deleteLinkLabel.ActiveLinkColor = System.Drawing.Color.Red;
             this.deleteLinkLabel.AutoSize = true;
-            this.deleteLinkLabel.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteLinkLabel.Font = new System.Drawing.Font("Corbel", 12F);
             this.deleteLinkLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.deleteLinkLabel.LinkColor = System.Drawing.Color.Red;
-            this.deleteLinkLabel.Location = new System.Drawing.Point(487, 18);
+            this.deleteLinkLabel.Location = new System.Drawing.Point(540, 18);
             this.deleteLinkLabel.Name = "deleteLinkLabel";
-            this.deleteLinkLabel.Size = new System.Drawing.Size(68, 26);
+            this.deleteLinkLabel.Size = new System.Drawing.Size(54, 19);
             this.deleteLinkLabel.TabIndex = 3;
             this.deleteLinkLabel.TabStop = true;
             this.deleteLinkLabel.Text = "Delete";
@@ -74,21 +75,35 @@
             // 
             this.viewStudentsLinkLabel.ActiveLinkColor = System.Drawing.Color.Red;
             this.viewStudentsLinkLabel.AutoSize = true;
-            this.viewStudentsLinkLabel.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewStudentsLinkLabel.Font = new System.Drawing.Font("Corbel", 12F);
             this.viewStudentsLinkLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.viewStudentsLinkLabel.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.viewStudentsLinkLabel.Location = new System.Drawing.Point(296, 18);
+            this.viewStudentsLinkLabel.Location = new System.Drawing.Point(399, 18);
             this.viewStudentsLinkLabel.Name = "viewStudentsLinkLabel";
-            this.viewStudentsLinkLabel.Size = new System.Drawing.Size(132, 26);
+            this.viewStudentsLinkLabel.Size = new System.Drawing.Size(102, 19);
             this.viewStudentsLinkLabel.TabIndex = 4;
             this.viewStudentsLinkLabel.TabStop = true;
             this.viewStudentsLinkLabel.Text = "View students";
             this.viewStudentsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.viewStudentsLinkLabel_LinkClicked);
             // 
+            // viewMarksLinkLabel
+            // 
+            this.viewMarksLinkLabel.AutoSize = true;
+            this.viewMarksLinkLabel.Font = new System.Drawing.Font("Corbel", 12F);
+            this.viewMarksLinkLabel.LinkColor = System.Drawing.Color.Black;
+            this.viewMarksLinkLabel.Location = new System.Drawing.Point(313, 18);
+            this.viewMarksLinkLabel.Name = "viewMarksLinkLabel";
+            this.viewMarksLinkLabel.Size = new System.Drawing.Size(85, 19);
+            this.viewMarksLinkLabel.TabIndex = 5;
+            this.viewMarksLinkLabel.TabStop = true;
+            this.viewMarksLinkLabel.Text = "View marks";
+            this.viewMarksLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.viewMarksLinkLabel_LinkClicked);
+            // 
             // GroupListItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.viewMarksLinkLabel);
             this.Controls.Add(this.viewStudentsLinkLabel);
             this.Controls.Add(this.deleteLinkLabel);
             this.Controls.Add(this.editLinkLabel);
@@ -106,5 +121,6 @@
         private System.Windows.Forms.LinkLabel editLinkLabel;
         private System.Windows.Forms.LinkLabel deleteLinkLabel;
         private System.Windows.Forms.LinkLabel viewStudentsLinkLabel;
+        private System.Windows.Forms.LinkLabel viewMarksLinkLabel;
     }
 }

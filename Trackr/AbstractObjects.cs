@@ -357,4 +357,66 @@ namespace Trackr {
             return this.score;
         }
     }
+
+    public class AbstractMark {
+        private bool hasMarked = false;
+        private string feedback;
+        private int score;
+
+        // Oject not needed because it will cause unnecessary API calls. Only the ID is required. Student and task objects will be added afterwards.
+        private int studentId;
+        private int taskId;
+        public Student student { get; set; }
+        public ITask task { get; set; }
+
+        public AbstractMark(int studentId, int taskId, string feedback = null, int score = 0, bool hasMarked = false){
+            this.studentId = studentId;
+            this.taskId = taskId;
+            this.feedback = feedback;
+            this.score = score;
+            this.hasMarked = hasMarked;
+        }
+        public static AbstractMark[] CreateFromJsonString(string json) {
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            AbstractMark[] marks = new AbstractMark[jsonObj.data.Count]; // The provided JSON may be an array of marks
+            
+            for (int i = 0; i < jsonObj.data.Count; i++) {
+                dynamic markObj = jsonObj.data[i]; // Get the mark
+                bool hasMarked = markObj.has_marked;
+                string feedback = markObj.feedback;
+                int score = markObj.score;
+
+                int studentId = markObj.student.reference.id;
+                int taskId = markObj.task.reference.id;
+
+                marks[i] = new AbstractMark(studentId, taskId, feedback, score, hasMarked);
+            }
+            return marks;
+        }
+        public int GetStudentId() {
+            return this.studentId;
+        }
+        public int GetTaskId() {
+            return this.taskId;
+        }
+        public string GetScoreString() {
+            /// <summary>
+            /// Returns a string for the score. If the task has not been marked then return "Not completed".
+            /// </summary>
+            if (this.hasMarked) {
+                return this.score.ToString();
+            } else {
+                return "Not completed";
+            }
+        }
+        public string GetFeedback() {
+            return this.feedback;
+        }
+        public bool HasMarked() {
+            return this.hasMarked;
+        }
+        public int GetScore() {
+            return this.score;
+        }
+    }
 }

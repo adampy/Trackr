@@ -112,6 +112,12 @@
     <Compile Include="TeacherUI\GroupPanel\ViewGroupStudents.Designer.cs">
       <DependentUpon>ViewGroupStudents.cs</DependentUpon>
     </Compile>
+    <Compile Include="TeacherUI\GroupPanel\ViewMarks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeacherUI\GroupPanel\ViewMarks.Designer.cs">
+      <DependentUpon>ViewMarks.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeacherUI\StudentPanel\EditStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\GroupPanel\ViewGroupStudents.resx">
       <DependentUpon>ViewGroupStudents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeacherUI\GroupPanel\ViewMarks.resx">
+      <DependentUpon>ViewMarks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherUI\StudentPanel\EditStudent.resx">
       <DependentUpon>EditStudent.cs</DependentUpon>

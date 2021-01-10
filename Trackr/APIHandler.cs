@@ -236,6 +236,11 @@ namespace Trackr {
         async public static void DeleteAssignment(Assignment assignment) {
             await WebRequestHandler.DELETE("/task/" + assignment.id.ToString());
         }
+        async public static Task<Assignment[]> TeacherGetGroupTasks(Group group) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/task");
+            Assignment[] homeworks = Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            return homeworks;
+        }
         #endregion
 
         #region Groups
@@ -347,7 +352,15 @@ namespace Trackr {
             };
 
             await WebRequestHandler.POST("/task/" + assignment.id.ToString() + "/provide_feedback", formData);
-            #endregion
         }
+            #endregion
+
+        #region AbstractMarks
+        async public static Task<AbstractMark[]> GetGroupMarks(Group group) {
+            HttpResponseMessage response = await WebRequestHandler.GET("/mark/" + "?group=" + group.GetId().ToString());
+            AbstractMark[] marks = AbstractMark.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            return marks;
+        }
+        #endregion
     }
 }

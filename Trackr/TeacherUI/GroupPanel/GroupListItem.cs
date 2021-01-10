@@ -48,5 +48,9 @@ namespace Trackr {
             ViewGroupStudents students = new ViewGroupStudents(this.group);
             DialogResult dialog = students.ShowDialog();
         }
+        private void viewMarksLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            ViewMarks marks = new ViewMarks(group);
+            marks.ShowDialog();
+        }
     }
 }

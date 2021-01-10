@@ -52,7 +52,7 @@ namespace Trackr {
         private object[] array;
         private int length;
 
-        public CustomList(int maxCapacity) {
+        public CustomList(int maxCapacity = 0) {
             array = new object[maxCapacity];
             length = 0;
         }
@@ -81,6 +81,14 @@ namespace Trackr {
 
         public int GetLength() {
             return length;
+        }
+        
+        public dynamic ToArray<T>() {
+            T[] toReturn = new T[this.array.Length];
+            for (int i = 0; i < this.array.Length; i++) {
+                toReturn[i] = (T)this.array[i];
+            }
+            return toReturn;
         }
     }
 }
