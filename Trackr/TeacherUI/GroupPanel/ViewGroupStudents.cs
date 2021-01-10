@@ -23,11 +23,14 @@ namespace Trackr {
             GetGroupStudents();
             GetAllNonGroupStudents();
 
-            BindingSource bind = new BindingSource();
-            bind.DataSource = this.allNonGroupStudents;
-            bind.ListChanged += FillStudentPanel;
+            // StudentList data
+            groupStudents.ListChanged += FillStudentPanel;
 
-            studentComboBox.DataSource = bind;
+            // ComboBox data
+            BindingSource comboBoxBind = new BindingSource();
+            comboBoxBind.DataSource = this.allNonGroupStudents;
+            comboBoxBind.ListChanged += FillStudentPanel;
+            studentComboBox.DataSource = comboBoxBind;
             studentComboBox.DisplayMember = "fullName";
             studentComboBox.ValueMember = "fullName";
 
@@ -43,6 +46,7 @@ namespace Trackr {
             foreach (Student student in students) {
                 groupStudents.Add(student);
             }
+            
         }
         async private void GetAllNonGroupStudents() {
             Student[] students = await APIHandler.GetAllStudents();
