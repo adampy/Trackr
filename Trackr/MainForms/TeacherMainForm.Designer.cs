@@ -31,7 +31,6 @@
             this.selectionPanel = new System.Windows.Forms.Panel();
             this.groupsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.tasksLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.teachersLinkLabel = new System.Windows.Forms.LinkLabel();
             this.studentLinkLabel = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.contentsPanel = new System.Windows.Forms.Panel();
@@ -91,7 +90,6 @@
             // 
             this.selectionPanel.Controls.Add(this.groupsLinkLabel);
             this.selectionPanel.Controls.Add(this.tasksLinkLabel);
-            this.selectionPanel.Controls.Add(this.teachersLinkLabel);
             this.selectionPanel.Controls.Add(this.studentLinkLabel);
             this.selectionPanel.Controls.Add(this.label2);
             this.selectionPanel.Location = new System.Drawing.Point(13, 62);
@@ -122,18 +120,6 @@
             this.tasksLinkLabel.TabStop = true;
             this.tasksLinkLabel.Text = "Assignments";
             this.tasksLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.taskLinkLabelClick);
-            // 
-            // teachersLinkLabel
-            // 
-            this.teachersLinkLabel.AutoSize = true;
-            this.teachersLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teachersLinkLabel.Location = new System.Drawing.Point(11, 270);
-            this.teachersLinkLabel.Name = "teachersLinkLabel";
-            this.teachersLinkLabel.Size = new System.Drawing.Size(113, 33);
-            this.teachersLinkLabel.TabIndex = 2;
-            this.teachersLinkLabel.TabStop = true;
-            this.teachersLinkLabel.Text = "Teachers";
-            this.teachersLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.teacherLinkLabelClick);
             // 
             // studentLinkLabel
             // 
@@ -232,7 +218,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel groupsLinkLabel;
         private System.Windows.Forms.LinkLabel tasksLinkLabel;
-        private System.Windows.Forms.LinkLabel teachersLinkLabel;
         private System.Windows.Forms.LinkLabel studentLinkLabel;
         private System.Windows.Forms.Button refreshButton;
     }

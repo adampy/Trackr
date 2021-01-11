@@ -166,9 +166,6 @@
     <Compile Include="TeacherUI\TaskPanel\ProvideFeedback.Designer.cs">
       <DependentUpon>ProvideFeedback.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeacherUI\TeacherPanel\TeacherPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TeacherUI\TaskPanel\TaskPanel.cs">
       <SubType>Component</SubType>
     </Compile>

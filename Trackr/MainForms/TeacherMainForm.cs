@@ -15,7 +15,6 @@ namespace Trackr {
         private StudentPanel studentPanel;
         private GroupPanel groupPanel;
         private TaskPanel taskPanel;
-        private TeacherPanel teacherPanel;
 
         public TeacherMainForm(Teacher user) {
             InitializeComponent();
@@ -84,13 +83,7 @@ namespace Trackr {
             }
             AddPanel(this.taskPanel);
         }
-        private void teacherLinkLabelClick(object sender, LinkLabelLinkClickedEventArgs e) {
-            if (this.teacherPanel == null) {
-                this.teacherPanel = new TeacherPanel(contentsPanel);
-            }
-            AddPanel(this.teacherPanel);
-        }
-
+        
         private void refreshButtonClick(object sender, EventArgs e) {
             if (this.studentPanel != null)
                 this.studentPanel.Hide();
@@ -98,13 +91,10 @@ namespace Trackr {
                 this.groupPanel.Hide();
             if (this.taskPanel != null)
                 this.taskPanel.Hide();
-            if (this.teacherPanel != null)
-                this.teacherPanel.Hide();
 
             this.studentPanel = null;
             this.groupPanel = null;
             this.taskPanel = null;
-            this.teacherPanel = null;
 
             if (!this.contentsPanel.Controls.Contains(label3)) {
                 this.contentsPanel.Controls.Add(label3); // Remove help label
