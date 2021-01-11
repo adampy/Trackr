@@ -28,6 +28,7 @@
             this.groupNameLabel = new System.Windows.Forms.Label();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.loadingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,23 +58,33 @@
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Location = new System.Drawing.Point(23, 66);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGrid.Size = new System.Drawing.Size(987, 497);
             this.dataGrid.TabIndex = 2;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(381, 278);
+            this.progressBar.Location = new System.Drawing.Point(349, 256);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(251, 23);
+            this.progressBar.Size = new System.Drawing.Size(293, 26);
             this.progressBar.TabIndex = 3;
+            // 
+            // loadingLabel
+            // 
+            this.loadingLabel.AutoSize = true;
+            this.loadingLabel.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLabel.Location = new System.Drawing.Point(392, 227);
+            this.loadingLabel.Name = "loadingLabel";
+            this.loadingLabel.Size = new System.Drawing.Size(205, 26);
+            this.loadingLabel.TabIndex = 4;
+            this.loadingLabel.Text = "Loading, please wait...";
             // 
             // ViewMarks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 575);
+            this.Controls.Add(this.loadingLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.groupNameLabel);
@@ -95,5 +106,6 @@
         private System.Windows.Forms.Label groupNameLabel;
         private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label loadingLabel;
     }
 }

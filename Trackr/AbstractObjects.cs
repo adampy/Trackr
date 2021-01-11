@@ -418,5 +418,19 @@ namespace Trackr {
         public int GetScore() {
             return this.score;
         }
+        public void UpdateScore(int newScore) {
+            /// <summary>
+            /// Updates the score property of an AbstractMark. No API calls are made in this method.
+            /// </summary>
+            this.score = newScore;
+            this.hasMarked = true;
+        }
+        public void UpdateFeedback(string feedback) {
+            /// <summary>
+            /// Updates the feedback property of an AbstractMark. No API calls are made in this method.
+            /// </summary>
+            this.feedback = feedback;
+            this.hasMarked = true;
+        }
     }
 }

@@ -18,8 +18,12 @@ namespace Trackr {
         private Dictionary<int, Student> studentIdToStudent = new Dictionary<int, Student>(); // Converter
         private Dictionary<int, Assignment> taskIdToTask = new Dictionary<int, Assignment>(); // Converter
         private AbstractMark[,] markGrid; // This is used for getting the data for the grid
+        private bool dataGridInitialised = false;
 
         public ViewMarks(Group group) {
+            /// <summary>
+            /// Constructor for ViewMarks
+            /// </summary>
             InitializeComponent();
             this.group = group;
             this.Text = "Trackr - Viewing '" + this.group.GetName() + "'s marks";
@@ -30,6 +34,7 @@ namespace Trackr {
             dataGrid.VirtualMode = true; // Turning on virtual mode, and implementing handlers myself increases performance - https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/implementing-virtual-mode-wf-datagridview-control?view=netframeworkdesktop-4.8
             dataGrid.CellValueNeeded += this.CellValueNeeded;
             dataGrid.CellToolTipTextNeeded += this.CellToolTipTextNeeded;
+            dataGrid.CellValueChanged += this.CellValueChanged;
             dataGrid.TopLeftHeaderCell.Value = "Student \\ Task"; // When executed, \\ => \
             dataGrid.DefaultCellStyle.SelectionBackColor = Color.Transparent;
 
@@ -42,6 +47,7 @@ namespace Trackr {
             GetTasks();
             GetMarks();
         }
+
         async private void ProgressBarIncrement() {
             progressBar.Value += 33;
             if (progressBar.Value == 100) {
@@ -49,6 +55,7 @@ namespace Trackr {
 
                 ProcessData();
                 progressBar.Hide();
+                loadingLabel.Hide();
                 dataGrid.Show();
             }
         }
@@ -87,6 +94,7 @@ namespace Trackr {
 
             for (int i = 0; i  < this.tasks.Length; i++) {
                 dataGrid.Columns[i].HeaderCell.Value = this.tasks[i].title;
+                dataGrid.Columns[i].ReadOnly = false;
             }
 
             for (int i = 0; i < this.students.Length; i++) {
@@ -101,13 +109,13 @@ namespace Trackr {
                     bool exists = studentTaskMarkLinker.TryGetValue(key, out mark);
                     if (exists) {
                         this.markGrid[j, i] = mark;
+                    } else {
+                        this.markGrid[j, i] = new AbstractMark(student.GetId(), task.id); // Add an empty mark
                     }
                     // The tooltip should not be set here because it can cause performance issues - https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/add-tooltips-to-individual-cells-in-a-wf-datagridview-control?view=netframeworkdesktop-4.8#robust-programming
                 }
-
-                
-
             }
+            this.dataGridInitialised = true;
         }
 
         #region DataCell handlers
@@ -131,25 +139,58 @@ namespace Trackr {
             AbstractMark mark = this.markGrid[e.ColumnIndex, e.RowIndex];
             DataGridViewCell cell = dataGrid[e.ColumnIndex, e.RowIndex];
 
-            if (mark != null && mark.HasMarked()) {
+            if (mark.HasMarked()) {
                 e.Value = mark.GetScoreString();
-                int maxScore = this.taskIdToTask[mark.GetTaskId()].maxScore;
-                float percentage = (float)mark.GetScore() / (float)maxScore; // Convert to floats to avoid integer division - https://stackoverflow.com/questions/37641472/how-do-i-calculate-a-percentage-of-a-number-in-c
-                Student student = this.studentIdToStudent[mark.GetStudentId()];
-                float adjustedAlps = (float)student.GetAlps() / 100f;
 
-                cell.Style.BackColor = ScoreGrade(percentage, adjustedAlps);
+                int maxScore = this.taskIdToTask[mark.GetTaskId()].maxScore;
+                Student student = this.studentIdToStudent[mark.GetStudentId()];
+                cell.Style.BackColor = ScoreGrade(mark, maxScore, student);
             } else {
                 cell.Style.BackColor = Color.Gray;
                 e.Value = "N/A";
             }
 
         }
+        private void CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (!this.dataGridInitialised || e.ColumnIndex <= -1 || e.RowIndex <= -1) {
+                return;
+            }
+
+            DataGridViewCell cell = dataGrid[e.ColumnIndex, e.RowIndex];
+            AbstractMark mark = this.markGrid[e.ColumnIndex, e.RowIndex];
+            Assignment task = this.taskIdToTask[mark.GetTaskId()];
+            Student student = this.studentIdToStudent[mark.GetStudentId()];
+
+            string newValue = cell.EditedFormattedValue.ToString();
+            int newScore = 0;
+            bool isDigit = Int32.TryParse(newValue, out newScore);
+            if (!isDigit || newScore < 0 || newScore > task.maxScore) {
+                return;
+            }
+
+            // Changed mark from N/A
+            if (mark.GetFeedback() == null) {
+                mark.UpdateFeedback("No feedback given."); // NO API CALLS MADE IN THIS METHOD
+            }
+            mark.UpdateScore(newScore); // NO API CALLS MADE IN THIS METHOD
+
+            this.markGrid[e.ColumnIndex, e.RowIndex] = mark; // Update cell data
+            cell.Style.BackColor = ScoreGrade(mark, task.maxScore, student);
+            APIHandler.GiveFeedback(student, task, newScore, mark.GetFeedback());
+        }
         #endregion
 
         #region Mathematical formulae
-        public static Color ScoreGrade(float markPercentage, float adjustedAlps) {
-            float diff = adjustedAlps - markPercentage;
+        public static Color ScoreGrade(AbstractMark mark, int maxScore, Student student) {
+            /// <summary>
+            /// Returns a cell colour for a `mark`. The ALPS grade of `student` is used.
+            /// </summary>
+            
+            // Get prerequesites
+            float percentage = (float)mark.GetScore() / (float)maxScore; // Convert to floats to avoid integer division - https://stackoverflow.com/questions/37641472/how-do-i-calculate-a-percentage-of-a-number-in-c
+            float adjustedAlps = (float)student.GetAlps() / 100f;
+
+            float diff = adjustedAlps - percentage;
             if (diff > 0.4) {
                 return Color.Red;
             } else if (diff > 0.25) {
