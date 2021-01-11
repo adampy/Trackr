@@ -30,7 +30,6 @@ namespace Trackr
             FormController.teacherMain = new TeacherMainForm(teacher);
             FormController.teacherMain.Show();*/
 
-
             Application.Run();
         }
     }

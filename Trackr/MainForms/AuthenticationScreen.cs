@@ -33,31 +33,6 @@ namespace Trackr {
             this.Close();
         }
 
-        async private Task<bool> isUserValid(UserType user, string username, string password) {
-            /// <summary>
-            /// A method that returns true if the given user is valid for the given `UserType`. This method does not slow down the API because the user data is stored in cache.
-            /// </summary>
-            Dictionary<string, string> formData = new Dictionary<string, string> {
-                {"username", username },
-                {"password", password }
-            };
-
-            string urlExtension = "";
-            if (user == UserType.Student) {
-                urlExtension = "/student/auth";
-            } else if (user == UserType.Teacher) {
-                urlExtension = "/teacher/auth";
-            }
-
-            try {
-                HttpResponseMessage response = await WebRequestHandler.POST(urlExtension, formData);
-                return response.IsSuccessStatusCode;
-            } catch (HttpStatusNotFound) {
-                return false;
-            } catch (HttpStatusUnauthorized) {
-                return false;
-            }
-        }
         private void flushTextBoxes() {
             ///<summary>
             ///Subroutine that empties all of the textboxes across all forms.
@@ -162,7 +137,7 @@ namespace Trackr {
 
                 string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
                 APIHandler.SetAuthorizationHeader(credentials);
-                if (await isUserValid(UserType.Student, username, password)) {
+                if (await APIHandler.IsUserValid(UserType.Student, username, password)) {
                     Student student = await APIHandler.GetStudent(username: username); // Get the student with username `username` from the API
                     closedByProgram = true; // Set boolean to prevent Application.Exit() call
                     this.Close(); // Close current form
@@ -193,7 +168,7 @@ namespace Trackr {
 
             string credentials = WebRequestHandler.ConvertToBase64(username + ":" + password);
             APIHandler.SetAuthorizationHeader(credentials);
-            if (await isUserValid(UserType.Teacher, username, password)){
+            if (await APIHandler.IsUserValid(UserType.Teacher, username, password)){
                 Teacher teacher = await APIHandler.GetTeacher(username: username);
                 closedByProgram = true; // Set boolean to prevent Application.Exit() call
                 this.Close(); // Close current form
