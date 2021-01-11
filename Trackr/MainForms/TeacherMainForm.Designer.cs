@@ -36,6 +36,9 @@
             this.contentsPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.refreshButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.selectionPanel.SuspendLayout();
             this.contentsPanel.SuspendLayout();
@@ -88,6 +91,9 @@
             // 
             // selectionPanel
             // 
+            this.selectionPanel.Controls.Add(this.label6);
+            this.selectionPanel.Controls.Add(this.label5);
+            this.selectionPanel.Controls.Add(this.label4);
             this.selectionPanel.Controls.Add(this.groupsLinkLabel);
             this.selectionPanel.Controls.Add(this.tasksLinkLabel);
             this.selectionPanel.Controls.Add(this.studentLinkLabel);
@@ -101,7 +107,7 @@
             // 
             this.groupsLinkLabel.AutoSize = true;
             this.groupsLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupsLinkLabel.Location = new System.Drawing.Point(11, 130);
+            this.groupsLinkLabel.Location = new System.Drawing.Point(11, 160);
             this.groupsLinkLabel.Name = "groupsLinkLabel";
             this.groupsLinkLabel.Size = new System.Drawing.Size(96, 33);
             this.groupsLinkLabel.TabIndex = 4;
@@ -113,7 +119,7 @@
             // 
             this.tasksLinkLabel.AutoSize = true;
             this.tasksLinkLabel.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tasksLinkLabel.Location = new System.Drawing.Point(11, 200);
+            this.tasksLinkLabel.Location = new System.Drawing.Point(11, 260);
             this.tasksLinkLabel.Name = "tasksLinkLabel";
             this.tasksLinkLabel.Size = new System.Drawing.Size(157, 33);
             this.tasksLinkLabel.TabIndex = 3;
@@ -179,6 +185,34 @@
             this.refreshButton.UseVisualStyleBackColor = false;
             this.refreshButton.Click += new System.EventHandler(this.refreshButtonClick);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(149, 26);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "•Create/remove/edit students\r\n•Reset a student\'s password";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 193);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(147, 52);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "•Create/remove/edit classes.\r\n•Add/remove students from\r\n a class.\r\n•View class m" +
+    "arkbook.\r\n";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(17, 293);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(170, 26);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "•Create/remove/edit assignments.\r\n•Provide feedback to students.\r\n";
+            // 
             // TeacherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,5 +254,8 @@
         private System.Windows.Forms.LinkLabel tasksLinkLabel;
         private System.Windows.Forms.LinkLabel studentLinkLabel;
         private System.Windows.Forms.Button refreshButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }

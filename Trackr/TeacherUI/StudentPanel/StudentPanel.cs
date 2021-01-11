@@ -18,7 +18,7 @@ namespace Trackr {
             allStudentsLabel.AutoSize = true;
             allStudentsLabel.Font = new Font("Calibri", 20.0f);
             allStudentsLabel.Location = new Point(180, 0);
-            allStudentsLabel.Text = "Manage students";
+            allStudentsLabel.Text = "Manage all students";
             allStudentsLabel.BackColor = Color.Transparent;
             this.Controls.Add(allStudentsLabel);
 
