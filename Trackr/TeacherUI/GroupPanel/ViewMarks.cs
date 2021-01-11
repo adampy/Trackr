@@ -22,6 +22,7 @@ namespace Trackr {
         public ViewMarks(Group group) {
             InitializeComponent();
             this.group = group;
+            this.Text = "Trackr - Viewing '" + this.group.GetName() + "'s marks";
             groupNameLabel.Text = this.group.GetName();
             
             // dataGrid configuration
@@ -95,9 +96,12 @@ namespace Trackr {
                 for (int j = 0; j < this.tasks.Length; j++) {
                     Assignment task = this.tasks[j];
                     StudentTask key = new StudentTask() { studentId = student.GetId(), taskId = task.id };
-                    AbstractMark mark = studentTaskMarkLinker[key];
 
-                    this.markGrid[j, i] = mark;
+                    AbstractMark mark;
+                    bool exists = studentTaskMarkLinker.TryGetValue(key, out mark);
+                    if (exists) {
+                        this.markGrid[j, i] = mark;
+                    }
                     // The tooltip should not be set here because it can cause performance issues - https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/add-tooltips-to-individual-cells-in-a-wf-datagridview-control?view=netframeworkdesktop-4.8#robust-programming
                 }
 
@@ -112,7 +116,13 @@ namespace Trackr {
                 return;
             }
             AbstractMark mark = this.markGrid[e.ColumnIndex, e.RowIndex];
-            e.ToolTipText = mark.GetFeedback();
+            if (mark != null) {
+                Assignment assignment = taskIdToTask[mark.GetTaskId()];
+                Student student = studentIdToStudent[mark.GetStudentId()];
+                e.ToolTipText = "Score: " + mark.GetScore().ToString() + "\nOut of: " + assignment.maxScore + "\nALPs grade: " + student.GetAlpsString() + "\nFeedback provided: " + mark.GetFeedback();
+            } else {
+                e.ToolTipText = "Feedback not yet provided";
+            }
         }
         private void CellValueNeeded(object sender, DataGridViewCellValueEventArgs e) {
             if (e.RowIndex <= -1 || e.ColumnIndex <= -1) {
@@ -121,8 +131,8 @@ namespace Trackr {
             AbstractMark mark = this.markGrid[e.ColumnIndex, e.RowIndex];
             DataGridViewCell cell = dataGrid[e.ColumnIndex, e.RowIndex];
 
-            e.Value = mark.GetScoreString();
-            if (mark.HasMarked()) {
+            if (mark != null && mark.HasMarked()) {
+                e.Value = mark.GetScoreString();
                 int maxScore = this.taskIdToTask[mark.GetTaskId()].maxScore;
                 float percentage = (float)mark.GetScore() / (float)maxScore; // Convert to floats to avoid integer division - https://stackoverflow.com/questions/37641472/how-do-i-calculate-a-percentage-of-a-number-in-c
                 Student student = this.studentIdToStudent[mark.GetStudentId()];
@@ -131,6 +141,7 @@ namespace Trackr {
                 cell.Style.BackColor = ScoreGrade(percentage, adjustedAlps);
             } else {
                 cell.Style.BackColor = Color.Gray;
+                e.Value = "N/A";
             }
 
         }
