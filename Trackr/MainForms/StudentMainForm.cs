@@ -30,7 +30,7 @@ namespace Trackr {
             tabController.Location = new Point(10, 56);
             tabController.Font = new Font("Calibri", 12.0f);
             tabController.SelectedIndex = 0;
-            tabController.Size = new Size(740, 363);
+            tabController.Size = new Size(740, 395);
             this.Controls.Add(tabController);
         }
 

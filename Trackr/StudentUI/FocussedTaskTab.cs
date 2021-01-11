@@ -71,9 +71,10 @@ namespace Trackr {
                 // Feedback label
                 feedbackLabel = new Label();
                 feedbackLabel.AutoSize = true;
-                feedbackLabel.Text = "Feedback from " + feedback.GetFeedback();
-                feedbackLabel.Font = new Font("Calibri", 14.0f);
+                feedbackLabel.Text = feedback.GetFeedback();
+                feedbackLabel.Font = new Font("Calibri", 12.0f);
                 feedbackLabel.Location = new Point(0, 25);
+                feedbackLabel.MaximumSize = new Size(700, 100);
                 this.Controls.Add(feedbackLabel);
 
                 // Score label

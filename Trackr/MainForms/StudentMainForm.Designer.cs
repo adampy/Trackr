@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 429);
+            this.ClientSize = new System.Drawing.Size(758, 461);
             this.Controls.Add(this.alpsLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.refreshButton);
