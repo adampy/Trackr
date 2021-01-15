@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class ManageStudent : Form {
+        /// <summary>
+        /// ManageStudent allows a teacher to edit a student's account. All API calls are made here.
+        /// </summary>
         private Student student;
         public bool studentPanelNeedsRefresh = false;
         public ManageStudent(Student student) {

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class ViewMarks : Form {
+        /// <summary>
+        /// This is the window that allows a teacher to view marks for a group. It retreives the marks, students, and tasks
+        /// and shows a colouring system relative to the ALPS grade of the student.
+        /// </summary>
         private Group group;
         private Student[] students; // Class used to store data retrieved from API
         private Assignment[] tasks; // Class used to store data retrieved from API

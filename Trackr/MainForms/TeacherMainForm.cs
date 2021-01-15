@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
@@ -19,12 +13,17 @@ namespace Trackr {
         public TeacherMainForm(Teacher user) {
             InitializeComponent();
             this.Show();
-
             this.user = user;
-            this.Text = "Trackr - " + user.GetUsername();
-            this.nameLabel.Text = user.DisplayName();
+            DecorateForm();
 
             this.FormClosed += (obj, args) => { Application.Exit(); }; // Anonymous function that closes the whole application if this form is closed
+        }
+        private void DecorateForm() {
+            /// <summary>
+            /// Procedure that makes the form nice - changes text according to this.user.
+            /// </summary>
+            this.Text = "Trackr - " + user.GetUsername();
+            this.nameLabel.Text = user.DisplayName();
         }
         async private void editAccountMenuItemClick(object sender, EventArgs e) {
             EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.GetUsername());
@@ -35,7 +34,7 @@ namespace Trackr {
                 if (edit.newUsername != null || edit.newPassword != null) { // Then a request is necessary
                     if (edit.newUsername != null) { // Then change the username
                         this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
-                        this.Text = "Trackr - " + edit.newUsername;
+                        DecorateForm();
                     }
                     bool done = await APIHandler.EditAccountCredentials(UserType.Teacher, newUsername: edit.newUsername, newPassword: edit.newPassword); // edit.newPassword and edit.newUsername may be null
                     MessageBox.Show("Your edits have been saved!");

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -35,6 +30,9 @@ namespace Trackr {
         }
 
         private void DecorateForm() {
+            /// <summary>
+            /// Procedure that makes the form nice e.g. changes the alps label
+            /// </summary>
             this.Text  = "Trackr - " +  this.user.GetUsername();
             this.nameLabel.Text = this.user.DisplayName() + "!";
             this.alpsLabel.Text = user.GetAlpsString();

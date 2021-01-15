@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class AssignmentListItem : ListItem {
+        /// <summary>
+        /// AssignmentListItem is a ListItem that is used when showing the teacher a list of assignments given to their groups.
+        /// </summary>
         private Assignment assignment;
         private DateRepresentationPanel datetime;
         public AssignmentListItem(Assignment assignment) {

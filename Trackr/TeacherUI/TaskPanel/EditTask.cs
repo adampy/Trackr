@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class EditTask : Form {
+        /// <summary>
+        /// EditTask provides constructor methods for either 1) creating an assignment or 2) editing a pre-existing assignment.
+        /// Due to this split functionality, no API calls are made here.
+        /// </summary>
         private Assignment assignment;
         public string newTitle;
         public string newDescription;

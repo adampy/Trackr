@@ -4,6 +4,10 @@ using System.Windows.Forms;
 
 namespace Trackr {
     public class DoneButtonControl : UserControl {
+        /// <summary>
+        /// DoneButtonControl is placed on every list item of students homeworks, it simply acts as a button.
+        /// Actions are added when `AddButtonClickAction` is used.
+        /// </summary>
         private Label lbl;
         private Button btn;
         private bool isChecked;

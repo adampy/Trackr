@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class DateRepresentationPanel : UserControl {
+        /// <summary>
+        /// DateRepresentationPanel shows a datetime in a specific way, according to the program design.
+        /// dateSize = font size of the date number
+        /// monthSize = font size of the month string
+        /// spacing = space between the bottom of the date and top of the month.
+        /// </summary>
         private DateTime datetime;
         public DateRepresentationPanel(DateTime datetime, float dateSize, float monthSize, int spacing) {
             InitializeComponent();

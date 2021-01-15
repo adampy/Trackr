@@ -3,6 +3,10 @@ using System.Drawing;
 
 namespace Trackr {
     public class HomeworkTabPage : TabPage {
+        /// <summary>
+        /// HomeworkTabPage contains the TabPage that gets placed inside of the HomeworkTabController. It receives `taskData` in the form
+        /// of a `CustomList` and it changes these into `HomeworkListItems`.
+        /// </summary>
         public CustomList data;
         private HomeworkListItem[] listItems;
         private HomeworkTabController parent;

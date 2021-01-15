@@ -4,6 +4,9 @@ using System.Drawing;
 
 namespace Trackr {
     public class HomeworkListItem : UserControl {
+        /// <summary>
+        /// HomeworkListItem creates the list element for a `HomeworkTabPage`.
+        /// </summary>
         private HomeworkTabController tabController;
         private Homework task;
         private LinkLabel titleLabel;

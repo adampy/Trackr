@@ -1,10 +1,13 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using System.Threading.Tasks;
 using System;
 
 namespace Trackr {
     public class StudentPanel : Panel {
+        /// <summary>
+        /// Student is a container class that contains all of the data for the students. It contains the list of all students.
+        /// It also contains the `searchBox` and a `newStudentButton`.
+        /// </summary>
         private Panel parent;
         private Label allStudentsLabel;
         private ListPanel list;

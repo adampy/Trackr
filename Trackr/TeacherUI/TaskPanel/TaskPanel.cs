@@ -1,11 +1,14 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 
 namespace Trackr {
     public class TaskPanel : Panel {
+        /// <summary>
+        /// TaskPanel is a container class that contains all of the data for the tasks. It contains the list of tasks that a
+        /// teacher has assigned. It also contains the `searchBox` and a `newTaskButton`.
+        /// </summary>
         private Panel parent;
         private Label taskLabel;
         private SearchBox searchBox;

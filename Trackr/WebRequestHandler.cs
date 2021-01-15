@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq; // TODO: Remove unnecessary `using` statements
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http; // Necessary library for web requests
-using Newtonsoft.Json;
 
 namespace Trackr {
     

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class ViewGroupStudents : Form {
+        /// <summary>
+        /// ViewGroupStudents is a form used to add and remove students from a group.
+        /// </summary>
         private Group group;
         private BindingList<Student> allNonGroupStudents = new BindingList<Student>(); // TODO: Change these to CustomList
-        private BindingList<Student> groupStudents = new BindingList<Student>();
+        private BindingList<Student> groupStudents = new BindingList<Student>(); // BindingLists allows data changed in the program, to be updated in the form using event handlers.
         private Dictionary<Label, Student> labelStudentLinker = new Dictionary<Label, Student>();
         private List<Label> currentStudentNameLabels = new List<Label>();
         public ViewGroupStudents(Group group) {

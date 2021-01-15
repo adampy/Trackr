@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms; // Used for the accessing "Panel" and "Button" classes
+﻿using System.Windows.Forms; // Used for the accessing "Panel" and "Button" classes
 
 namespace Trackr {
 

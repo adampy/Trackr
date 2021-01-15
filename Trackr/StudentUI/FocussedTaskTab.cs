@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace Trackr {
     public class FocussedTaskTab : TabPage {
+        /// <summary>
+        /// FocussedTaskTab takes in a `Homework` and a `HomeworkTabController` and adds this new TabTage to the controller.
+        /// </summary>
         private Homework task;
         private Label titleLabel;
         private Label groupLabel;

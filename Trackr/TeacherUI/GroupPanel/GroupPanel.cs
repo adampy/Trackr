@@ -1,11 +1,14 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
 namespace Trackr {
     public class GroupPanel : Panel {
+        /// <summary>
+        /// GroupPanel is a container class that contains all of the data for the groups. It contains the list of groups that a
+        /// teacher is part of. It also contains the `searchBox` and a `newGroupButton`.
+        /// </summary>
         private Panel parent;
         private Label groupLabel;
         private SearchBox searchBox;

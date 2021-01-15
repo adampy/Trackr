@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Trackr {
-
     public class User {
         protected int id;
         protected string forename;
-        protected string surname; // Protected attributes such that User's children can access them - Student and Teacher
+        protected string surname; // Protected attributes such that User's children (Student and Teacher) can access them
         protected string username;
         public string fullName { get; set; }
 

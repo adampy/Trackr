@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Net.Http; // TODO: Change these fonts to calibri
@@ -15,8 +9,10 @@ namespace Trackr {
         Student = 0,
         Teacher = 1
     }
-
     public partial class AuthenticationScreen : Form {
+        /// <summary>
+        /// The form that controls authentication of a user.
+        /// </summary>
 
         PanelStack panels = new PanelStack(4); // Make a stack of size 4
         bool closedByProgram = false; // false if not closed by program and true if the program has closed the window
@@ -215,6 +211,9 @@ namespace Trackr {
                 }
         }
         async private void usernameAvaliableButtonClick(object sender, EventArgs e) {
+            /// <summary>
+            /// Subroutine that is executed when the "Username avaliable" button is pressed when creating a teacher account.
+            /// </summary>
             string adminCode = adminCodeTextBox.Text;
             string username = usernameRegistrationTextBox.Text;
             if (adminCode == "" || username == "") {
@@ -253,7 +252,6 @@ namespace Trackr {
                 passwordMatchingLabel.Show();
             }
         }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             passwordTextBox.Enabled = !checkBox1.Checked;
             passwordTextBox.Text = "";

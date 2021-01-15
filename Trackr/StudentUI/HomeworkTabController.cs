@@ -3,6 +3,10 @@ using System.Windows.Forms;
 
 namespace Trackr {
     public class HomeworkTabController : TabControl {
+        /// <summary>
+        /// HomeworkTabController controls all the tabs on the student app.
+        /// It receives the homeworks from the API and places them into "completed" and "uncompleted" tasks.
+        /// </summary>
         private Homework[] allTasks;
         private HomeworkTabPage uncompleted;
         private HomeworkTabPage completed;

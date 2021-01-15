@@ -4,6 +4,10 @@ using System;
 
 namespace Trackr {
     public class ListPanel : Panel {
+        /// <summary>
+        /// ListPanel creates a list of given type, `t`. `listItems` contain the panels, and has type UserControl because all panels
+        /// (AssignmentListItem, StudentListItem, GroupListItem) all inherit UserControl - this is called polymorphism.
+        /// </summary>
         private dynamic[] data; // data
         private UserControl[] listItems; // actual panels
         private Type typeOfListItem;

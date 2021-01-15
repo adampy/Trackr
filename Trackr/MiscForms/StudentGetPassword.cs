@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class StudentGetPassword : Form {
+        /// <summary>
+        /// StudentGetPassword allows a student with no password to get one.
+        /// No API calls are made in this class, it is only to obtain a new password.
+        /// </summary>
         public string passwordResult { get; set; }
         public StudentGetPassword() {
             InitializeComponent();

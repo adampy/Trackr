@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Trackr {
     public partial class StudentListItem : ListItem {
+        /// <summary>
+        /// StudentListItem is the ListItem that appears when a teacher views students from the homepage.
+        /// </summary>
         private Student student;
         public StudentListItem(Student student) {
             InitializeComponent();

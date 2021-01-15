@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trackr {
     public partial class EditAccount : Form {
+        /// <summary>
+        /// EditAccount allows the editing of a user. The form itself depends on the `userType` provided.
+        /// </summary>
         public string newUsername;
         public string newPassword;
         private UserType userType;
@@ -36,6 +33,9 @@ namespace Trackr {
         }
 
         private void stateChanged(object sender, EventArgs e) {
+            /// <summary>
+            /// Procedure that executes when a checkbox is changed, and updates the state of the textboxes to represent this.
+            /// </summary>
             passwordTextbox1.Enabled = passwordCheckBox.Checked;
             passwordTextbox2.Enabled = passwordCheckBox.Checked;
             usernameTextbox.Enabled = usernameCheckBox.Checked;
