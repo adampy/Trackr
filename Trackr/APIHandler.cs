@@ -228,11 +228,11 @@ namespace Trackr {
         async public static Task<Homework[]> GetHomework(Student student, bool groupHardRefresh = false) {
             try {
                 HttpResponseMessage response = await WebRequestHandler.GET("/task/?is_completed=True");
-                Homework[] tasks = Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh);
+                Homework[] tasks = await Homework.CreateFromJsonString(await response.Content.ReadAsStringAsync(), student, groupHardRefresh: groupHardRefresh); // This must be async to prevent blocking of the UI thread
                 return tasks;
             }
             catch (HttpStatusNotFound) {
-                return new Homework[0];
+                return new Homework[0]; // Make 0 sized array of Homework type
             }
         }
         async public static void UpdateHomeworkStatus(Homework homework) {
@@ -255,7 +255,7 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData);
         }
         async public static void CreateAssignment(Group group, Dictionary<string, string> formData) {
-            HttpResponseMessage response = await WebRequestHandler.POST("/group/" + group.GetId() + "/task", formData); // TODO: Remove response var here
+            await WebRequestHandler.POST("/group/" + group.GetId() + "/task", formData); // TODO: Account for errors here and in other voids?
         }
         async public static void DeleteAssignment(Assignment assignment) {
             await WebRequestHandler.DELETE("/task/" + assignment.id.ToString());
@@ -284,14 +284,14 @@ namespace Trackr {
 
             // Otherwise, or if no cache wanted, send request
             HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink);
-            group = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync())[0];
+            group = (await Group.CreateFromJsonString(await response.Content.ReadAsStringAsync()))[0]; // These are async to prevent blocking of the UI thread
             // Add to cache
             groupCache.Add(id, group);
             return group;
         }
         async public static Task<Group[]> TeacherGetGroups() {
             HttpResponseMessage response = await WebRequestHandler.GET("/group/?mine=True");
-            Group[] groups = Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            Group[] groups = await Group.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return groups;
         }
         async public static void UpdateGroup(Group group, Dictionary<string, string> formData) {

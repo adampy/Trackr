@@ -210,7 +210,7 @@ namespace Trackr {
             this.hasCompleted = hasCompleted;
             this.student = student;
         }
-        public static Homework[] CreateFromJsonString(string json, Student student, bool groupHardRefresh = false) {
+        async public static Task<Homework[]> CreateFromJsonString(string json, Student student, bool groupHardRefresh = false) {
             /// <summary>
             /// Static method that creates an array of `TaskObj` from an API response
             /// </summary>
@@ -222,7 +222,7 @@ namespace Trackr {
 
                 string temp = homeworkObj.group.reference.link;
 
-                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh)).Result;
+                Group group = await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh);
                 int maxScore = homeworkObj.max_score;
                 string title = homeworkObj.title;
                 string description = homeworkObj.description;
@@ -303,7 +303,7 @@ namespace Trackr {
             return this.teacher; // TODO: Make all private attributes accessible by funcitons (encapsulation)
         }
 
-        public static Group[] CreateFromJsonString(string json) {
+        async public static Task<Group[]> CreateFromJsonString(string json) {
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             Group[] allGroups = new Group[jsonObj.data.Count]; // The provided JSON may be an array of groups
             for (int i = 0; i < jsonObj.data.Count; i++) {
@@ -313,8 +313,7 @@ namespace Trackr {
                 string subject = groupObj.subject;
 
                 string hateoasLink = groupObj.teacher.reference.link;
-                Task<Teacher> task = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(hateoasLink: hateoasLink));
-                Teacher teacher = task.Result;
+                Teacher teacher = await APIHandler.GetTeacher(hateoasLink: hateoasLink);
 
                 allGroups[i] = new Group(id, teacher, name, subject);
             }

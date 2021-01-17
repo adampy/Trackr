@@ -16,17 +16,6 @@ namespace Trackr {
             // Aesthetics
             this.user = user;
             DecorateForm();
-
-            Task<Homework[]> task = Task.Run<Homework[]>(async () => await APIHandler.GetHomework(student: user)); // Running async code from a sync method by using `Task`
-            Homework[] tasks = task.Result; // TODO: Change this to async void method (remove task.Result)
-
-            // HomeworkTabController
-            tabController = new HomeworkTabController(tasks);
-            tabController.Location = new Point(10, 56);
-            tabController.Font = new Font("Calibri", 12.0f);
-            tabController.SelectedIndex = 0;
-            tabController.Size = new Size(740, 395);
-            this.Controls.Add(tabController);
         }
 
         private void DecorateForm() {
@@ -39,12 +28,25 @@ namespace Trackr {
         }
 
         async private void OnRefreshButtonClick(object sender, EventArgs e) {
+            refreshButton.Enabled = false; // Disable refresh button and show loading
+            loadingLabel.Show();
+            loadingLabel.Text = "Loading your homework, please wait...";
+            progressBar.Show();
+            label3.Show();
+            tabController.Hide();
+
             Homework[] tasks = await APIHandler.GetHomework(student: user, groupHardRefresh: true);
             tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
 
             this.user = await APIHandler.GetStudent(id: this.user.GetId()); // Update student
             DecorateForm(); // Update the form accordingly (e.g. new ALPs grade, username)
             // TODO: Show error to re-sign-in if a teacher changes username whilst student using the program
+            
+            refreshButton.Enabled = true;
+            loadingLabel.Hide();
+            progressBar.Hide();
+            label3.Hide();
+            tabController.Show();
         }
 
         async private void editAccountClick(object sender, EventArgs e) {
@@ -62,6 +64,31 @@ namespace Trackr {
                     MessageBox.Show("Your edits have saved!");
                 }
             }
+        }
+
+        async private void FormLoaded(object sender, EventArgs e) {
+            /// <summary>
+            /// Allows async code to be executed when starting the form. This is async to prevent blocking of the UI thread.
+            /// </summary>
+
+            Homework[] tasks = await APIHandler.GetHomework(student: user);
+            // HomeworkTabController
+            tabController = new HomeworkTabController(tasks);
+            tabController.Location = new Point(10, 56);
+            tabController.Font = new Font("Calibri", 12.0f);
+            tabController.SelectedIndex = 0;
+            tabController.Size = new Size(740, 395);
+            this.Controls.Add(tabController);
+
+            loadingLabel.Hide();
+            progressBar.Hide();
+            label3.Hide();
+            label1.Show();
+            label2.Show();
+            alpsLabel.Show();
+            nameLabel.Show();
+            refreshButton.Show();
+            menuStrip1.Show();
         }
     }
 }

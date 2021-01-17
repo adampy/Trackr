@@ -114,7 +114,7 @@ namespace Trackr {
             }
             Student student = (Student)studentComboBox.SelectedItem;
             
-            APIHandler.AddStudentToGroup(student, this.group); // TODO: Remove and test these lines
+            APIHandler.AddStudentToGroup(student, this.group);
             groupStudents.Add(student);
             allNonGroupStudents.Remove(student);
         } 

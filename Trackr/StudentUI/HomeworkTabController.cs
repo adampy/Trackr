@@ -38,6 +38,11 @@ namespace Trackr {
                 // The current tabs are wrong, so provide new data to the current tabs
                 uncompleted.FillTabPage(newTaskData: uncompletedTasks);
                 completed.FillTabPage(newTaskData: completedTasks);
+                
+                while (this.TabCount > 2) {
+                    this.TabPages.RemoveAt(2); // Remove open focussed tabs
+                }
+
             } else {
                 // The current tabs do not exist, so create them
                 uncompleted = new HomeworkTabPage(this, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);

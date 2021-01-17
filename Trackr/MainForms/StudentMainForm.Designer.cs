@@ -31,6 +31,9 @@
             this.editAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.alpsLabel = new System.Windows.Forms.Label();
+            this.loadingLabel = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +48,7 @@
             this.label1.Size = new System.Drawing.Size(199, 39);
             this.label1.TabIndex = 0;
             this.label1.Text = "Welcome back,";
+            this.label1.Visible = false;
             // 
             // nameLabel
             // 
@@ -57,6 +61,7 @@
             this.nameLabel.Size = new System.Drawing.Size(228, 39);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "SAMPLE NAME";
+            this.nameLabel.Visible = false;
             // 
             // refreshButton
             // 
@@ -66,11 +71,12 @@
             this.refreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.refreshButton.FlatAppearance.BorderSize = 0;
             this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.refreshButton.Location = new System.Drawing.Point(674, 7);
+            this.refreshButton.Location = new System.Drawing.Point(674, 2);
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(60, 60);
             this.refreshButton.TabIndex = 2;
             this.refreshButton.UseVisualStyleBackColor = false;
+            this.refreshButton.Visible = false;
             this.refreshButton.Click += new System.EventHandler(this.OnRefreshButtonClick);
             // 
             // menuStrip1
@@ -84,6 +90,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(758, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Visible = false;
             // 
             // editAccountToolStripMenuItem
             // 
@@ -105,24 +112,59 @@
             this.label2.Size = new System.Drawing.Size(98, 23);
             this.label2.TabIndex = 4;
             this.label2.Text = "ALPS grade:";
+            this.label2.Visible = false;
             // 
             // alpsLabel
             // 
             this.alpsLabel.AutoSize = true;
             this.alpsLabel.BackColor = System.Drawing.Color.Transparent;
             this.alpsLabel.Font = new System.Drawing.Font("Corbel", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.alpsLabel.Location = new System.Drawing.Point(103, 24);
+            this.alpsLabel.Location = new System.Drawing.Point(108, 24);
             this.alpsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.alpsLabel.Name = "alpsLabel";
             this.alpsLabel.Size = new System.Drawing.Size(126, 23);
             this.alpsLabel.TabIndex = 5;
             this.alpsLabel.Text = "SAMPLE ALPS";
+            this.alpsLabel.Visible = false;
+            // 
+            // loadingLabel
+            // 
+            this.loadingLabel.AutoSize = true;
+            this.loadingLabel.Font = new System.Drawing.Font("Corbel", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLabel.Location = new System.Drawing.Point(210, 178);
+            this.loadingLabel.Name = "loadingLabel";
+            this.loadingLabel.Size = new System.Drawing.Size(343, 26);
+            this.loadingLabel.TabIndex = 7;
+            this.loadingLabel.Text = "Loading your homepage, please wait...";
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(233, 207);
+            this.progressBar.MarqueeAnimationSpeed = 20;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(293, 26);
+            this.progressBar.Step = 1;
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Corbel", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(259, 236);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(235, 18);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "This should only take a few seconds...";
             // 
             // StudentMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 461);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.loadingLabel);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.alpsLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.refreshButton);
@@ -136,6 +178,7 @@
             this.MaximizeBox = false;
             this.Name = "StudentMainForm";
             this.Text = "Trackr - ";
+            this.Load += new System.EventHandler(this.FormLoaded);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -152,5 +195,8 @@
         private System.Windows.Forms.ToolStripMenuItem editAccountToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label alpsLabel;
+        private System.Windows.Forms.Label loadingLabel;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label label3;
     }
 }
