@@ -4,51 +4,27 @@ using System;
 using System.Collections.Generic;
 
 namespace Trackr {
-    public class GroupPanel : Panel {
+    public class GroupPanel : TeacherFormPanel {
         /// <summary>
         /// GroupPanel is a container class that contains all of the data for the groups. It contains the list of groups that a
         /// teacher is part of. It also contains the `searchBox` and a `newGroupButton`.
         /// </summary>
-        private Panel parent;
-        private Label groupLabel;
-        private SearchBox searchBox;
-        private ListPanel list;
-        private Button newGroupButton;
-        public GroupPanel(Panel parentPanel) : base() {
+        public GroupPanel(Panel parentPanel) : base(parentPanel) {
             this.parent = parentPanel;
             this.Width = parent.Width;
-            // groupLabel
-            groupLabel = new Label();
-            groupLabel.AutoSize = true;
-            groupLabel.Font = new Font("Calibri", 20.0f);
-            groupLabel.Location = new Point(150, 0);
-            groupLabel.Text = "Manage your groups";
-            groupLabel.BackColor = Color.Transparent;
-            this.Controls.Add(groupLabel);
-            
-            // newGroupButton
-            newGroupButton = new Button();
-            newGroupButton.Text = "New class";
-            newGroupButton.Font = new Font("Calibri", 12.0f);
-            newGroupButton.Location = new Point(5, 3);
-            newGroupButton.AutoSize = true;
-            newGroupButton.Click += NewGroupButton_Click;
-            this.Controls.Add(newGroupButton);
 
+            // mainLabel
+            mainLabel.Location = new Point(150, 0);
+            mainLabel.Text = "Manage your groups";
+            // newObjButton
+            newObjButton.Text = "New class";
             // searchBox
-            searchBox = new SearchBox();
-            searchBox.BackColor = Color.Transparent;
             searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
-            searchBox.AddTextBoxChangedAction(SearchBoxChanged);
-            this.Controls.Add(searchBox);
             RefreshList();
         }
-        private void SearchBoxChanged(object sender, EventArgs e) {
-            list.MakePanels(searchBox.GetText());
-        }
 
-        private void NewGroupButton_Click(object sender, EventArgs e) {
-            EditGroup newG = new EditGroup(); // Create a new student
+        public override void OnNewObjButtonClick(object sender, EventArgs e) {
+            EditGroup newG = new EditGroup(); // Create a new group
             DialogResult dialog = newG.ShowDialog(this);
             if (dialog != DialogResult.OK) {
                 return;
@@ -62,7 +38,7 @@ namespace Trackr {
             RefreshList();
         }
 
-        async public void RefreshList() {
+        async public override void RefreshList() {
             // Groups
             Group[] groups = await APIHandler.TeacherGetGroups();
 

@@ -11,14 +11,12 @@ namespace Trackr {
         private HomeworkTabPage uncompleted;
         private HomeworkTabPage completed;
         private Dictionary<int, FocussedTaskTab> focussedTasks; // Links the task id to the focussed task tab
-        private int previousTabIndex = 0;
-
+        
         public HomeworkTabController(Homework[] allTasks, int tabIndx = 0) : base() {
             this.focussedTasks = new Dictionary<int, FocussedTaskTab>();
             this.allTasks = allTasks;
             this.UpdateTabs();
             this.SelectedIndex = tabIndx;
-            this.Deselecting += this.BeforeNewTabSelected;
         }
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
@@ -49,19 +47,6 @@ namespace Trackr {
             }
 
         }
-        private void BeforeNewTabSelected(object sender, TabControlCancelEventArgs e) {
-            /// <summary>
-            /// Method that changes the previous tab index.
-            /// </summary>
-            if (this.SelectedIndex >= 0) {
-                this.previousTabIndex = this.SelectedIndex; // TODO: Fix this for occurences where the tab goes back
-            }
-        }
-
-        public void ChangeToPreviousTab() {
-            this.SelectedIndex = this.previousTabIndex;
-        }
-
         public void GoToFocussedTab(Homework task, Feedback feedback) {
             FocussedTaskTab tab;
             bool exists = this.focussedTasks.TryGetValue(task.id, out tab);

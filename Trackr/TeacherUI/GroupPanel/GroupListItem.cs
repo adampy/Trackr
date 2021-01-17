@@ -27,7 +27,7 @@ namespace Trackr {
 
             APIHandler.UpdateGroup(this.group, formData);
             MessageBox.Show("Group has been updated successfully.");
-            ((GroupPanel)((ListPanel)this.Parent).Parent).RefreshList(); // TODO: Remove all parent and this.parent references and change to something like this
+            ParentRefreshList();
         }
 
         private void deleteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -37,7 +37,7 @@ namespace Trackr {
             }
             APIHandler.DeleteGroup(this.group);
             MessageBox.Show("Group has been deleted successfully.");
-            ((GroupPanel)((ListPanel)this.Parent).Parent).RefreshList();
+            ParentRefreshList();
         }
 
         private void viewStudentsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

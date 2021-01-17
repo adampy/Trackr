@@ -239,7 +239,7 @@ namespace Trackr {
             Dictionary<string, string> formData = new Dictionary<string, string> {
                 {"completed", homework.hasCompleted.ToString().ToLower() }
             };
-            HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData); // TODO: Do I need to account for errors here?
+            HttpResponseMessage response = await WebRequestHandler.POST("/task/" + homework.id.ToString() + "/status", formData);
         }
         async public static Task<Assignment[]> TeacherGetAssignments() {
             try {
@@ -252,7 +252,7 @@ namespace Trackr {
             }
         }
         async public static void EditAssignment(Assignment assignment, Dictionary<string, string> formData) {
-            HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData); // TODO: Do I need to account for errors here?
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData);
         }
         async public static void CreateAssignment(Group group, Dictionary<string, string> formData) {
             HttpResponseMessage response = await WebRequestHandler.POST("/group/" + group.GetId() + "/task", formData); // TODO: Remove response var here
@@ -304,8 +304,14 @@ namespace Trackr {
             await WebRequestHandler.DELETE("/group/" + group.GetId().ToString());
         }
         async public static Task<Student[]> GetGroupStudents(Group group) {
-            HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/students"); // TODO: Handle 404 NOT FOUND
-            return Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            Student[] students;
+            try {
+                HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/students");
+                students = Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            } catch (HttpStatusNotFound) {
+                students = new Student[0];
+            }
+            return students;
         }
         async public static void RemoveStudentFromGroup(Student student, Group group) {
             Dictionary<string, string> formData = new Dictionary<string, string> {

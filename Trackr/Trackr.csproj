@@ -169,6 +169,9 @@
     <Compile Include="TeacherUI\TaskPanel\TaskPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TeacherUI\ITeacherFormPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\DateRepresentationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

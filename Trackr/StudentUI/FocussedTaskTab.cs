@@ -47,7 +47,6 @@ namespace Trackr {
             protected override void OnClick(EventArgs e) {
                 base.OnClick(e);
                 tabController.RemoveFocussedTab(parentTab.task);
-                tabController.ChangeToPreviousTab();
             }
         }
 

@@ -3,47 +3,24 @@ using System.Drawing;
 using System;
 
 namespace Trackr {
-    public class StudentPanel : Panel {
+    public class StudentPanel : TeacherFormPanel {
         /// <summary>
         /// Student is a container class that contains all of the data for the students. It contains the list of all students.
         /// It also contains the `searchBox` and a `newStudentButton`.
         /// </summary>
-        private Panel parent;
-        private Label allStudentsLabel;
-        private ListPanel list;
-        private SearchBox searchBox;
-        private Button newStudentButton;
-        public StudentPanel(Panel parentPanel) : base() {
-            this.parent = parentPanel;
-            this.Width = parent.Width;
-            // allStudentsLabel
-            allStudentsLabel = new Label();
-            allStudentsLabel.AutoSize = true;
-            allStudentsLabel.Font = new Font("Calibri", 20.0f);
-            allStudentsLabel.Location = new Point(180, 0);
-            allStudentsLabel.Text = "Manage all students";
-            allStudentsLabel.BackColor = Color.Transparent;
-            this.Controls.Add(allStudentsLabel);
+        public StudentPanel(Panel parentPanel) : base(parentPanel) {
+            this.Width = parent.Width; // this.parent is defined in TeacherFormPanel
 
             // newStudentButton
-            newStudentButton = new Button();
-            newStudentButton.Text = "New student";
-            newStudentButton.Font = new Font("Calibri", 12.0f);
-            newStudentButton.Location = new Point(5, 3);
-            newStudentButton.AutoSize = true;
-            newStudentButton.Click += NewStudentButton_Click;
-            this.Controls.Add(newStudentButton);
-
+            this.newObjButton.Text = "New student";
+            // mainLabel
+            this.mainLabel.Text = "Manage students";
             // searchBox
-            searchBox = new SearchBox();
-            searchBox.BackColor = Color.Transparent;
-            searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
-            searchBox.AddTextBoxChangedAction(SearchBoxChanged);
-            this.Controls.Add(searchBox);
+            this.searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
             RefreshList();
         }
 
-        private void NewStudentButton_Click(object sender, EventArgs e) {
+        public override void OnNewObjButtonClick(object sender, EventArgs e) {
             EditStudent edit = new EditStudent(); // Create a new student
             DialogResult dialog = edit.ShowDialog(this);
             if (dialog != DialogResult.OK) {
@@ -59,10 +36,7 @@ namespace Trackr {
             RefreshList();
         }
 
-        private void SearchBoxChanged(object sender, EventArgs e) {
-            list.MakePanels(searchBox.GetText());
-        }
-        async public void RefreshList() {
+        async public override void RefreshList() {
             /// <summary>
             /// Executed after opening the manage student tab.
             /// </summary>

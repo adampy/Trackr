@@ -17,7 +17,7 @@ namespace Trackr {
             authorizationHeader = credentials;
         }
         static public string GetAuthorizationHeader() {
-            return authorizationHeader; // TODO: Add <summary>
+            return authorizationHeader;
         }
         static public string ConvertToBase64(string utf8) {
             /// <summary>

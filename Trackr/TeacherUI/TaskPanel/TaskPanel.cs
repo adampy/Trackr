@@ -4,51 +4,25 @@ using System.Collections.Generic;
 using System;
 
 namespace Trackr {
-    public class TaskPanel : Panel {
+    public class TaskPanel : TeacherFormPanel {
         /// <summary>
         /// TaskPanel is a container class that contains all of the data for the tasks. It contains the list of tasks that a
         /// teacher has assigned. It also contains the `searchBox` and a `newTaskButton`.
         /// </summary>
-        private Panel parent;
-        private Label taskLabel;
-        private SearchBox searchBox;
-        private ListPanel list;
-        private Button newTaskButton;
-        public TaskPanel(Panel parentPanel) : base() {
+        public TaskPanel(Panel parentPanel) : base(parentPanel) {
             this.parent = parentPanel;
             this.Width = parent.Width;
 
-            // groupLabel
-            taskLabel = new Label();
-            taskLabel.AutoSize = true;
-            taskLabel.Font = new Font("Calibri", 20.0f);
-            taskLabel.Location = new Point(150, 0);
-            taskLabel.Text = "Manage your tasks";
-            taskLabel.BackColor = Color.Transparent;
-            this.Controls.Add(taskLabel);
-
-            // newTaskButton
-            newTaskButton = new Button();
-            newTaskButton.Text = "New task";
-            newTaskButton.Font = new Font("Calibri", 12.0f);
-            newTaskButton.Location = new Point(5, 3);
-            newTaskButton.AutoSize = true;
-            newTaskButton.Click += NewTaskButton_Click;
-            this.Controls.Add(newTaskButton);
-
+            // mainLabel
+            mainLabel.Text = "Manage your tasks";
+            // newObjButton
+            newObjButton.Text = "New task";
             // searchBox
-            searchBox = new SearchBox();
-            searchBox.BackColor = Color.Transparent;
             searchBox.Location = new Point(this.Width - searchBox.Width - 5, 3);
-            searchBox.AddTextBoxChangedAction(SearchBoxChanged);
-            this.Controls.Add(searchBox);
             RefreshList();
         }
-        private void SearchBoxChanged(object sender, EventArgs e) {
-            list.MakePanels(searchBox.GetText());
-        }
 
-        async private void NewTaskButton_Click(object sender, EventArgs e) {
+        async public override void OnNewObjButtonClick(object sender, EventArgs e) {
             Group[] teachersGroups = await APIHandler.TeacherGetGroups();
             EditTask newTask = new EditTask(teachersGroups);
             DialogResult dialog = newTask.ShowDialog();
@@ -66,11 +40,11 @@ namespace Trackr {
                 {"date_due", newDueDate.ToString("dd/MM/yyyy|HH:mm") }
             };
             APIHandler.CreateAssignment(newTask.newGroup, formData);
-            RefreshList(); //TODO: Make all panels (TaskPanel,StudentPanel,GroupPanel,TeacherPanel) have abstract methods of refreshlist
+            RefreshList();
             MessageBox.Show("Created task successfully!");
         }
 
-        async public void RefreshList() {
+        async public override void RefreshList() {
             // Assignments
             Assignment[] assignments = await APIHandler.TeacherGetAssignments(); // TODO: CONSIDER GROUP CACHE HERE (IMPLEMENT A HARDREFRESH OPTION)
 

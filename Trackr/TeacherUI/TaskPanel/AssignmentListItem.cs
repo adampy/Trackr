@@ -39,7 +39,7 @@ namespace Trackr {
                 {"date_due", newDueDate.ToString("dd/MM/yyyy|HH:mm") }
             };
             APIHandler.EditAssignment(assignment, formData);
-            ((TaskPanel)((ListPanel)this.Parent).Parent).RefreshList(); //TODO: Make all panels (TaskPanel,StudentPanel,GroupPanel,TeacherPanel) have abstract methods of refreshlist
+            ParentRefreshList();
             MessageBox.Show("Edited task successfully!");
         }
 
@@ -49,7 +49,7 @@ namespace Trackr {
                 return;
             }
             APIHandler.DeleteAssignment(assignment);
-            ((TaskPanel)((ListPanel)this.Parent).Parent).RefreshList();
+            ParentRefreshList();
         }
 
         private void provideFeedbackLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
