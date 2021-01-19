@@ -204,7 +204,7 @@ namespace Trackr {
 
             try {
                 Teacher teacher = await APIHandler.MakeTeacher(forename, surname, username, password, title, adminCode: adminCode);
-                MessageBox.Show("Success: " + teacher.DisplayName() + " " + teacher.GetUsername());
+                MessageBox.Show("Success: " + teacher.DisplayName() + " " + teacher.username);
                 flushTextBoxes();
             } catch (HttpStatusUnauthorized) {
                 MessageBox.Show("Incorrect admin code entered.");

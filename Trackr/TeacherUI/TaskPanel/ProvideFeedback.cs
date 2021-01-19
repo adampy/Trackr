@@ -14,7 +14,7 @@ namespace Trackr {
             InitializeComponent();
 
             this.assignment = assignment;
-            label2.Text = "You're providing feedback to '" + assignment.group.GetName() + "' for '" + assignment.title + "'.";
+            label2.Text = "You're providing feedback to '" + assignment.group.name + "' for '" + assignment.title + "'.";
             maxScoreLabel.Text = "/" + assignment.maxScore.ToString();
             students = Task.Run(async () => await APIHandler.GetGroupStudents(assignment.group)).Result;
             studentComboBox.DataSource = students;
@@ -30,8 +30,8 @@ namespace Trackr {
             currentStudent = (Student)studentComboBox.SelectedItem;
             Feedback fbk = await APIHandler.TeacherGetFeedback(currentStudent, assignment);
             if (fbk.Exists()) {
-                feedbackTextBox.Text = fbk.GetFeedback();
-                scoreTextBox.Text = fbk.GetScore().ToString();
+                feedbackTextBox.Text = fbk.feedback;
+                scoreTextBox.Text = fbk.score.ToString();
             } else {
                 feedbackTextBox.Text = "";
                 scoreTextBox.Text = "";

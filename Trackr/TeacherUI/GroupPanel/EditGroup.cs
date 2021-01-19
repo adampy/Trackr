@@ -22,8 +22,8 @@ namespace Trackr {
             /// </summary>
             InitializeComponent();
             this.group = group;
-            newName = group.GetName();
-            newSubject = group.GetSubject();
+            newName = group.name;
+            newSubject = group.subject;
 
             nameTextBox.Text = newName;
             subjectTextBox.Text = newSubject;

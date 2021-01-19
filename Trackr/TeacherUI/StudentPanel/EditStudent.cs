@@ -39,10 +39,10 @@ namespace Trackr {
             InitializeComponent();
             this.student = student;
             alpsComboBox.Items.AddRange(alpsConverter.Keys.ToArray());
-            newUsername = student.GetUsername();
-            newForename = student.GetForename();
-            newSurname = student.GetSurname();
-            newAlps = student.GetAlps();
+            newUsername = student.username; ;
+            newForename = student.forename; ;
+            newSurname = student.surname;
+            newAlps = student.alps;
 
             usernameTextBox.Text = newUsername;
             forenameTextBox.Text = newForename;
@@ -62,7 +62,7 @@ namespace Trackr {
             newAlps = alpsConverter[alpsComboBox.SelectedItem.ToString()];
             
             if (student != null) {
-                isNewUsername = newUsername != student.GetUsername(); // If the username has changed
+                isNewUsername = newUsername != student.username; // If the username has changed
             }
 
             if ((isNewUsername && !await APIHandler.IsUsernameTaken(UserType.Student, newUsername)) || !isNewUsername) {

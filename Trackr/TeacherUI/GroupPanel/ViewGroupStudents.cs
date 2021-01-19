@@ -17,8 +17,8 @@ namespace Trackr {
         public ViewGroupStudents(Group group) {
             InitializeComponent();
             this.group = group;
-            this.Text += group.GetName();
-            label1.Text = group.GetName() + "'s students";
+            this.Text += group.name;
+            label1.Text = group.name + "'s students";
             GetGroupStudents();
             GetAllNonGroupStudents();
 
@@ -56,7 +56,7 @@ namespace Trackr {
                 // If student isnt in the group, then add them to the non group
                 bool found = false;
                 foreach (Student groupStudent in this.groupStudents) {
-                    found = found || groupStudent.GetId() == student.GetId();
+                    found = found || groupStudent.id == student.id;
                 }
 
                 if (!found) {  // Student is not already in the group
@@ -75,7 +75,7 @@ namespace Trackr {
             for (int i = 0; i < this.groupStudents.Count; i++) { 
                 Student student = (Student)this.groupStudents[i];
                 Label lbl = new Label();
-                lbl.Text = "• " + student.GetFullName();
+                lbl.Text = "• " + student.fullName;
                 lbl.Font = new Font("Calibri", 20.0f, FontStyle.Italic);
                 lbl.AutoSize = true;
                 lbl.Location = new Point(5, y);
@@ -98,7 +98,7 @@ namespace Trackr {
         private void OnStudentLabelClick(object sender, EventArgs e) {
             Label lbl = (Label)sender;
             Student student = this.labelStudentLinker[lbl];
-            DialogResult dialog = MessageBox.Show("Are you sure you want to remove '" + student.GetForename() + "' from '" + group.GetName() + "'?", "Remove confirmation", MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to remove '" + student.forename + "' from '" + group.name + "'?", "Remove confirmation", MessageBoxButtons.YesNo);
             if (dialog != DialogResult.Yes) {
                 return;
             }

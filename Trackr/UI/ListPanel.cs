@@ -64,10 +64,10 @@ namespace Trackr {
                 bool success = false;
 
                 UserControl listItem = new UserControl();
-                if (this.typeOfListItem == typeof(StudentListItem) && ((Student)obj).GetFullName().ToLower().Contains(mustContain.ToLower())) {
+                if (this.typeOfListItem == typeof(StudentListItem) && ((Student)obj).fullName.ToLower().Contains(mustContain.ToLower())) {
                     listItem = new StudentListItem(obj);
                     success = true;
-                } else if (this.typeOfListItem == typeof(GroupListItem) && ((Group)obj).GetName().ToLower().Contains(mustContain.ToLower())) {
+                } else if (this.typeOfListItem == typeof(GroupListItem) && ((Group)obj).name.ToLower().Contains(mustContain.ToLower())) {
                     listItem = new GroupListItem(obj);
                     success = true;
                 } else if (this.typeOfListItem == typeof(AssignmentListItem) && ((Assignment)obj).title.ToLower().Contains(mustContain.ToLower())) {

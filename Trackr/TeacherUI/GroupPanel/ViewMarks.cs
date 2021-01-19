@@ -26,8 +26,8 @@ namespace Trackr {
             /// </summary>
             InitializeComponent();
             this.group = group;
-            this.Text = "Trackr - Viewing '" + this.group.GetName() + "'s marks";
-            groupNameLabel.Text = this.group.GetName();
+            this.Text = "Trackr - Viewing '" + this.group.name + "'s marks";
+            groupNameLabel.Text = this.group.name;
             
             // dataGrid configuration
             dataGrid.Hide();
@@ -68,7 +68,7 @@ namespace Trackr {
         async private void GetStudents() {
             this.students = await APIHandler.GetGroupStudents(group);
             foreach (Student student in this.students) {
-                this.studentIdToStudent[student.GetId()] = student;
+                this.studentIdToStudent[student.id] = student;
             }
             ProgressBarIncrement();
         }
@@ -99,18 +99,18 @@ namespace Trackr {
 
             for (int i = 0; i < this.students.Length; i++) {
                 Student student = this.students[i];
-                dataGrid.Rows[i].HeaderCell.Value = student.GetFullName();
+                dataGrid.Rows[i].HeaderCell.Value = student.fullName;
 
                 for (int j = 0; j < this.tasks.Length; j++) {
                     Assignment task = this.tasks[j];
-                    StudentTask key = new StudentTask() { studentId = student.GetId(), taskId = task.id };
+                    StudentTask key = new StudentTask() { studentId = student.id, taskId = task.id };
 
                     AbstractMark mark;
                     bool exists = studentTaskMarkLinker.TryGetValue(key, out mark);
                     if (exists) {
                         this.markGrid[j, i] = mark;
                     } else {
-                        this.markGrid[j, i] = new AbstractMark(student.GetId(), task.id); // Add an empty mark
+                        this.markGrid[j, i] = new AbstractMark(student.id, task.id); // Add an empty mark
                     }
                     // The tooltip should not be set here because it can cause performance issues - https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/add-tooltips-to-individual-cells-in-a-wf-datagridview-control?view=netframeworkdesktop-4.8#robust-programming
                 }
@@ -149,7 +149,6 @@ namespace Trackr {
                 cell.Style.BackColor = Color.Gray;
                 e.Value = "N/A";
             }
-
         }
         private void CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             if (!this.dataGridInitialised || e.ColumnIndex <= -1 || e.RowIndex <= -1) {
@@ -188,7 +187,7 @@ namespace Trackr {
             
             // Get prerequesites
             float percentage = (float)mark.GetScore() / (float)maxScore; // Convert to floats to avoid integer division - https://stackoverflow.com/questions/37641472/how-do-i-calculate-a-percentage-of-a-number-in-c
-            float adjustedAlps = (float)student.GetAlps() / 100f;
+            float adjustedAlps = (float)student.alps / 100f;
 
             float diff = adjustedAlps - percentage;
             if (diff > 0.4) {

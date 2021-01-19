@@ -148,7 +148,7 @@ namespace Trackr {
 
         }
         async public static void UpdateStudent(Student student, Dictionary<string, string> formData) {
-            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/student/" + student.id.ToString(), formData);
         }
         async public static void CreateStudent(string forename, string surname, string username, int alps) {
             /// <summary>
@@ -217,10 +217,10 @@ namespace Trackr {
             }
         }
         async public static void TeacherEditStudent(Student student, Dictionary<string, string> formData) {
-            await WebRequestHandler.PATCH("/student/" + student.GetId().ToString(), formData);
+            await WebRequestHandler.PATCH("/student/" + student.id.ToString(), formData);
         }
         async public static void TeacherDeleteStudentAccount(Student student) {
-            await WebRequestHandler.DELETE("/student/" + student.GetId().ToString());
+            await WebRequestHandler.DELETE("/student/" + student.id.ToString());
         }
         #endregion
 
@@ -255,13 +255,13 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.PATCH("/task/" + assignment.id.ToString(), formData);
         }
         async public static void CreateAssignment(Group group, Dictionary<string, string> formData) {
-            await WebRequestHandler.POST("/group/" + group.GetId() + "/task", formData); // TODO: Account for errors here and in other voids?
+            await WebRequestHandler.POST("/group/" + group.id.ToString() + "/task", formData); // TODO: Account for errors here and in other voids?
         }
         async public static void DeleteAssignment(Assignment assignment) {
             await WebRequestHandler.DELETE("/task/" + assignment.id.ToString());
         }
         async public static Task<Assignment[]> TeacherGetGroupTasks(Group group) {
-            HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/task");
+            HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.id.ToString() + "/task");
             Assignment[] homeworks = await Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return homeworks;
         }
@@ -295,18 +295,18 @@ namespace Trackr {
             return groups;
         }
         async public static void UpdateGroup(Group group, Dictionary<string, string> formData) {
-            HttpResponseMessage response = await WebRequestHandler.PATCH("/group/" + group.GetId().ToString(), formData);
+            HttpResponseMessage response = await WebRequestHandler.PATCH("/group/" + group.id.ToString(), formData);
         }
         async public static void CreateGroup(Dictionary<string, string> formData) {
             await WebRequestHandler.POST("/group/", formData);
         }
         async public static void DeleteGroup(Group group) {
-            await WebRequestHandler.DELETE("/group/" + group.GetId().ToString());
+            await WebRequestHandler.DELETE("/group/" + group.id.ToString());
         }
         async public static Task<Student[]> GetGroupStudents(Group group) {
             Student[] students;
             try {
-                HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/students");
+                HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.id.ToString() + "/students");
                 students = Student.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             } catch (HttpStatusNotFound) {
                 students = new Student[0];
@@ -315,15 +315,15 @@ namespace Trackr {
         }
         async public static void RemoveStudentFromGroup(Student student, Group group) {
             Dictionary<string, string> formData = new Dictionary<string, string> {
-                { "students", student.GetId().ToString() }
+                { "students", student.id.ToString() }
             };
-            await WebRequestHandler.POST("/group/" + group.GetId().ToString() + "/leave", formData);
+            await WebRequestHandler.POST("/group/" + group.id.ToString() + "/leave", formData);
         }
         async public static void AddStudentToGroup(Student student, Group group) {
             Dictionary<string, string> formData = new Dictionary<string, string> {
-                { "students", student.GetId().ToString() }
+                { "students", student.id.ToString() }
             };
-            await WebRequestHandler.POST("/group/" + group.GetId().ToString() + "/join", formData);
+            await WebRequestHandler.POST("/group/" + group.id.ToString() + "/join", formData);
         }
         #endregion
 
@@ -359,7 +359,7 @@ namespace Trackr {
             int score = 0;
             Feedback feedback;
             try {
-                HttpResponseMessage response = await WebRequestHandler.GET("/task/" + assignment.id.ToString() + "/current_feedback?student=" + student.GetId().ToString());
+                HttpResponseMessage response = await WebRequestHandler.GET("/task/" + assignment.id.ToString() + "/current_feedback?student=" + student.id.ToString());
                 string responseContent = await response.Content.ReadAsStringAsync();
                 dynamic json = JsonConvert.DeserializeObject(responseContent);
 
@@ -376,7 +376,7 @@ namespace Trackr {
         }
         async public static void GiveFeedback(Student student, Assignment assignment, int score, string feedback) {
             Dictionary<string, string> formData = new Dictionary<string, string> {
-                { "student", student.GetId().ToString() },
+                { "student", student.id.ToString() },
                 { "score", score.ToString() },
                 { "feedback", feedback }
             };
@@ -387,7 +387,7 @@ namespace Trackr {
 
         #region AbstractMarks
         async public static Task<AbstractMark[]> GetGroupMarks(Group group) {
-            HttpResponseMessage response = await WebRequestHandler.GET("/mark/" + "?group=" + group.GetId().ToString());
+            HttpResponseMessage response = await WebRequestHandler.GET("/mark/" + "?group=" + group.id.ToString());
             AbstractMark[] marks = AbstractMark.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return marks;
         }

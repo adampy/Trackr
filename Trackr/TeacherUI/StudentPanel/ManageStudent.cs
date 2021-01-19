@@ -12,14 +12,14 @@ namespace Trackr {
         public ManageStudent(Student student) {
             InitializeComponent();
             this.student = student;
-            usernameLabel.Text = student.GetUsername();
-            forenameLabel.Text = student.GetForename();
-            surnameLabel.Text = student.GetSurname();
+            usernameLabel.Text = student.username;
+            forenameLabel.Text = student.forename;
+            surnameLabel.Text = student.surname;
             alpsGradeLabel.Text = student.GetAlpsString();
         }
 
         private void resetPasswordButton_Click(object sender, EventArgs e) {
-            DialogResult dialog = MessageBox.Show("Are you sure you want to reset " + student.GetForename() + "'s password?", "Reset password confirmation", MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to reset " + student.forename + "'s password?", "Reset password confirmation", MessageBoxButtons.YesNo);
             if (dialog != DialogResult.Yes) {
                 return;
             }
@@ -28,17 +28,17 @@ namespace Trackr {
                 { "password", "true" }
             };
             APIHandler.TeacherEditStudent(student, formData);
-            MessageBox.Show(student.GetForename() + "'s password has been reset. Please tell them to select the 'first time sign-in' when they next sign-in.");
+            MessageBox.Show(student.forename + "'s password has been reset. Please tell them to select the 'first time sign-in' when they next sign-in.");
         }
 
         private void deleteStudentButton_Click(object sender, EventArgs e) {
-            DialogResult dialog = MessageBox.Show("Are you sure you want to delete " + student.GetForename() + "'s account?", "Delete account confirmation", MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to delete " + student.forename + "'s account?", "Delete account confirmation", MessageBoxButtons.YesNo);
             if (dialog != DialogResult.Yes) {
                 return;
             }
             // Delete account
             APIHandler.TeacherDeleteStudentAccount(student);
-            MessageBox.Show(student.GetForename() + "'s account has been deleted.");
+            MessageBox.Show(student.forename + "'s account has been deleted.");
             this.studentPanelNeedsRefresh = true;
             this.Close();
         }

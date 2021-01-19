@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 
 namespace Trackr {
     public class User {
-        protected int id;
-        protected string forename;
-        protected string surname; // Protected attributes such that User's children (Student and Teacher) can access them
-        protected string username;
-        public string fullName { get; set; }
+        public int id { get; }
+        public string forename { get; }
+        public string surname { get; } // Protected attributes such that User's children (Student and Teacher) can access them
+        public string username { get; private set; } // Only allow setting through a subroutine TODO: Change this to a normal {get;set;}?
+        public string fullName { get; } // (This is variable encapsulation)
 
         public User(int id, string forename, string surname, string username) {
             /// <summary>
@@ -25,27 +25,6 @@ namespace Trackr {
             /// Returns the display name, which consists of the forename plus the first letter of the surname.
             /// </summary>
             return (forename + " " + surname[0]);
-        }
-        public int GetId() {
-            /// <summary>
-            /// Method used to encapsulate the `id` attribute.
-            /// </summary>
-            return id;
-        }
-        public string GetUsername() {
-            /// <summary>
-            /// Method used to encapsulate the private `username` attribute.
-            /// </summary>
-            return username;
-        }
-        public string GetFullName() {
-            return this.fullName;
-        }
-        public string GetForename() {
-            return this.forename;
-        }
-        public string GetSurname() {
-            return this.surname;
         }
         public void SetUsername(string username) {
             /// <summary>
@@ -87,7 +66,7 @@ namespace Trackr {
     }
 
     public class Student : User {
-        private int alps;
+        public int alps { get; }
         public static Student[] CreateFromJsonString(string json) {
             /// <summary>
             /// Returns an array of student objects from a JSON string.
@@ -133,13 +112,10 @@ namespace Trackr {
                 return "A*/A";
             }
         }
-        public int GetAlps() {
-            return this.alps;
-        }
     }
 
     public class Teacher : User {
-        private string title;
+        public string title { get; }
         public static Teacher[] CreateFromJsonString(string json) {
             /// <summary>
             /// Returns an array of teachers.
@@ -202,7 +178,7 @@ namespace Trackr {
             this.id = id;
             this.student = student;
             this.group = group;
-            this.title = title; // make these public and access them in the TaskControl class
+            this.title = title;
             this.description = description;
             this.maxScore = maxScore;
             this.dateDue = dateDue;
@@ -263,7 +239,7 @@ namespace Trackr {
         public Assignment(int id, Group group, string title, string description, int maxScore, DateTime dateDue, DateTime dateSet) {
             this.id = id;
             this.group = group;
-            this.title = title; // TODO: make these public and access them in the TaskControl class
+            this.title = title;
             this.description = description;
             this.maxScore = maxScore;
             this.dateDue = dateDue;
@@ -304,20 +280,16 @@ namespace Trackr {
     }
 
     public class Group {
-        private int id;
-        private Teacher teacher;
-        public string name { get; set; } // This needs a getter and setter because of the teacher/create task/assigned to combobox
-        private string subject;
+        public int id { get; } // Implement a getter, but no setter needed
+        public Teacher teacher { get; }
+        public string name { get; } // This needs a getter because of the teacher/create task/assigned to combobox
+        public string subject { get; }
 
         public Group(int id, Teacher teacher, string name, string subject) {
             this.id = id;
             this.teacher = teacher;
             this.name = name;
             this.subject = subject;
-        }
-
-        public Teacher GetTeacher() {
-            return this.teacher; // TODO: Make all private attributes accessible by funcitons (encapsulation)
         }
 
         async public static Task<Group[]> CreateFromJsonString(string json) {
@@ -336,24 +308,12 @@ namespace Trackr {
             }
             return allGroups;
         }
-
-        public string GetName() {
-            return this.name;
-        }
-
-        public string GetSubject() {
-            return this.subject;
-        }
-        
-        public int GetId() {
-            return this.id;
-        }
     }
 
     public class Feedback {
-        private string feedback { get; set; }
-        private int score { get; set; }
-        public ITask task { get; set; }
+        public string feedback { get; }
+        public int score { get; }
+        public ITask task { get; }
         public Feedback(ITask task, string feedback = null, int score = 0) {
             this.feedback = feedback;
             this.score = score;
@@ -361,12 +321,6 @@ namespace Trackr {
         }
         public bool Exists() {
             return (this.feedback != null);
-        }
-        public string GetFeedback() {
-            return this.feedback;
-        }
-        public int GetScore() {
-            return this.score;
         }
     }
 

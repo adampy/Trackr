@@ -66,14 +66,14 @@ namespace Trackr {
                 // Main label
                 mainLabel = new Label();
                 mainLabel.AutoSize = true;
-                mainLabel.Text = "Feedback from " + feedback.task.group.GetTeacher().DisplayName();
+                mainLabel.Text = "Feedback from " + feedback.task.group.teacher.DisplayName();
                 mainLabel.Font = new Font("Calibri", 18.0f, FontStyle.Bold);
                 this.Controls.Add(mainLabel);
 
                 // Feedback label
                 feedbackLabel = new Label();
                 feedbackLabel.AutoSize = true;
-                feedbackLabel.Text = feedback.GetFeedback();
+                feedbackLabel.Text = feedback.feedback;
                 feedbackLabel.Font = new Font("Calibri", 12.0f);
                 feedbackLabel.Location = new Point(0, 25);
                 feedbackLabel.MaximumSize = new Size(700, 100);
@@ -82,7 +82,7 @@ namespace Trackr {
                 // Score label
                 scoreLabel = new Label();
                 scoreLabel.AutoSize = true;
-                scoreLabel.Text = "Marks: " + feedback.GetScore().ToString() + "/" + feedback.task.maxScore.ToString();
+                scoreLabel.Text = "Marks: " + feedback.score.ToString() + "/" + feedback.task.maxScore.ToString();
                 scoreLabel.Font = new Font("Calibri", 14.0f, FontStyle.Bold);
                 scoreLabel.Location = new Point(500, 0);
                 this.Controls.Add(scoreLabel);
@@ -113,7 +113,7 @@ namespace Trackr {
             groupLabel.AutoSize = true;
             groupLabel.Font = new Font("Calibri", 14.0f);
             groupLabel.Location = new Point(10, 30);
-            groupLabel.Text = "• Class: " + task.group.GetName();
+            groupLabel.Text = "• Class: " + task.group.name;
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
 
@@ -122,7 +122,7 @@ namespace Trackr {
             groupSubjectLabel.AutoSize = true;
             groupSubjectLabel.Font = new Font("Calibri", 14.0f, FontStyle.Italic);
             groupSubjectLabel.Location = new Point(10, 55);
-            groupSubjectLabel.Text = "• Subject: " + task.group.GetSubject();
+            groupSubjectLabel.Text = "• Subject: " + task.group.subject;
             groupSubjectLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupSubjectLabel);
 

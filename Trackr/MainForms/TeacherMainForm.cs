@@ -22,11 +22,11 @@ namespace Trackr {
             /// <summary>
             /// Procedure that makes the form nice - changes text according to this.user.
             /// </summary>
-            this.Text = "Trackr - " + user.GetUsername();
+            this.Text = "Trackr - " + user.username;
             this.nameLabel.Text = user.DisplayName();
         }
         async private void editAccountMenuItemClick(object sender, EventArgs e) {
-            EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.GetUsername());
+            EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.username);
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
             if (dialog == DialogResult.OK) {
                 // Validation passed -> edit account

@@ -9,7 +9,7 @@ namespace Trackr {
         public StudentListItem(Student student) {
             InitializeComponent();
             this.student = student;
-            this.studentNameLabel.Text = student.GetFullName();
+            this.studentNameLabel.Text = student.fullName;
         }
         private void manageStudentLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             ManageStudent manage = new ManageStudent(this.student);

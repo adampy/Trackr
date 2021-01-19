@@ -14,7 +14,7 @@ namespace Trackr {
             InitializeComponent();
             this.assignment = assignment;
             this.assignmentNameLabel.Text = assignment.title;
-            this.groupNameLabel.Text = assignment.group.GetName();
+            this.groupNameLabel.Text = assignment.group.name;
 
             //datetime panel
             datetime = new DateRepresentationPanel(assignment.dateDue, 20.0f, 15.0f, 0); // TODO: Replace student task datetime with new DateRepresentationPanel

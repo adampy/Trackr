@@ -44,7 +44,7 @@ namespace Trackr {
             groupLabel.AutoSize = true;
             groupLabel.Font = new Font("Calibri", 15.0f);
             groupLabel.Location = new Point(5, 35);
-            groupLabel.Text = task.group.GetName();
+            groupLabel.Text = task.group.name;
             groupLabel.BackColor = Color.Transparent;
             this.Controls.Add(groupLabel);
 

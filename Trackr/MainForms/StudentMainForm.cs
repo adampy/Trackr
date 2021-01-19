@@ -22,7 +22,7 @@ namespace Trackr {
             /// <summary>
             /// Procedure that makes the form nice e.g. changes the alps label
             /// </summary>
-            this.Text  = "Trackr - " +  this.user.GetUsername();
+            this.Text  = "Trackr - " +  this.user.username;
             this.nameLabel.Text = this.user.DisplayName() + "!";
             this.alpsLabel.Text = user.GetAlpsString();
         }
@@ -38,7 +38,7 @@ namespace Trackr {
             Homework[] tasks = await APIHandler.GetHomework(student: user, groupHardRefresh: true);
             tabController.UpdateTabs(disposeCurrentTabs: true, newTasks: tasks); // Provide new data to the tab controller
 
-            this.user = await APIHandler.GetStudent(id: this.user.GetId()); // Update student
+            this.user = await APIHandler.GetStudent(id: this.user.id); // Update student
             DecorateForm(); // Update the form accordingly (e.g. new ALPs grade, username)
             // TODO: Show error to re-sign-in if a teacher changes username whilst student using the program
             
@@ -50,7 +50,7 @@ namespace Trackr {
         }
 
         async private void editAccountClick(object sender, EventArgs e) {
-            EditAccount edit = new EditAccount(UserType.Student, existingUsername: user.GetUsername());
+            EditAccount edit = new EditAccount(UserType.Student, existingUsername: user.username);
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
             if (dialog == DialogResult.OK) {
                 // Validation passed -> edit account

@@ -48,7 +48,7 @@ namespace Trackr {
             maxScoreTextBox.Text = newScore.ToString();
             dueDatePicker.Value = newDueDate;
             //dueDatePicker.MinDate = DateTime.Now;
-            assignedcomboBox1.Text = assignment.group.GetName();
+            assignedcomboBox1.Text = assignment.group.name;
             assignedcomboBox1.Enabled = false;
         }
 

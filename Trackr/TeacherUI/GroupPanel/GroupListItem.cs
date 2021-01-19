@@ -10,7 +10,7 @@ namespace Trackr {
         public GroupListItem(Group group) {
             InitializeComponent();
             this.group = group;
-            this.groupNameLabel.Text = group.GetName();
+            this.groupNameLabel.Text = group.name;
         }
 
         private void editLinkLabel_Clicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -31,7 +31,7 @@ namespace Trackr {
         }
 
         private void deleteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            DialogResult dialog = MessageBox.Show("Are you sure you want to delete '" + this.group.GetName() + "'?", "Deletion confirmation", MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to delete '" + this.group.name + "'?", "Deletion confirmation", MessageBoxButtons.YesNo);
             if (dialog != DialogResult.Yes) {
                 return;
             }
