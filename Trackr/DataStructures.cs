@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms; // Used for the accessing "Panel" and "Button" classes
+using System;
 
 namespace Trackr {
 
@@ -82,6 +83,13 @@ namespace Trackr {
             T[] toReturn = new T[this.array.Length];
             for (int i = 0; i < this.array.Length; i++) {
                 toReturn[i] = (T)this.array[i];
+            }
+            return toReturn;
+        }
+        public bool Contains(object element) {
+            bool toReturn = false;
+            foreach (object o in this.array) {
+                toReturn = toReturn || element.Equals(o);
             }
             return toReturn;
         }

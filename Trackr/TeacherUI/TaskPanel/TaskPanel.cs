@@ -46,7 +46,7 @@ namespace Trackr {
 
         async public override void RefreshList() {
             // Assignments
-            Assignment[] assignments = await APIHandler.TeacherGetAssignments(); // TODO: CONSIDER GROUP CACHE HERE (IMPLEMENT A HARDREFRESH OPTION)
+            Assignment[] assignments = await APIHandler.TeacherGetAssignments();
 
             // List
             if (list != null) {

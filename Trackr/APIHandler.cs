@@ -244,7 +244,7 @@ namespace Trackr {
         async public static Task<Assignment[]> TeacherGetAssignments() {
             try {
                 HttpResponseMessage response = await WebRequestHandler.GET("/task/?mine=True");
-                Assignment[] assignments = Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+                Assignment[] assignments = await Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync(), groupHardRefresh: true);
                 return assignments;
             }
             catch (HttpStatusNotFound) {
@@ -262,7 +262,7 @@ namespace Trackr {
         }
         async public static Task<Assignment[]> TeacherGetGroupTasks(Group group) {
             HttpResponseMessage response = await WebRequestHandler.GET("/group/" + group.GetId().ToString() + "/task");
-            Assignment[] homeworks = Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
+            Assignment[] homeworks = await Assignment.CreateFromJsonString(await response.Content.ReadAsStringAsync());
             return homeworks;
         }
         #endregion

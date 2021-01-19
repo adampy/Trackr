@@ -216,13 +216,21 @@ namespace Trackr {
             /// </summary>
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             Homework[] homeworks = new Homework[jsonObj.data.Count];
+            CustomList previousGroups = new CustomList(3); // Make a list of size 3 (every student normally takes 3/4 subjects)
+
             for (int i = 0; i < jsonObj.data.Count; i++) {
                 dynamic homeworkObj = jsonObj.data[i];
                 int id = homeworkObj.id;
 
                 string temp = homeworkObj.group.reference.link;
+                Group group;
+                if (previousGroups.Contains(temp) || !groupHardRefresh) { // If that group has already been called in this subroutine OR no hard refresh, retreive from cache.
+                    group = await APIHandler.GetGroup(hateoasLink: temp);
+                } else {
+                    group = await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh);
+                    previousGroups.Add(temp);
+                }
 
-                Group group = await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh);
                 int maxScore = homeworkObj.max_score;
                 string title = homeworkObj.title;
                 string description = homeworkObj.description;
@@ -261,19 +269,28 @@ namespace Trackr {
             this.dateDue = dateDue;
             this.dateSet = dateSet;
         }
-        public static Assignment[] CreateFromJsonString(string json) {
+        async public static Task<Assignment[]> CreateFromJsonString(string json, bool groupHardRefresh = false) {
             /// <summary>
             /// Static method that creates an array of `TaskObj` from an API response
             /// </summary>
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             Assignment[] assignments = new Assignment[jsonObj.data.Count];
+            CustomList previousGroups = new CustomList(3); // Make a list of size 3
+
             for (int i = 0; i < jsonObj.data.Count; i++) {
                 dynamic homeworkObj = jsonObj.data[i];
                 int id = homeworkObj.id;
 
                 string temp = homeworkObj.group.reference.link;
+                Group group;
 
-                Group group = Task.Run<Group>(async () => await APIHandler.GetGroup(hateoasLink: temp)).Result;
+                if (previousGroups.Contains(temp) || !groupHardRefresh) {
+                    group = await APIHandler.GetGroup(hateoasLink: temp);
+                } else {
+                    group = await APIHandler.GetGroup(hateoasLink: temp, hardRefresh: groupHardRefresh);
+                    previousGroups.Add(temp);
+                }
+
                 int maxScore = homeworkObj.max_score;
                 string title = homeworkObj.title;
                 string description = homeworkObj.description;
