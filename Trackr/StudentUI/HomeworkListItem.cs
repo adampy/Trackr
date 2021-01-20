@@ -12,8 +12,7 @@ namespace Trackr {
         private LinkLabel titleLabel;
         private Label groupLabel;
         private Label descriptionLabel;
-        private Label dateLabel;
-        private Label monthLabel;
+        private DateRepresentationPanel date;
         private Label overdueLabel;
         private DoneButtonControl doneButton;
         private bool bottomBorder;
@@ -25,7 +24,6 @@ namespace Trackr {
             /// </summary>
             this.tabController = tabController;
             this.task = task;
-            this.AutoSize = true;
             this.bottomBorder = bottomBorder;
             this.bottomBorderWidth = bottomBorderWidth;
 
@@ -68,23 +66,11 @@ namespace Trackr {
                 this.Controls.Add(overdueLabel);
             }
 
-            // Date Label
-            dateLabel = new Label();
-            dateLabel.AutoSize = true;
-            dateLabel.Font = new Font("Calibri", 30.0f);
-            dateLabel.Location = new Point(650, 0);
-            dateLabel.Text = task.dateDue.ToString("dd"); // dd gets the day as a 2 digit number
-            dateLabel.BackColor = Color.Transparent;
-            this.Controls.Add(dateLabel);
-
-            // Month Label
-            monthLabel = new Label();
-            monthLabel.AutoSize = true;
-            monthLabel.Font = new Font("Calibri", 20.0f);
-            monthLabel.Location = new Point(650, 45);
-            monthLabel.Text = task.dateDue.ToString("MMM"); // MMM gets the abbreviated month
-            monthLabel.BackColor = Color.Transparent;
-            this.Controls.Add(monthLabel);
+            // DateRepresentationPanel
+            date = new DateRepresentationPanel(task.dateDue, 30.0f, 20.0f, -20);
+            date.Location = new Point(650, 0);
+            date.BackColor = Color.White;
+            this.Controls.Add(date);
 
             // Done Checkbox
             doneButton = new DoneButtonControl("Done?", startingState: this.task.hasCompleted);
@@ -94,7 +80,7 @@ namespace Trackr {
             doneButton.AddButtonClickAction(this.OnDoneButtonClick);
             this.Controls.Add(doneButton);
 
-            this.Height = monthLabel.Location.Y + monthLabel.Height + 3; //Height is changed relative to the lowest component to prevent UserControl taking up more space than necessary
+            this.Height = date.Location.Y + date.Height + 15; //Height is changed relative to the lowest component to prevent UserControl taking up more space than necessary
 
         }
         protected override void OnPaint(PaintEventArgs e) {

@@ -286,7 +286,9 @@ namespace Trackr {
             HttpResponseMessage response = await WebRequestHandler.GET(hateoasLink);
             group = (await Group.CreateFromJsonString(await response.Content.ReadAsStringAsync()))[0]; // These are async to prevent blocking of the UI thread
             // Add to cache
-            groupCache.Add(id, group);
+            if (!groupCache.ContainsKey(id)) {
+                groupCache.Add(id, group);
+            }
             return group;
         }
         async public static Task<Group[]> TeacherGetGroups() {

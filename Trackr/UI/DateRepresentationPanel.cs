@@ -15,6 +15,7 @@ namespace Trackr {
             InitializeComponent();
             this.datetime = datetime;
             this.AutoSize = true;
+            this.BackColor = Color.Transparent;
             // Date Label
             dateLabel.AutoSize = true;
             dateLabel.Font = new Font("Calibri", dateSize);
@@ -26,7 +27,7 @@ namespace Trackr {
             // Month Label
             monthLabel.AutoSize = true;
             monthLabel.Font = new Font("Calibri", monthSize);
-            monthLabel.Location = new Point(0, dateLabel.Location.Y + dateLabel.Height + spacing);
+            monthLabel.Location = new Point(3, dateLabel.Location.Y + dateLabel.Height + spacing);
             monthLabel.Text = this.datetime.ToString("MMM"); // MMM gets the abbreviated month
             monthLabel.BackColor = Color.Transparent;
             this.Controls.Add(monthLabel);

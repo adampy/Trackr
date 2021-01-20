@@ -2,8 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using System.Net.Http; // TODO: Change these fonts to calibri
-
+using System.Net.Http; 
 namespace Trackr {
     public enum UserType {
         Student = 0,
