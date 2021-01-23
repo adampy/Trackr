@@ -26,17 +26,20 @@ namespace Trackr {
             this.nameLabel.Text = user.DisplayName();
         }
         async private void editAccountMenuItemClick(object sender, EventArgs e) {
-            EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.username);
+            EditAccount edit = new EditAccount(UserType.Teacher, existingUsername: user.username, forename: user.forename, surname: user.surname, title: user.title);
             var dialog = edit.ShowDialog(); // Block any events occurring on the main form
             if (dialog == DialogResult.OK) {
                 // Validation passed -> edit account
 
-                if (edit.newUsername != null || edit.newPassword != null) { // Then a request is necessary
+                if (edit.newUsername != null || edit.newPassword != null || edit.newTitle != null || edit.newForename != null || edit.newSurname != null) { // Then a request is necessary
                     if (edit.newUsername != null) { // Then change the username
-                        this.user.SetUsername(edit.newUsername); // NO API CALLS MADE IN THIS METHOD
-                        DecorateForm();
+                        
+                        edit.newUsername = user.username;
                     }
-                    bool done = await APIHandler.EditAccountCredentials(UserType.Teacher, newUsername: edit.newUsername, newPassword: edit.newPassword); // edit.newPassword and edit.newUsername may be null
+                    // NO API CALLS MADE IN THE FOLLOWING METHOD
+                    this.user.SetAttributes(username: edit.newUsername, forename: edit.newForename, surname: edit.newSurname, title: edit.newTitle);
+                    DecorateForm();
+                    bool done = await APIHandler.EditAccountCredentials(UserType.Teacher, newUsername: edit.newUsername, newPassword: edit.newPassword, newForename: edit.newForename, newSurname: edit.newSurname, newTitle: edit.newTitle); // edit.newPassword and edit.newUsername may be null
                     MessageBox.Show("Your edits have been saved!");
                 }
             }

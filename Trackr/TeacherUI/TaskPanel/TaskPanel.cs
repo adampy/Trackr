@@ -47,14 +47,12 @@ namespace Trackr {
         async public override void RefreshList() {
             // Assignments
             Assignment[] assignments = await APIHandler.TeacherGetAssignments();
-
             // List
             if (list != null) {
                 list.Dispose();
             }
 
-            //TODO: SORT `assignments` IN TERMS OF THEIR DATETIME
-
+            assignments = Algorithms.Sorts.MergeSort(assignments); // Sorts assignments in ascending order according to the date due
             list = new ListPanel(this.parent.Width, assignments, typeof(AssignmentListItem));
             list.Location = new Point(0, 35);
             list.Width = this.parent.Width;

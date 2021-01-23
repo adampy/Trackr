@@ -9,42 +9,62 @@ namespace Trackr {
         /// </summary>
         public string newUsername;
         public string newPassword;
+        public string newTitle;
+        public string newForename;
+        public string newSurname;
         private UserType userType;
-        public EditAccount(UserType userType, string existingUsername) {
+        public EditAccount(UserType userType, string existingUsername, string forename = "", string surname = "", string title = "") { // 3 optional params are for teachers
             this.userType = userType;
             InitializeComponent();
             usernameTextbox.Text = existingUsername;
-            passwordTextbox1.Enabled = passwordCheckBox.Checked;
-            passwordTextbox2.Enabled = passwordCheckBox.Checked;
-            usernameTextbox.Enabled = usernameCheckBox.Checked;
+            titleTextBox.Text = title;
+            forenameTextBox.Text = forename;
+            surnameTextBox.Text = surname;
+            StatesChanged();
+
             if (userType == UserType.Student) {
-                label5.Dispose();
+                // Move all items up
+                submitChangedButton.Location = new Point(15, 256);
+                forenameTextBox.Dispose();
+                surnameTextBox.Dispose();
+                titleTextBox.Dispose();
+                nameCheckBox.Hide(); // Prevents null reference after clicking submit and checking this box's state
+                this.Size = new Size(425, 362);
+            } else {
             }
         }
 
-        private void EditAccount_Paint(object sender, PaintEventArgs e) {
-            int y = passwordCheckBox.Location.Y + 10;
-            e.Graphics.DrawLine(Pens.Gray, 0, y, passwordCheckBox.Location.X - 5, y);
-            e.Graphics.DrawLine(Pens.Gray, passwordCheckBox.Location.X + passwordCheckBox.Size.Width, y, this.Width, y);
-
-            y = usernameCheckBox.Location.Y + 10;
-            e.Graphics.DrawLine(Pens.Gray, 0, y, usernameCheckBox.Location.X - 5, y);
-            e.Graphics.DrawLine(Pens.Gray, usernameCheckBox.Location.X + usernameCheckBox.Size.Width, y, this.Width, y);
-        }
-
         private void stateChanged(object sender, EventArgs e) {
+            StatesChanged();
+        }
+        private void StatesChanged() {
             /// <summary>
-            /// Procedure that executes when a checkbox is changed, and updates the state of the textboxes to represent this.
+            /// Method that updates the states of the textboxes.
             /// </summary>
             passwordTextbox1.Enabled = passwordCheckBox.Checked;
             passwordTextbox2.Enabled = passwordCheckBox.Checked;
             usernameTextbox.Enabled = usernameCheckBox.Checked;
+            forenameTextBox.Enabled = nameCheckBox.Checked;
+            surnameTextBox.Enabled = nameCheckBox.Checked;
+            titleTextBox.Enabled = nameCheckBox.Checked;
+        }
+
+        private void EditAccount_Paint(object sender, PaintEventArgs e) {
+            CheckBox[] checkBoxes = { passwordCheckBox, usernameCheckBox, nameCheckBox };
+            foreach (CheckBox box in checkBoxes) {
+                int y = box.Location.Y + 10;
+                e.Graphics.DrawLine(Pens.Gray, 0, y, box.Location.X - 5, y);
+                e.Graphics.DrawLine(Pens.Gray, box.Location.X + box.Size.Width, y, this.Width, y);
+            }
         }
 
         async private void submitChangedClick(object sender, EventArgs e) { 
             string password = passwordTextbox1.Text;
             string confirmedPassword = passwordTextbox2.Text;
             string username = usernameTextbox.Text;
+            string title = titleTextBox.Text;
+            string forename = forenameTextBox.Text;
+            string surname = surnameTextBox.Text;
             //passwordTextbox1.Text = "";
             //passwordTextbox2.Text = "";
 
@@ -83,6 +103,17 @@ namespace Trackr {
                 }
                 // Password is valid at this point
                 this.newPassword = password;
+            }
+
+            // New name checks
+            if (nameCheckBox.Checked) {
+                if (title == "" || forename == "" || surname == "") {
+                    MessageBox.Show("You must not leave any fields blank!");
+                    return;
+                }
+                this.newTitle = title;
+                this.newForename = forename;
+                this.newSurname = surname;
             }
 
             this.DialogResult = DialogResult.OK;

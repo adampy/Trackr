@@ -11,10 +11,10 @@ namespace Trackr {
     }
     public class User {
         public int id { get; }
-        public string forename { get; }
-        public string surname { get; } // Protected attributes such that User's children (Student and Teacher) can access them
-        public string username { get; private set; } // Only allow setting through a subroutine TODO: Change this to a normal {get;set;}?
-        public string fullName { get; } // (This is variable encapsulation)
+        public string forename { get; protected set; } // Protected properties mean that User's children (Student and Teacher) can access them
+        public string surname { get; protected set; }
+        public string username { get; protected set; } // Only allow setting through a subroutine
+        public string fullName { get; } // (This is variable encapsulation) - no setter needed because this property is only accessed in the teacher app
 
         public User(int id, string forename, string surname, string username) {
             /// <summary>
@@ -121,7 +121,7 @@ namespace Trackr {
     }
 
     public class Teacher : User {
-        public string title { get; }
+        public string title { get; private set; }
         public static Teacher[] CreateFromJsonString(string json) {
             /// <summary>
             /// Returns an array of teachers.
@@ -153,6 +153,16 @@ namespace Trackr {
             /// Returns Title + Surname
             /// </summary>
             return this.title + " " + this.surname;
+        }
+
+        public void SetAttributes(string forename = null, string surname = null, string username = null, string title = null) {
+            /// <summary>
+            /// Encapsulation method that ONLY updates attributes of the teacher object, NO API CALLS HAPPEN IN THIS METHOD.
+            /// </summary>
+            if (forename != null) this.forename = forename;
+            if (surname != null) this.surname = surname;
+            if (username != null) this.username = username;
+            if (title != null) this.title = title;
         }
     }
 

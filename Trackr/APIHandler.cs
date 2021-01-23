@@ -67,7 +67,7 @@ namespace Trackr {
                 return false; // If incorrect params entered
             }
         }
-        async public static Task<bool> EditAccountCredentials(UserType user, string newUsername = null, string newPassword = null) {
+        async public static Task<bool> EditAccountCredentials(UserType user, string newUsername = null, string newPassword = null, string newTitle = null, string newForename = null, string newSurname = null) {
             /// <summary>
             /// Update the student which is from the Authorization header.
             /// </summary>
@@ -77,6 +77,15 @@ namespace Trackr {
             }
             if (newPassword != null) {
                 formData.Add("password", newPassword);
+            }
+            if (newTitle != null) {
+                formData.Add("title", newTitle);
+            }
+            if (newForename != null) {
+                formData.Add("forename", newForename);
+            }
+            if (newSurname != null) {
+                formData.Add("surname", newSurname);
             }
 
             string url = "";
