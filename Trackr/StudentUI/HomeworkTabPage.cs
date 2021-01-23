@@ -8,12 +8,18 @@ namespace Trackr {
         /// of a `CustomList` and it changes these into `HomeworkListItems`.
         /// </summary>
         public CustomList data;
-        private HomeworkListItem[] listItems;
+        private HomeworkListItem[] listItems = new HomeworkListItem[0];
         private HomeworkTabController parent;
         private string titleText;
+        private bool containsCompletedTasks;
 
-        public HomeworkTabPage(HomeworkTabController parent, string text, CustomList taskData, int taskBorderWidth) {
-            this.titleText = text;
+        public HomeworkTabPage(HomeworkTabController parent, bool containsCompletedTasks, CustomList taskData, int taskBorderWidth) {
+            this.containsCompletedTasks = containsCompletedTasks;
+            if (containsCompletedTasks) {
+                this.titleText = "Completed tasks";
+            } else {
+                this.titleText = "Uncompleted tasks";
+            }
             this.data = taskData;
             this.parent = parent;
             this.AutoScroll = true;
@@ -45,20 +51,24 @@ namespace Trackr {
                 }
             }
 
-            // TODO: Merge sort these in relation to their due date - most recent come first
-            int y = 0;
-            this.listItems = new HomeworkListItem[this.data.GetLength()]; // TODO: Change all arrays to CustomList type
-            for (int i = 0; i < this.data.GetLength(); i++) {
-                Homework taskIterable = (Homework)this.data.Get(i);
-                bool includeBottomBorder = (i != this.data.GetLength() - 1); // Boolean that denotes the last item in the list. When this is True the bottom border is not included in the ListItem.
-                HomeworkListItem taskListItem = new HomeworkListItem(parent, taskIterable, 2, true);
-                this.listItems[i] = taskListItem;
-                taskListItem.Location = new Point(0, y);
-                y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
-                this.Controls.Add(taskListItem);
-            }
-            this.Text = this.titleText + " (" + this.data.GetLength().ToString() + ")";
+            int numberOfHomeworks = this.data.GetLength(); // Because this call is O(n), it can be stored as a var
+            if (numberOfHomeworks > 0) {
+                Homework[] homeworkToSort = this.data.ToArray<Homework>();
+                Homework[] sortedHomework = Algorithms.Sorts.MergeSort(homeworkToSort, ascending: !this.containsCompletedTasks);
 
+                int y = 0;
+                this.listItems = new HomeworkListItem[numberOfHomeworks];
+                for (int i = 0; i < numberOfHomeworks; i++) {
+                    Homework homework = sortedHomework[i];
+                    //bool includeBottomBorder = (i != numberOfHomeworks - 1);
+                    HomeworkListItem taskListItem = new HomeworkListItem(parent, homework, 2, true);
+                    this.listItems[i] = taskListItem;
+                    taskListItem.Location = new Point(0, y);
+                    y += taskListItem.Height; // Ensure that the item below is actually underneath the previous item 
+                    this.Controls.Add(taskListItem);
+                }
+            }
+            this.Text = this.titleText + " (" + numberOfHomeworks.ToString() + ")";
         }
     }
 }

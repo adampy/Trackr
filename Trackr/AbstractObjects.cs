@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Trackr {
+    public interface ISortable {
+        /// <summary>
+        /// Interface that allows objects to be compared.
+        /// </summary>
+        public abstract bool LargerThan(ITask toCompare);
+    }
     public class User {
         public int id { get; }
         public string forename { get; }
@@ -150,7 +156,7 @@ namespace Trackr {
         }
     }
 
-    public interface ITask {
+    public interface ITask : ISortable {
         public int id { get; set; }
         public Group group { get; set; } // This field is the group ref object
         public string title { get; set; }
@@ -226,6 +232,10 @@ namespace Trackr {
             this.hasCompleted = newStatus;
             APIHandler.UpdateHomeworkStatus(this);
         }
+
+        public virtual bool LargerThan(ITask toCompare) {
+            return this.dateDue > toCompare.dateDue;
+        }
     }
 
     public class Assignment : ITask {
@@ -276,6 +286,9 @@ namespace Trackr {
                 assignments[i] = new Assignment(id, group, title, description, maxScore, dateDue, dateSet);
             }
             return assignments;
+        }
+        public virtual bool LargerThan(ITask toCompare) {
+            return this.dateDue > toCompare.dateDue;
         }
     }
 

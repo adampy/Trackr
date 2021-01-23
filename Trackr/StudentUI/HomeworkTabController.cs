@@ -45,8 +45,8 @@ namespace Trackr {
 
             } else {
                 // The current tabs do not exist, so create them
-                uncompleted = new HomeworkTabPage(this, "Uncompleted tasks", uncompletedTasks, taskBorderWidth: 3);
-                completed = new HomeworkTabPage(this, "Completed tasks", completedTasks, taskBorderWidth: 3);
+                uncompleted = new HomeworkTabPage(this, false, uncompletedTasks, taskBorderWidth: 3);
+                completed = new HomeworkTabPage(this, true, completedTasks, taskBorderWidth: 3);
                 this.TabPages.Add(uncompleted);
                 this.TabPages.Add(completed);
             }

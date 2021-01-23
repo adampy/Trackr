@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIHandler.cs" />
+    <Compile Include="DataAlgorithms.cs" />
     <Compile Include="MainForms\AuthenticationScreen.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -80,8 +80,8 @@ namespace Trackr {
         }
         
         public dynamic ToArray<T>() {
-            T[] toReturn = new T[this.array.Length];
-            for (int i = 0; i < this.array.Length; i++) {
+            T[] toReturn = new T[this.length];
+            for (int i = 0; i < this.length; i++) {
                 toReturn[i] = (T)this.array[i];
             }
             return toReturn;
