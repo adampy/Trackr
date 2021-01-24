@@ -28,6 +28,9 @@ namespace Trackr {
                 forenameTextBox.Dispose();
                 surnameTextBox.Dispose();
                 titleTextBox.Dispose();
+                label5.Dispose();
+                label6.Dispose();
+                label7.Dispose();
                 nameCheckBox.Hide(); // Prevents null reference after clicking submit and checking this box's state
                 this.Size = new Size(425, 362);
             } else {
