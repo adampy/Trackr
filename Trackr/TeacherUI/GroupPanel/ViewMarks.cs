@@ -198,7 +198,7 @@ namespace Trackr {
                 return Color.Green;
             }
         }
-        public static int[] InconsistentVals(float[] values, float multiplier = 1) {
+        /*public static int[] InconsistentVals(float[] values, float multiplier = 1) {
             float sum = 0;
             foreach (float v in values) {
                 sum += v;
@@ -214,14 +214,14 @@ namespace Trackr {
             CustomList indexes = new CustomList();
             for (int i = 0; i < values.Length; i++) {
                 float v = values[i];
-                double upperBound = standardDeviation + multiplier * mean;
-                double lowerBound = standardDeviation - multiplier * mean;
+                double upperBound = multiplier * mean + standardDeviation;
+                double lowerBound = multiplier * mean - standardDeviation;
                 if (!(v >= lowerBound && v <= upperBound)) {
                     indexes.Add(i);
                 }
             }
             return indexes.ToArray<int>();
-        } // TODO: Implement this?
+        } TODO: Delete this*/
         #endregion
     }
 }
