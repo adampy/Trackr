@@ -54,7 +54,7 @@ namespace Trackr {
             /// Subroutine that sends a simple GET request to the root of the API to ensure it is not sleeping. This route also checks for internet connection on the device.
             /// </summary>
             try {
-                HttpResponseMessage response = await WebRequestHandler.GET("/");
+                HttpResponseMessage response = await APIHandler.WakeAPI();
                 if (!response.IsSuccessStatusCode) {
                     MessageBox.Show("An unexpected error has occured within the API, please try again later", "API error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
