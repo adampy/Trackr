@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Math;
 
 namespace Trackr {
     public class FocussedTaskTab : TabPage {
@@ -80,9 +81,10 @@ namespace Trackr {
                 this.Controls.Add(feedbackLabel);
 
                 // Score label
+                double scorePercentage = feedback.score * 100 / feedback.task.maxScore;
                 scoreLabel = new Label();
                 scoreLabel.AutoSize = true;
-                scoreLabel.Text = "Marks: " + feedback.score.ToString() + "/" + feedback.task.maxScore.ToString();
+                scoreLabel.Text = "Marks: " + feedback.score.ToString() + "/" + feedback.task.maxScore.ToString() + " (" + Math.Round(scorePercentage, 1) + "%)";
                 scoreLabel.Font = new Font("Calibri", 14.0f, FontStyle.Bold);
                 scoreLabel.Location = new Point(500, 0);
                 this.Controls.Add(scoreLabel);
