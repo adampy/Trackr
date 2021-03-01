@@ -203,11 +203,11 @@ namespace Trackr {
 
             try {
                 Teacher teacher = await APIHandler.MakeTeacher(forename, surname, username, password, title, adminCode: adminCode);
-                MessageBox.Show("Success: " + teacher.DisplayName() + " " + teacher.username);
+                MessageBox.Show("Registration complete, you can now go back and log in.");
                 flushTextBoxes();
             } catch (HttpStatusUnauthorized) {
                 MessageBox.Show("Incorrect admin code entered.");
-                }
+             }
         }
         async private void usernameAvaliableButtonClick(object sender, EventArgs e) {
             /// <summary>
