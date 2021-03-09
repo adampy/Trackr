@@ -207,7 +207,9 @@ namespace Trackr {
                 flushTextBoxes();
             } catch (HttpStatusUnauthorized) {
                 MessageBox.Show("Incorrect admin code entered.");
-             }
+            } catch (HttpRequestException) {
+                MessageBox.Show("That username has already been used, please try again with a different username.");
+            }
         }
         async private void usernameAvaliableButtonClick(object sender, EventArgs e) {
             /// <summary>

@@ -355,9 +355,6 @@ namespace Trackr {
         // Oject not needed because it will cause unnecessary API calls. Only the ID is required. Student and task objects will be added afterwards.
         private int studentId;
         private int taskId;
-        public Student student { get; set; }
-        public ITask task { get; set; }
-
         public AbstractMark(int studentId, int taskId, string feedback = null, int score = 0, bool hasMarked = false){
             this.studentId = studentId;
             this.taskId = taskId;
