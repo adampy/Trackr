@@ -45,9 +45,9 @@ namespace Trackr {
 
             string urlExtension = "";
             if (user == UserType.Student) {
-                urlExtension = "/student/auth";
+                urlExtension = studentRoute + "/auth";
             } else if (user == UserType.Teacher) {
-                urlExtension = "/teacher/auth";
+                urlExtension = teacherRoute + "/auth";
             }
 
             try {
@@ -72,14 +72,14 @@ namespace Trackr {
                     {"username", username }
                 };
 
-                HttpResponseMessage response = await WebRequestHandler.POST("/teacher/username", formData);
+                HttpResponseMessage response = await WebRequestHandler.POST(teacherRoute + "/username", formData);
                 dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 return json.data[0];
             } else if (user == UserType.Student) {
                 Dictionary<string, string> formData = new Dictionary<string, string> {
                     { "username", username }
                 };
-                HttpResponseMessage response = await WebRequestHandler.POST("/student/username", formData);
+                HttpResponseMessage response = await WebRequestHandler.POST(studentRoute + "/username", formData);
                 dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 return json.data[0];
             } else {
@@ -109,9 +109,9 @@ namespace Trackr {
 
             string url = "";
             if (user == UserType.Student) {
-                url = "/student/";
+                url = studentRoute + "/";
             } else if (user == UserType.Teacher) {
-                url = "/teacher/";
+                url = teacherRoute + "/";
             }
             HttpResponseMessage response = await WebRequestHandler.PATCH(url, formData);
 
