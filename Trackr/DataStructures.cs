@@ -45,34 +45,41 @@ namespace Trackr {
     }
     
     public class CustomList {
+        /// <summary>
+        /// A singly linked list class. The start node is stored as an attribute, and each node has a link to the next node and some data.
+        /// </summary>
         private object[] array;
         private int length;
+        private CustomListNode head;
 
         public CustomList(int maxCapacity = 0) {
             array = new object[maxCapacity];
             length = 0;
+            head = new CustomListNode();
         }
 
         public void Add(object data) {
+            CustomListNode toAdd = new CustomListNode();
+            toAdd.data = data;
+            toAdd.next = head;
+            head = toAdd;
             length++;
-            if (length > array.Length) {
-                // Make new array with an additional length
-                object[] newArray = new object[length];
-                for (int i = 0; i < array.Length; i++) {
-                    // Copy all elements to new array
-                    newArray[i] = array[i];
-                }
-                array = newArray; // Replace old array with new one
-            }
-            array[length - 1] = data; // Append new item
         }
 
         public object Get(int index) {
-            return array[index];
+            CustomListNode node = head;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+            return node.data;
         }
 
         public void Set(int index, object data) {
-            array[index] = data;
+            CustomListNode node = head;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+            node.data = data;
         }
 
         public int GetLength() {
@@ -81,17 +88,26 @@ namespace Trackr {
         
         public dynamic ToArray<T>() {
             T[] toReturn = new T[this.length];
-            for (int i = 0; i < this.length; i++) {
-                toReturn[i] = (T)this.array[i];
+            CustomListNode node = head;
+            for (int i = 0; i < length; i++) {
+                toReturn[i] = (T)node.data;
+                node = node.next;
             }
             return toReturn;
         }
         public bool Contains(object element) {
-            bool toReturn = false;
-            foreach (object o in this.array) {
-                toReturn = toReturn || element.Equals(o);
+            bool found = false;
+            CustomListNode node = head;
+            for (int i = 0; i < length; i++) {
+                found = found || element.Equals(node.data);
+                node = node.next;
             }
-            return toReturn;
+            return found;
         }
+    }
+
+    public class CustomListNode {
+        public CustomListNode next;
+        public object data;
     }
 }
