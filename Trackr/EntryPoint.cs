@@ -18,16 +18,6 @@ namespace Trackr
             FormController.auth = new AuthenticationScreen();
             FormController.auth.Show();
 
-            /*APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("hbushell1:password"));
-            Student student = Task.Run<Student>(async () => await APIHandler.GetStudent(username: "hbushell1")).Result;
-            FormController.studentMain = new StudentMainForm(student);
-            FormController.studentMain.Show();*/
-
-            /*APIHandler.SetAuthorizationHeader(WebRequestHandler.ConvertToBase64("stoods:beeryboater"));
-            Teacher teacher = Task.Run<Teacher>(async () => await APIHandler.GetTeacher(username: "stoods")).Result;
-            FormController.teacherMain = new TeacherMainForm(teacher);
-            FormController.teacherMain.Show();*/
-
             Application.Run();
         }
     }
