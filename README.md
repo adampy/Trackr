@@ -21,6 +21,7 @@ This is a client program, called Trackr, that I created for my A-Level CS NEA ad
 
 # Skills I learnt
 - The role interfaces play within OOP code and the UI
+- Singly linked lists in practice
 - Creating custom UI elements
 - Web request and JSON handling (asynchronous code) in C# using Newtonsoft
 - Designing, creating, and managing a RESTful API built using Flask
