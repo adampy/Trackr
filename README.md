@@ -16,7 +16,9 @@ This is a client program, called Trackr, that I created for my A-Level CS NEA ad
 6. Start the Dyno
 
 **Client**
-1. Provide the Dyno's URL to the client app's `WebRequestHandler.apiRoot`
+1. Clone the repository
+2. Open in Visual Studio, and install the Newtonsoft package
+3. Provide the Dyno's URL to the client app's `WebRequestHandler.apiRoot`
 
 
 # Skills I learnt
@@ -35,3 +37,4 @@ This is a client program, called Trackr, that I created for my A-Level CS NEA ad
 # Features I would have implemented if I had more time
 - Notification system which notifies the user when they have had homework assigned or marked
 - File system, potentially using Amazon S3 buckets, that would allow students to upload files for the teacher to see
+- Allow multiple schools to use the system - at the moment it is bespoke
