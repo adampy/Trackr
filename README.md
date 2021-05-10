@@ -1,6 +1,5 @@
 # Trackr Client
-The client app I submitted for my A-Level Computer Science Non-Exam-Assessment (AQA 2021). The client app that accompanies the API - a Python Quart app - which was designed to be provisioned on Heroku.
-Note: Main API routes are dynamic, however the sub-routes are not dynamic. [Newtonsoft](https://www.newtonsoft.com/) needs to be installed for JSON parsing.
+The client app I submitted for my A-Level Computer Science Non-Exam-Assessment (AQA 2021). The client app that accompanies the API - a Python Quart app - which was designed to be provisioned on Heroku. The client only works for a single college/school, and therefore all form titles and pictures are specific to my college.
 
 # Overview
 This is a client program, called Trackr, that I created for my A-Level CS NEA admission alongside the API. When both are running together, Trackr can be used to allow teachers to log on, create students and create groups/classes for the students to be part of and assign homework tasks to these classes. The students camn log on and see the groups they are part of as well as their homeworks. Teachers can mark the homeworks using the application and store their students marks on the application. Once teachers have marked theses pieces of classwork, students can log on and see the mark that they have been awarded.
