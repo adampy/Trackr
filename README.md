@@ -19,11 +19,18 @@ This is a client program, called Trackr, that I created for my A-Level CS NEA ad
 1. Provide the Dyno's URL to the client app's `WebRequestHandler.apiRoot`
 
 
-# Things I learnt from this
-•The role interfaces play within OOP code and the UI
-•Creating custom UI elements
-•Web request and JSON handling (asynchronous code) in C# using Newtonsoft
+# Skills I learnt
+- The role interfaces play within OOP code and the UI
+- Creating custom UI elements
+- Web request and JSON handling (asynchronous code) in C# using Newtonsoft
+- Designing, creating, and managing a RESTful API built using Flask
+- Database provision, the use of foreign keys, and join tables
+- How sensitive data is managed and the importance of keeping up to date with security practises
+  - Salting passwords before hashing them with a secure hash to prevent the use of rainbow tables
+  - Using SHA256 which is cryptographically secure as of early 2021
+  - Preventing timing attacks on the admin code
+- RESTful API constraints including HATEOAS
 
 # Features I would have implemented if I had more time
-•Notification system which notifies the user when they have had homework assigned or marked
-•File system, potentially using Amazon S3 buckets, that would allow students to upload files for the teacher to see
+- Notification system which notifies the user when they have had homework assigned or marked
+- File system, potentially using Amazon S3 buckets, that would allow students to upload files for the teacher to see
