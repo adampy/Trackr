@@ -412,9 +412,13 @@ namespace Trackr {
         async public static void GiveFeedback(Student student, Assignment assignment, int score, string feedback) {
             Dictionary<string, string> formData = new Dictionary<string, string> {
                 { "student", student.id.ToString() },
-                { "score", score.ToString() },
-                { "feedback", feedback }
+                { "score", score.ToString() }
             };
+
+            // Add feedback into form if given
+            if (feedback != "") {
+                formData.Add("feedback", feedback);
+            }
 
             await WebRequestHandler.POST(taskRoute + "/" + assignment.id.ToString() + "/provide_feedback", formData);
         }
